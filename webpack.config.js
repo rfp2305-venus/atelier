@@ -10,6 +10,12 @@ module.exports = {
     filename: "bundle.js",
   },
   devtool: "source-map",
+  devServer: {
+    port: process.env.PORT,
+    static: {
+      directory: path.join(__dirname, "dist"),
+    }
+  },
   module: {
     rules: [
       {
