@@ -1,4 +1,53 @@
 html,
 body {
-  margin: none;
+  margin: 0;
+}
+
+/*
+  DEVELOPMENT CSS
+  - bad css using it just to visualize
+    the layout
+  going to delete
+ */
+.container {
+  padding: 10px;
+}
+
+.view {
+  min-width: 1000px;
+  display: flex;
+  flex-wrap: wrap;
+
+}
+
+.container.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.test-layout {
+  border: 1px solid;
+}
+
+.row {
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+#product-gallery {
+  height: 600px;
+  width: 800px;
+  flex-grow: 1;
+}
+
+#product-form {
+  width: 400px;
+}
+
+#product-info {
+  min-height: 200px;
+  flex-grow: 1;
 }
