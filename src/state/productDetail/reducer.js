@@ -9,5 +9,10 @@ export default function ProductDetail(state = initialState, action) {
         product: action.product
       }
       break;
+
+    default:
+      return {
+        ...state
+      }
   }
 }
