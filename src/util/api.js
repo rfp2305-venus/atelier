@@ -25,7 +25,7 @@ export async function fetchProductRatings(productId) {
   const endpoint = '/reviews/meta?product_id=' + productId;
 
   try {
-    return await executeRequest(endpoint, 'get');;
+    return await executeRequest(endpoint, 'get');
   } catch (err) {
     console.error(err);
   }
@@ -43,4 +43,14 @@ export async function fetchProduct(productId) {
     console.error(err);
   }
 
+}
+
+export async function fetchProducts() {
+  const endpoint = '/products';
+  try {
+    const products = await executeRequest(endpoint, 'get');
+    return products;
+  } catch(err) {
+
+  }
 }

@@ -51,3 +51,7 @@ body {
   min-height: 200px;
   flex-grow: 1;
 }
+
+.style_thumbnail {
+  display: inline-block;
+}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import ProductOverview from './ProductOverview.jsx';
+import ProductOverview from './ProductOverview/ProductOverview.jsx';
 import RelatedComp from './relatedAndComp/RelatedComp.jsx';
 
 export default function App() {
