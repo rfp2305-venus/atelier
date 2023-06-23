@@ -1,7 +1,9 @@
 import React from 'react';
 
 export default function Related() {
-  <>
-    hello earthlings - from related
-  </>
+  return (
+    <>
+      hello earthlings - from related
+    </>
+  )
 }
