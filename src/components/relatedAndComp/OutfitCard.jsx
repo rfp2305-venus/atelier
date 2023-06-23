@@ -1,7 +1,7 @@
 export default function OutfitCard() {
   return (
     <>
-      <div className="card outfit-card">Card</div>
+      <div className="card outfit-card">Outfit Card</div>
     </>
   );
 }
