@@ -2,7 +2,7 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import ProductOverview from './ProductOverview.jsx';
-import Related from './relatedAndComp/Related.jsx';
+import RelatedComp from './relatedAndComp/RelatedComp.jsx';
 
 export default function App() {
   const { loading } = useSelector(({ app }) => app);
@@ -15,7 +15,7 @@ export default function App() {
         <ProductOverview />
       </div>
       <div>
-        <Related />
+        <RelatedComp />
       </div>
     </>
   );
