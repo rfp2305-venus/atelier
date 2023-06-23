@@ -16,9 +16,11 @@ export default function RelatedComp() {
     dispatch(aSimpleAction());
   }, []);
 
+  let relatedProducts = [];
+
   return (
     <>
-      <div className="container" id="related-and-comp">
+      <div id="related-and-comp">
         <div>
           <RelatedProducts />
         </div>
