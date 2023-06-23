@@ -44,3 +44,13 @@ export async function fetchProduct(productId) {
   }
 
 }
+
+export async function fetchProducts() {
+  const endpoint = '/products';
+  try {
+    const products = await executeRequest(endpoint, 'get');
+    return products;
+  } catch(err) {
+
+  }
+}
