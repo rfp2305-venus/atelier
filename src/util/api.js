@@ -3,7 +3,7 @@ import axios from 'axios';
 const baseURL = process.env.API_URL;
 const apiKey = process.env.API_KEY;
 
-function executeRequest(endpoint, method = 'get', headers = {}, body = {}) {
+export default function executeRequest(endpoint, method = 'get', headers = {}, body = {}) {
   const url = baseURL + endpoint;
   headers = {
     Authorization: apiKey,
