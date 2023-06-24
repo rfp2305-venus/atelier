@@ -8,17 +8,18 @@ import axios from 'axios';
 import { useState, useEffect } from 'react'; // tech debt
 import { useSelector } from 'react-redux';
 
+import Question from './Question.jsx';
+
 export default function QuestionsList() {
-  // const [ questions, setQuestions ] = useState([]);
 
   const { product } = useSelector(({ productDetail }) => productDetail);
   // console.log('product:', product);
 
-  const questions = []; // stores all questions
+  // const [ questions, setQuestions ] = useState([]);
+  const questions = [];
 
   useEffect(() => {
-
-    // if product defined —> fetch questions
+    // fetches questions for clicked product
     if (product) {
 
       axios({
@@ -28,8 +29,8 @@ export default function QuestionsList() {
         headers: { Authorization: API_KEY },
         params: {
           product_id: product.id,
-          page: 1,
-          count: 4
+          page: 1, // page of results (?)
+          count: 4 // results per page
         }
 
       }).then((res) => {
@@ -37,45 +38,24 @@ export default function QuestionsList() {
 
         // push questions into array
         const { results } = res.data;
+
+        // setQuestions(results);
         results.forEach((result) => questions.push(result));
 
-        /*
-        const {
-
-          answers,
-          asker_name,
-          question_body,
-          question_date,
-          question_helpfulness,
-          question_id,
-          reported
-
-        } = res.data.results;
-
-        console.log('answers:', answers);
-        console.log('asker_name:', asker_name);
-        console.log('question_body:', question_body);
-        console.log('question_date:', question_date);
-        console.log('question_helpfulness:', question_helpfulness);
-        console.log('question_id:', question_id);
-        console.log('reported:', reported);
-        */
-
       }).then(() => {
-        console.log('Questions set!');
-
-        questions.forEach((q, i) => {
-          console.log(`question ${ i }: ${ JSON.stringify(q) }`);
-        });
+        if (questions.length === 0) {
+          console.log('No questions!');
+        } else {
+          questions.forEach((q, i) => {
+            console.log(`question ${ i }: ${ JSON.stringify(q) }`);
+          });
+        }
 
       }).catch((err) => {
         console.error(`Error retrieving questions: ${ err }`);
       });
-
     }
-
   }, [ product ]);
-
 
   return (
     <div>
@@ -85,7 +65,18 @@ export default function QuestionsList() {
         </tbody>
       </table> */}
 
-      {/* { questions.map((q) => <Question key={ id } />) } */}
+      {/* still need to handle when no questions */}
+      { questions.map(({ question_id, question_body, question_date, asker_name, question_helpfulness, reported, answers }) =>
+        // question not rendering anywhere on page
+        <Question
+          key={ question_id }
+          body={ question_body }
+          date={ question_date }
+          user={ asker_name }
+          votes={ question_helpfulness }
+          reported={ reported }
+          answers={ answers }
+        />) }
 
     </div>
   );
