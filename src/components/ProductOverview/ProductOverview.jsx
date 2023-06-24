@@ -5,10 +5,6 @@ import ProductForm from './ProductForm.jsx';
 import {handleFetchProducts} from "../../state/Products/actions.js";
 import Nav from "../../lib/Nav";
 
-// const HARDCODEDPRODUCTID = 40344;
-// const HARDCODEDPRODUCTID = 40346;40348
-const HARDCODEDPRODUCTID = 40348
-
 
 export default function ProductOverview() {
   const state = useSelector(({ products, productDetail }) => ({productDetail, products}));

@@ -6,6 +6,6 @@ export default function ProductStyles() {
   const {styles} = useSelector(({productDetail}) => productDetail.product);
 
   return styles.map((style) => (
-    <ProductStyle style={style}/>
+    <ProductStyle key={style.style_id} style={style}/>
   ))
 }
