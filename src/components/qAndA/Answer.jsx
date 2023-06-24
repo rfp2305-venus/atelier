@@ -1,26 +1,36 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-export default function Answer({ a }) {
+/*
+accepts { answer } obj
+  > id
+  > body
+  > number of votes
+  > user
+  > isReported (boolean flag)
+*/
+export default function Answer(a) {
+
+  // const { id, body, votes, user, isReported } = a;
+
 
   // can JSX fragment be child of table (?)
   return (
     <>
       <tr>
-        <td>
+        <th>
           <strong>A:</strong>
-        </td>
-        <td>
           {/* ANSWER HERE */ a }
-        </td>
+        </th>
       </tr>
 
       <tr>
-        {/* BUTTONS HERE */}
         <td>
-          Helpful? {/* Yes button */}
+          <strong>Helpful?</strong>
+          {/* Yes button */}
           <Upvote />
         </td>
+
         <td>
           {/* Report button */}
           <Report />
