@@ -38,12 +38,12 @@ export default function RelatedComp() {
       console.log(error);
     });
   }
-  
+
   return (
     <>
       <div id="related-and-comp">
         <div>
-          <RelatedProducts />
+          <RelatedProducts relatedProducts={relatedProducts}/>
         </div>
         <div>
           <YourOutfit />
