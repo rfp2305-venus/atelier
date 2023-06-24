@@ -17,7 +17,7 @@ body {
   min-width: 1000px;
   display: flex;
   flex-wrap: wrap;
-
+  justify-content: center;
 }
 
 .container.flex-center {
@@ -39,7 +39,6 @@ body {
 
 #product-gallery {
   height: 600px;
-  width: 800px;
   flex-grow: 1;
 }
 
