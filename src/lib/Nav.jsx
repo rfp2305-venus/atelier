@@ -3,7 +3,13 @@ export default function Nav({products, onClick} ) {
   return (
     <div>
       {products.map((product) => (
-        <span onClick={() => onClick(product.id)}>{product.name}</span>
+        <span
+          key={product.id}
+          onClick={() => onClick(product.id)}
+          style={{marginRight: '10px', cursor: 'pointer'}}
+        >
+          {product.name}
+        </span>
       ))}
     </div>
   )
