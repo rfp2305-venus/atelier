@@ -17,13 +17,13 @@ export default function Question({ body, date, user, votes, reported, answers })
   return (
     <>
       <h3>Q: { body }</h3>
-      <br />
+
+      {/* render answers below */}
+      <AnswersList answers={ answers } />
 
       Helpful?
       {/* Yes button */}
 
-      {/* render answers below */}
-      {/* <AnswersList /> */}
     </>
   );
 }

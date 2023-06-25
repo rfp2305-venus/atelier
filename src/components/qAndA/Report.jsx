@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 export default function Report() {
   return (
     <button>
-      <strong>Report</strong>
+      Report
     </button>
   );
 }

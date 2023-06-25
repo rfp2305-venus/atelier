@@ -1,6 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import Upvote from './Upvote';
+import Report from './Report';
+
 /*
 accepts { answer } obj
   > id
@@ -9,30 +12,24 @@ accepts { answer } obj
   > user
   > isReported (boolean flag)
 */
-export default function Answer(a) {
+export default function Answer({ body, date, user, votes, photos }) {
 
-  // const { id, body, votes, user, isReported } = a;
+  console.log('answer:', body);
 
-
-  // can JSX fragment be child of table (?)
   return (
     <>
       <tr>
-        <th>
-          <strong>A:</strong>
-          {/* ANSWER HERE */ a }
-        </th>
+        <td>
+          <strong>A: { body }</strong>
+        </td>
       </tr>
 
       <tr>
         <td>
-          <strong>Helpful?</strong>
-          {/* Yes button */}
-          <Upvote />
+          Helpful? <Upvote />
         </td>
 
         <td>
-          {/* Report button */}
           <Report />
         </td>
       </tr>
