@@ -15,8 +15,10 @@ export default function AnswersList({ questionID }) {
   const { product } = useSelector(({ productDetail }) => productDetail);
 
   const [ answers, setAnswers ] = useState([]);
+  const [ length, setLength ] = useState(2);
+  const [ isExpanded, setExpanded ] = useState(false);
 
-  const fetchAnswers = (page = 1, count = 5 /* placeholder values */) => {
+  const fetchAnswers = (page = 1, count = 20 /* placeholder values */) => {
     return axios
       .get(`${ API_URL }/qa/questions/${ questionID }/answers`, {
         headers: { Authorization: API_KEY },
@@ -31,12 +33,11 @@ export default function AnswersList({ questionID }) {
         const { results } = res.data;
 
         // sort answers by helpfulness
-        const defaultA = results.sort((a, b) => {
+        results.sort((a, b) => {
           return b.helpfulness - a.helpfulness;
+        });
 
-        }).slice(0, 2); // dedicated component later
-
-        setAnswers(defaultA);
+        setAnswers(results);
       })
       .catch((err) => {
         console.error(`Error fetching answers: ${ err }`);
@@ -57,10 +58,7 @@ export default function AnswersList({ questionID }) {
     <table>
       <tbody>
         {answers
-          // probably superfluous since sorted at top
-          .sort((a, b) => {
-            b.helpfulness - a.helpfulness;
-          })
+          .slice(0, length)
           .map(({ answer_id, body, date, answerer_name, helpfulness, photos }) => (
             // if answer isn't blank
             (body.length > 0) ?
@@ -79,6 +77,28 @@ export default function AnswersList({ questionID }) {
               />) : (null)
           ))
         }
+
+        <tr>
+          <th>
+            <button onClick={(e) => {
+              e.preventDefault();
+
+              if (!isExpanded) {
+                setLength(answers.length);
+
+                setExpanded(true);
+
+              } else {
+                setLength(2);
+
+                setExpanded(false);
+              }
+            }}>
+              { (isExpanded) ? ('Collapse answers') : ('See more answers') }
+            </button>
+          </th>
+        </tr>
+
         <tr>
           <th>—————( delete later )—————</th>
         </tr>
