@@ -2,8 +2,7 @@ import {useSelector} from "react-redux";
 import StarRating from "../../lib/StarRating.jsx";
 import ProductStyles from "./ProductStyles.jsx";
 
-export default function ProductForm() {
-  const {product} = useSelector(({productDetail}) => productDetail);
+export default function ProductForm({product, ...props}) {
 
   return (
     <div>
@@ -11,7 +10,7 @@ export default function ProductForm() {
       <h4>{product.category}</h4>
       <h2>{product.name}</h2>
       <h6>{product.default_price}</h6>
-      <ProductStyles />
+      <ProductStyles styles={product.styles} {...props} />
     </div>
   )
 }

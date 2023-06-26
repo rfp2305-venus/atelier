@@ -1,16 +1,10 @@
 import React, {useEffect} from "react";
 
-export default function ProductStyle({style}) {
-
-  useEffect(() => {
-    const image = new Image();
-    image.src = style.photos[0].thumbnail_url;
-  }, []);
-
+export default function ProductStyle({style, onSelectStyle}) {
   function createThumbnail() {
     return {
-      height: '100px',
-      width: '100px',
+      height: '75px',
+      width: '75px',
       backgroundImage: `url(${style.photos[0].thumbnail_url})`,
       backgroundPosition: 'center center',
       backgroundSize: 'cover',
@@ -19,7 +13,11 @@ export default function ProductStyle({style}) {
   }
   return (
     <>
-      <div className="style_thumbnail" style={createThumbnail()}></div>
+      <div
+        className="style_thumbnail"
+        style={createThumbnail()}
+        onClick={() => onSelectStyle(style.style_id)}
+      ></div>
       {/*<img src={style.photos[0].thumbnail_url} alt=""/>*/}
     </>
   )

@@ -7,12 +7,18 @@ import {handleFetchProducts} from "../state/Products/actions";
 import Loading from '../lib/Loading';
 
 import QuestionsList from './qAndA/QuestionsList';
+import Nav from "../lib/Nav";
+import {handleFetchProduct} from "../state/productDetail/actions";
 
 export default function App() {
   const dispatch = useDispatch();
-  const { loading, products, productDetail } = useSelector(
-    ({ app, products, productDetail }) => ({...app, products, productDetail})
-  );
+  const { loading, products, productDetail } =
+    useSelector(({ app, products, productDetail }) =>
+      ({...app, products, productDetail}));
+
+  function handleSelectProduct(id) {
+    dispatch(handleFetchProduct(id))
+  }
 
   useEffect(() => {
     dispatch(handleFetchProducts())
@@ -20,9 +26,16 @@ export default function App() {
 
   return loading ? <Loading /> : (
     <div id="app">
+      {products.products &&
+        <Nav
+          products={products.products}
+          selectedProduct={productDetail.product.id}
+          onClick={(id) => handleSelectProduct(id)}
+        />
+      }
+
       <ProductOverview />
       <RelatedComp />
-
       <QuestionsList />
 
     </div>
