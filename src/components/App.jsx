@@ -18,16 +18,13 @@ export default function App() {
     dispatch(handleFetchProducts())
   }, [dispatch]);
 
-  return (
-    <>
-      <div id="app">
-        {loading ? <Loading /> : null}
-        <ProductOverview />
-        <RelatedComp />
+  return loading ? <Loading /> : (
+    <div id="app">
+      <ProductOverview />
+      <RelatedComp />
 
-        <QuestionsList />
+      <QuestionsList />
 
-      </div>
-    </>
+    </div>
   );
 }

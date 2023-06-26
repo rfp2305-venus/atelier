@@ -1,16 +1,12 @@
-export default function Nav({products, onClick} ) {
+export default function Nav({products, selectedProduct, onClick} ) {
 
   return (
-    <div>
+    <select onChange={(x) => {onClick(x.target.value)}} value={selectedProduct}>
       {products.map((product) => (
-        <span
-          key={product.id}
-          onClick={() => onClick(product.id)}
-          style={{marginRight: '10px', cursor: 'pointer'}}
-        >
+        <option value={product.id}>
           {product.name}
-        </span>
+        </option>
       ))}
-    </div>
+    </select>
   )
 }
