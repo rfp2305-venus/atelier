@@ -76,16 +76,14 @@ export default function QuestionsList() {
             <Question key={ question_id }
               id={ question_id }
               body={ question_body }
-              date={new Date(question_date).toLocaleDateString('en-US', {
+              date={ new Date(question_date).toLocaleDateString('en-US', {
                 month: 'long',
                 day: '2-digit',
                 year: 'numeric'
-              })}
+              }) }
               user={ asker_name }
               votes={ question_helpfulness }
               reported={ reported }
-              // convert answers obj into sorted array
-              // answers={ sortedAnswers.slice(0, 2) }
             /> : null
         ))
       }

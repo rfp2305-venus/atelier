@@ -16,7 +16,7 @@ export default function AnswersList({ questionID } /* { answers } */) {
 
   const [ answers, setAnswers ] = useState([]);
 
-  const fetchAnswers = (page, count) => {
+  const fetchAnswers = (page = 1, count = 5) => {
     return axios
       .get(`${ API_URL }/qa/questions/${ questionID }/answers`, {
         headers: { Authorization: API_KEY },
