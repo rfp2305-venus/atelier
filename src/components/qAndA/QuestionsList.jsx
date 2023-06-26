@@ -13,11 +13,12 @@ import Question from './Question';
 export default function QuestionsList() {
 
   const { product } = useSelector(({ productDetail }) => productDetail);
-  // console.log('product:', product);
 
   const [ questions, setQuestions ] = useState([]);
+  const [ length, setLength ] = useState(4);
+  const [ isExpanded, setExpanded ] = useState(false);
 
-  const fetchQuestions = (page = 1, count = 5) => {
+  const fetchQuestions = (page = 1, count = 20 /* placeholder values */) => {
 
     return axios.get(`${ API_URL }/qa/questions`, {
       headers: { Authorization: API_KEY },
@@ -25,19 +26,14 @@ export default function QuestionsList() {
         product_id: product.id,
         page: page,
         count: count
-        // still not entirely sure how to manipulate
       }
     })
       .then((res) => {
         const { results } = res.data;
 
-        results.forEach((result) => {
-          const { answers } = result;
-
-          // add sorted answers to obj
-          result.sortedAnswers = Object.values(answers).sort((a, b) => {
-            return b.helpfulness - a.helpfulness;
-          });
+        // sort questions by helpfulness
+        results.sort((a, b) => {
+          return b.helpfulness - a.helpfulness;
         });
 
         setQuestions(results);
@@ -53,7 +49,7 @@ export default function QuestionsList() {
     }
   }, [ product ]);
 
-  // test if questions fetched correctly
+  // check if questions fetched correctly
   questions.forEach((q, i) => {
     console.log(`question ${ i }: ${ JSON.stringify(q) }`);
   });
@@ -63,63 +59,50 @@ export default function QuestionsList() {
       <h1>Q&A:</h1>
 
       {questions
-        .sort((a, b) => {
-          return b.helpfulness - a.helpfulness;
-        })
-        .map(({ question_id, question_body, question_date, asker_name, question_helpfulness, reported, /* sortedAnswers */}) => (
-        /*
-        if question hasn't been reported
-          > business req. implies reportable answers
-          > obj returned by API —> 'reported' === question prop (??)
-        */
+        // set length of array based on current state
+        .slice(0, length)
+        .map(({ question_id, question_body, question_date, asker_name, question_helpfulness, reported }) => (
+          /*
+          if question hasn't been reported
+            > business req. implies reportable answers
+            > obj returned by API —> 'reported' === QUESTION prop
+          */
           (!reported) ?
-            <Question key={ question_id }
+            (<Question key={ question_id }
               id={ question_id }
               body={ question_body }
+              // converts date to ideal format
               date={ new Date(question_date).toLocaleDateString('en-US', {
                 month: 'long',
                 day: '2-digit',
                 year: 'numeric'
               }) }
               user={ asker_name }
-              votes={ question_helpfulness }
-              reported={ reported }
-            /> : null
+              helpfulness={ question_helpfulness }
+              reported={ reported } // <— (?)
+            />) : (null)
         ))
       }
+      <br />
+
+      {/* NOTE: shouldn't appear if fewer than (2) questions */}
+      {/* consider dedicated component */}
+      <button onClick={(e) => {
+        e.preventDefault();
+
+        if (!isExpanded) {
+          setLength(questions.length);
+
+          setExpanded(true);
+
+        } else {
+          setLength(4);
+
+          setExpanded(false);
+        }
+      }}>
+        { (isExpanded) ? ('Less Answered Questions') : ('More Answered Questions') }
+      </button>
     </div>
   );
 }
-
-/*
-  const fetchQuestions = async() => {
-    try {
-      const res = await axios.get(`${ API_URL }/qa/questions`, {
-        headers: { Authorization: API_KEY },
-        params: {
-          product_id: product.id,
-          page: 1, // which results page
-          count: 4 // how many results per page
-
-          // not entirely sure what inputs needed
-
-          // should load <= 4 Q's by default
-        }
-      });
-
-      const { results } = res.data;
-
-      results.forEach((result) => {
-        const { answers } = result;
-
-        // convert each 'answers' obj into sorted array
-        result.sortedAnswers = Object.values(answers).sort((a, b) => b.helpfulness - a.helpfulness);
-      });
-
-      setQuestions(results);
-
-    } catch(err) {
-      console.error(`Error fetching questions: ${ err }`);
-    }
-  };
-  */

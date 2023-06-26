@@ -7,24 +7,27 @@ import { useState } from 'react';
 
 import axios from 'axios';
 
-export default function Upvote({ id, type, votes }) {
+export default function Upvote({ id, type, helpfulness }) {
 
   // refactor to Redux
-  const [ score, setScore ] = useState(votes);
+  const [ votes, setVotes ] = useState(helpfulness);
   const [ hasVoted, setVoted ] = useState(false);
 
   return (
     <button disabled={ hasVoted } onClick={(e) => {
       e.preventDefault();
 
-      // send PUT req to update score
-      axios // NOTE: 401 Error resolved (needed null)
-        .put(`${ API_URL }/qa/${ type }s/${ id }/helpful`, null, {
+      // send PUT req to update helpfulness
+      axios
+        .put(`${ API_URL }/qa/${ type }s/${ id }/helpful`, {
+          // NOTE: increments helpfulness
+          helpfulness: helpfulness + 1
+        }, {
           headers: { Authorization: API_KEY }
         })
         .then(() => {
-          // increment score on click
-          setScore(score + 1);
+          // increment helpfulness on click
+          setVotes(votes + 1);
           console.log('Helpfulness updated (+1)!');
 
           // toggle disable thereafter
@@ -34,7 +37,7 @@ export default function Upvote({ id, type, votes }) {
           console.error(`Error updating helpfulness: ${ err }`);
         });
     }}>
-      Yes ({ score })
+      Yes ({ votes })
     </button>
   );
 }
