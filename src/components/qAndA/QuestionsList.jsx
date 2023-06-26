@@ -17,7 +17,7 @@ export default function QuestionsList() {
 
   const [ questions, setQuestions ] = useState([]);
 
-  const fetchQuestions = (page, count) => {
+  const fetchQuestions = (page = 1, count = 5) => {
 
     return axios.get(`${ API_URL }/qa/questions`, {
       headers: { Authorization: API_KEY },
@@ -49,7 +49,7 @@ export default function QuestionsList() {
 
   useEffect(() => {
     if (product) {
-      fetchQuestions(1, 5);
+      fetchQuestions();
     }
   }, [ product ]);
 
