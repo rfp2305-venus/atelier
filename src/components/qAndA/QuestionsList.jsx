@@ -8,85 +8,118 @@ import axios from 'axios';
 import { useState, useEffect } from 'react'; // tech debt
 import { useSelector } from 'react-redux';
 
+import Question from './Question';
+
 export default function QuestionsList() {
-  // const [ questions, setQuestions ] = useState([]);
 
   const { product } = useSelector(({ productDetail }) => productDetail);
   // console.log('product:', product);
 
-  const questions = []; // stores all questions
+  const [ questions, setQuestions ] = useState([]);
 
-  useEffect(() => {
+  const fetchQuestions = (page = 1, count = 5) => {
 
-    // if product defined —> fetch questions
-    if (product) {
-
-      axios({
-        baseURL: API_URL,
-        url: '/qa/questions',
-        method: 'get',
-        headers: { Authorization: API_KEY },
-        params: {
-          product_id: product.id,
-          page: 1,
-          count: 4
-        }
-
-      }).then((res) => {
-        console.log('res.data:', res.data);
-
-        // push questions into array
+    return axios.get(`${ API_URL }/qa/questions`, {
+      headers: { Authorization: API_KEY },
+      params: {
+        product_id: product.id,
+        page: page,
+        count: count
+        // still not entirely sure how to manipulate
+      }
+    })
+      .then((res) => {
         const { results } = res.data;
-        results.forEach((result) => questions.push(result));
 
-        /*
-        const {
+        results.forEach((result) => {
+          const { answers } = result;
 
-          answers,
-          asker_name,
-          question_body,
-          question_date,
-          question_helpfulness,
-          question_id,
-          reported
-
-        } = res.data.results;
-
-        console.log('answers:', answers);
-        console.log('asker_name:', asker_name);
-        console.log('question_body:', question_body);
-        console.log('question_date:', question_date);
-        console.log('question_helpfulness:', question_helpfulness);
-        console.log('question_id:', question_id);
-        console.log('reported:', reported);
-        */
-
-      }).then(() => {
-        console.log('Questions set!');
-
-        questions.forEach((q, i) => {
-          console.log(`question ${ i }: ${ JSON.stringify(q) }`);
+          // add sorted answers to obj
+          result.sortedAnswers = Object.values(answers).sort((a, b) => {
+            return b.helpfulness - a.helpfulness;
+          });
         });
 
-      }).catch((err) => {
-        console.error(`Error retrieving questions: ${ err }`);
+        setQuestions(results);
+      })
+      .catch((err) => {
+        console.error(`Error fetching questions: ${ err }`);
       });
+  };
 
+  useEffect(() => {
+    if (product) {
+      fetchQuestions();
     }
-
   }, [ product ]);
 
+  // test if questions fetched correctly
+  questions.forEach((q, i) => {
+    console.log(`question ${ i }: ${ JSON.stringify(q) }`);
+  });
 
   return (
     <div>
-      {/* <table>
-        <tbody>
-          { questions.map((q) => <Question key={ id } type="q" q={ q } />) }
-        </tbody>
-      </table> */}
+      <h1>Q&A:</h1>
 
-      {/* { questions.map((q) => <Question key={ id } />) } */}
-
+      {questions
+        .sort((a, b) => {
+          return b.helpfulness - a.helpfulness;
+        })
+        .map(({ question_id, question_body, question_date, asker_name, question_helpfulness, reported, /* sortedAnswers */}) => (
+        /*
+        if question hasn't been reported
+          > business req. implies reportable answers
+          > obj returned by API —> 'reported' === question prop (??)
+        */
+          (!reported) ?
+            <Question key={ question_id }
+              id={ question_id }
+              body={ question_body }
+              date={ new Date(question_date).toLocaleDateString('en-US', {
+                month: 'long',
+                day: '2-digit',
+                year: 'numeric'
+              }) }
+              user={ asker_name }
+              votes={ question_helpfulness }
+              reported={ reported }
+            /> : null
+        ))
+      }
     </div>
   );
 }
+
+/*
+  const fetchQuestions = async() => {
+    try {
+      const res = await axios.get(`${ API_URL }/qa/questions`, {
+        headers: { Authorization: API_KEY },
+        params: {
+          product_id: product.id,
+          page: 1, // which results page
+          count: 4 // how many results per page
+
+          // not entirely sure what inputs needed
+
+          // should load <= 4 Q's by default
+        }
+      });
+
+      const { results } = res.data;
+
+      results.forEach((result) => {
+        const { answers } = result;
+
+        // convert each 'answers' obj into sorted array
+        result.sortedAnswers = Object.values(answers).sort((a, b) => b.helpfulness - a.helpfulness);
+      });
+
+      setQuestions(results);
+
+    } catch(err) {
+      console.error(`Error fetching questions: ${ err }`);
+    }
+  };
+  */

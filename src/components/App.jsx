@@ -6,6 +6,8 @@ import RelatedComp from './relatedAndComp/RelatedComp.jsx';
 import {handleFetchProducts} from "../state/Products/actions";
 import Loading from '../lib/Loading';
 
+import QuestionsList from './qAndA/QuestionsList';
+
 export default function App() {
   const dispatch = useDispatch();
   const { loading, products, productDetail } = useSelector(
@@ -22,6 +24,9 @@ export default function App() {
         {loading ? <Loading /> : null}
         <ProductOverview />
         <RelatedComp />
+
+        <QuestionsList />
+
       </div>
     </>
   );

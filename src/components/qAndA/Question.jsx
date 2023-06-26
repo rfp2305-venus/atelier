@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import Upvote from './Upvote';
 import AnswersList from './AnswersList';
 
 /*
@@ -10,21 +11,18 @@ accepts { question } obj
   > number of votes
   > user
 */
-export default function Question(q) {
-  // expanding & collapsing accordion
-
-  const { id, body, votes, user } = q;
+export default function Question({ id, body, date, user, votes, reported, answers }) {
 
   return (
     <>
-      <strong>Q:</strong> { body }
-      <br />
+      <h3>Q: { body }</h3>
+      By { user } — { date }
+      <br /><br />
 
-      {/* Yes button */}
-      Helpful? <Upvote />
+      Helpful? <Upvote id={ id } type={ 'question' } votes={ votes } />
+      <br /><br />
 
-      {/* render answers below */}
-      <AnswersList />
+      <AnswersList questionID={ id } /* answers={ answers } */ />
     </>
   );
 }
