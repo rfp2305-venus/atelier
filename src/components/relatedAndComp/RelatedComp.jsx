@@ -9,7 +9,7 @@ import executeRequest from '../../util/api.js';
 import axios from 'axios';
 
 const baseURL = process.env.API_URL;
-const apiKey = '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';
+const apiKey = process.env.API_KEY;
 
 export default function RelatedComp() {
   // const state = useSelector((state) => state);
@@ -22,22 +22,25 @@ export default function RelatedComp() {
   console.log('product', product);
   let productId, endpoint, relatedProducts;
 
-  if (product !== null) {
-    console.log('product.id', product.id);
-    productId = product.id;
-    axios({
-      method: 'get',
-      url: `${baseURL}/products/${productId}/related`,
-      headers: {
-        Authorization: apiKey
-      }
-    }).then((response) => {
-      relatedProducts = response.data;
-      console.log('relatedProducts', relatedProducts);
-    }).catch((error) => {
-      console.log(error);
-    });
-  }
+  useEffect(() => {
+    if (product !== null) {
+      console.log('product.id', product.id);
+      productId = product.id;
+      axios({
+        method: 'get',
+        url: `${baseURL}/products/${productId}/related`,
+        headers: {
+          Authorization: apiKey
+        }
+      }).then((response) => {
+        relatedProducts = response.data;
+        console.log('relatedProducts', relatedProducts);
+      }).catch((error) => {
+        console.log(error);
+      });
+    }
+  }, []);
+
 
   return (
     <>
