@@ -1,15 +1,14 @@
+const {API_URL, API_KEY} = process.env;
+
 import React from 'react';
 import { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import RelatedProducts from './RelatedProducts.jsx';
 import YourOutfit from './YourOutfit.jsx';
 import './relatedStyles.css';
-import aSimpleAction from '../../state/related/actions.js';
-import executeRequest from '../../util/api.js';
 import axios from 'axios';
-
-const baseURL = process.env.API_URL;
-const apiKey = process.env.API_KEY;
+//redux
+import { useSelector, useDispatch } from 'react-redux';
+import aSimpleAction from '../../state/related/actions.js';
 
 export default function RelatedComp() {
 
@@ -24,9 +23,9 @@ export default function RelatedComp() {
       productId = product.id;
       axios({
         method: 'get',
-        url: `${baseURL}/products/${productId}/related`,
+        url: `${API_URL}/products/${productId}/related`,
         headers: {
-          Authorization: apiKey
+          Authorization: API_KEY
         }
       }).then((response) => {
         setRelatedProducts(response.data);
