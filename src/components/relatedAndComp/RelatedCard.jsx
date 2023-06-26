@@ -1,4 +1,4 @@
-export default function RelatedCard() {
+export default function RelatedCard(props) {
   return (
     <>
       <div className="card related-card">

@@ -19,12 +19,12 @@ export default function RelatedComp() {
   //   dispatch(aSimpleAction());
   // }, []);
   const { product } = useSelector(({ productDetail }) => productDetail);
-  console.log('product', product);
+  // console.log('product', product);
   let productId, endpoint, relatedProducts;
 
   useEffect(() => {
     if (product !== null) {
-      console.log('product.id', product.id);
+      // console.log('product.id', product.id);
       productId = product.id;
       axios({
         method: 'get',
@@ -34,7 +34,7 @@ export default function RelatedComp() {
         }
       }).then((response) => {
         relatedProducts = response.data;
-        console.log('relatedProducts', relatedProducts);
+        // console.log('relatedProducts', relatedProducts);
       }).catch((error) => {
         console.log(error);
       });
