@@ -4,15 +4,7 @@ import ReactDOM from 'react-dom';
 import Upvote from './Upvote';
 import Report from './Report';
 
-/*
-accepts { answer } obj
-  > id
-  > body
-  > number of votes
-  > user
-  > isReported (boolean flag)
-*/
-export default function Answer({ id, questionID, body, date, user, votes, photos }) {
+export default function Answer({ id, body, date, user, helpfulness, photos, reported }) {
 
   // console.log('answer:', body);
 
@@ -38,11 +30,12 @@ export default function Answer({ id, questionID, body, date, user, votes, photos
 
       <tr>
         <td>
-          Helpful? <Upvote id={ id } type={ 'answer' } votes={ votes } />
+          Helpful? <Upvote id={ id } type={ 'answer' } helpfulness={ helpfulness } />
         </td>
 
         <td>
-          <Report />
+          {/* NOTE: no 'reported' prop on obj */}
+          <Report id={ id } type={ 'answer' } reported={ (reported) ? (reported) : (false) } />
         </td>
       </tr>
     </>
