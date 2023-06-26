@@ -13,7 +13,7 @@ import Question from './Question';
 export default function QuestionsList() {
 
   const { product } = useSelector(({ productDetail }) => productDetail);
-  // console.log('product:', product);
+  console.log('product:', product);
 
   const [ questions, setQuestions ] = useState([]);
 

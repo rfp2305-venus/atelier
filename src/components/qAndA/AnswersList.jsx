@@ -45,7 +45,7 @@ export default function AnswersList({ questionID } /* { answers } */) {
 
   useEffect(() => {
     fetchAnswers();
-  }, [ questionID ]);
+  }, []);
 
   answers.forEach((a) => console.log('answer:', a));
 
