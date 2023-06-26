@@ -19,6 +19,11 @@ export default function Answer({ id, questionID, body, date, user, votes, photos
   return (
     <>
       <tr>
+        <th>
+          ———( ANSWERS HERE )———
+        </th>
+      </tr>
+      <tr>
         <td>
           <strong>A:</strong> { body }
         </td>
@@ -33,17 +38,13 @@ export default function Answer({ id, questionID, body, date, user, votes, photos
 
       <tr>
         <td>
-          <strong>Helpful?</strong>
-          <Upvote id={ id } type={ 'answer' } votes={ votes } />
+          Helpful? <Upvote id={ id } type={ 'answer' } votes={ votes } />
         </td>
 
         <td>
           <Report />
         </td>
       </tr>
-
-      <tr></tr>
-      <tr></tr>
     </>
   );
 }
