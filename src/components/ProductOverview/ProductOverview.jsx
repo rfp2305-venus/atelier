@@ -13,12 +13,9 @@ export default function ProductOverview() {
   const [selectedStyle, setSelectedStyle] = useState(null);
 
   function handleSelectProduct(id) {
+    setSelectedStyle(null);
     dispatch(handleFetchProduct(id))
   }
-
-  useEffect(() => {
-    dispatch(handleFetchProducts());
-  }, [dispatch]);
 
   useEffect(() => {
     if(productDetail.product) {
@@ -32,13 +29,9 @@ export default function ProductOverview() {
 
   }, [productDetail]);
 
-
-
   return (
     <>
-      {products.products && <Nav products={products.products}
-                                       onClick={(id) => handleSelectProduct(id)}/>
-      }
+      {products.products && <Nav products={products.products} selectedProduct={productDetail.product.id} onClick={(id) => handleSelectProduct(id)}/>}
       <div className="container view">
         {selectedStyle && <ProductGallery product={selectedStyle} />}
 
