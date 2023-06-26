@@ -5,9 +5,8 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 export default function RelatedCard({ productID }) {
-  // console.log('props in RelatedCard', productID); //
-  const [product, setProduct] = useState({});
-  const [productStyles, setProductStyles] = useState({});
+  const [ product, setProduct ] = useState({});
+  const [ productStyles, setProductStyles ] = useState({});
   const [ productPhoto, setProductPhoto ] = useState('');
 
   useEffect(()=>{
@@ -22,8 +21,6 @@ export default function RelatedCard({ productID }) {
     }).catch(error => {
       console.log('error', error);
     });
-
-
   }, []);
 
   useEffect(() => {
@@ -34,7 +31,6 @@ export default function RelatedCard({ productID }) {
         Authorization: API_KEY
       }
     }).then(response => {
-      // console.log('styles: ', response.data.results[0].photos[0].thumbnail_url);
       setProductStyles(response.data);
       setProductPhoto(response.data.results[0].photos[0].thumbnail_url);
     }).catch(error => {
@@ -54,7 +50,4 @@ export default function RelatedCard({ productID }) {
       </div>
     </>
   );
-
 }
-
-//alt={product.name + }

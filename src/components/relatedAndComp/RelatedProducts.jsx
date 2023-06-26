@@ -1,7 +1,7 @@
 import RelatedCard from './RelatedCard.jsx';
 
 export default function RelatedProducts({ relatedProducts }) {
-  // console.log('props in relatedproducts: ', relatedProducts);
+
   let cardList = relatedProducts.map((productID)=> <RelatedCard productID={productID} key={productID}/>);
   return (
     <>
