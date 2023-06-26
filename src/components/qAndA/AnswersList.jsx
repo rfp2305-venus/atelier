@@ -6,37 +6,37 @@ import ReactDOM from 'react-dom';
 import Answer from './Answer';
 
 import { useState, useEffect } from 'react';
-// import { useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import axios from 'axios';
 
-export default function AnswersList({ questionID } /* { answers } */) {
+export default function AnswersList({ questionID }) {
 
-  // provided separate endpoint for fetching answers, even tho they were fetched w/ questions (??)
+  const { product } = useSelector(({ productDetail }) => productDetail);
 
   const [ answers, setAnswers ] = useState([]);
 
-  const fetchAnswers = (page = 1, count = 5) => {
+  const fetchAnswers = (page = 1, count = 5 /* placeholder values */) => {
     return axios
       .get(`${ API_URL }/qa/questions/${ questionID }/answers`, {
         headers: { Authorization: API_KEY },
         params: {
           page: page,
           count: count
-          // still unsure what numbers to input
         }
       })
       .then((res) => {
-        console.log('Answers successfully fetched!');
+        // console.log('Answers successfully fetched!');
 
         const { results } = res.data;
 
-        const defaultAnswers = results.sort((a, b) => {
+        // sort answers by helpfulness
+        const defaultA = results.sort((a, b) => {
           return b.helpfulness - a.helpfulness;
 
-        }).slice(0, 2);
+        }).slice(0, 2); // dedicated component later
 
-        setAnswers(defaultAnswers);
+        setAnswers(defaultA);
       })
       .catch((err) => {
         console.error(`Error fetching answers: ${ err }`);
@@ -45,21 +45,26 @@ export default function AnswersList({ questionID } /* { answers } */) {
 
   useEffect(() => {
     fetchAnswers();
-  }, []);
+  }, [ product /* questionID */]);
+  // does not seem to resolve multiple API calls —> backlog
 
-  answers.forEach((a) => console.log('answer:', a));
+  // check if answers fetched correctly
+  answers.forEach((a, i) => {
+    console.log(`answer ${ i }: ${ JSON.stringify(a) }`);
+  });
 
   return (
     <table>
       <tbody>
         {answers
+          // probably superfluous since sorted at top
           .sort((a, b) => {
             b.helpfulness - a.helpfulness;
           })
           .map(({ answer_id, body, date, answerer_name, helpfulness, photos }) => (
             // if answer isn't blank
             (body.length > 0) ?
-              <Answer key={ answer_id }
+              (<Answer key={ answer_id }
                 id={ answer_id }
                 body={ body }
                 // converts date to ideal format
@@ -69,9 +74,9 @@ export default function AnswersList({ questionID } /* { answers } */) {
                   year: 'numeric'
                 })}
                 user={ answerer_name }
-                votes={ helpfulness }
+                helpfulness={ helpfulness }
                 photos={ photos }
-              /> : null
+              />) : (null)
           ))
         }
         <tr>

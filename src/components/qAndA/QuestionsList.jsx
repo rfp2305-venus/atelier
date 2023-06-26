@@ -13,11 +13,11 @@ import Question from './Question';
 export default function QuestionsList() {
 
   const { product } = useSelector(({ productDetail }) => productDetail);
-  console.log('product:', product);
+  // console.log('product:', product);
 
   const [ questions, setQuestions ] = useState([]);
 
-  const fetchQuestions = (page = 1, count = 5) => {
+  const fetchQuestions = (page = 1, count = 5 /* placeholder values */) => {
 
     return axios.get(`${ API_URL }/qa/questions`, {
       headers: { Authorization: API_KEY },
@@ -25,22 +25,17 @@ export default function QuestionsList() {
         product_id: product.id,
         page: page,
         count: count
-        // still not entirely sure how to manipulate
       }
     })
       .then((res) => {
         const { results } = res.data;
 
-        results.forEach((result) => {
-          const { answers } = result;
+        // sort questions by helpfulness
+        const defaultQ = results.sort((a, b) => {
+          return b.helpfulness - a.helpfulness;
+        }).slice(0, 4); // dedicated component later
 
-          // add sorted answers to obj
-          result.sortedAnswers = Object.values(answers).sort((a, b) => {
-            return b.helpfulness - a.helpfulness;
-          });
-        });
-
-        setQuestions(results);
+        setQuestions(defaultQ);
       })
       .catch((err) => {
         console.error(`Error fetching questions: ${ err }`);
@@ -53,7 +48,7 @@ export default function QuestionsList() {
     }
   }, [ product ]);
 
-  // test if questions fetched correctly
+  // check if questions fetched correctly
   questions.forEach((q, i) => {
     console.log(`question ${ i }: ${ JSON.stringify(q) }`);
   });
@@ -63,17 +58,18 @@ export default function QuestionsList() {
       <h1>Q&A:</h1>
 
       {questions
+        // probably superfluous since sorted at top
         .sort((a, b) => {
           return b.helpfulness - a.helpfulness;
         })
-        .map(({ question_id, question_body, question_date, asker_name, question_helpfulness, reported, /* sortedAnswers */}) => (
-        /*
-        if question hasn't been reported
-          > business req. implies reportable answers
-          > obj returned by API —> 'reported' === question prop (??)
-        */
+        .map(({ question_id, question_body, question_date, asker_name, question_helpfulness, reported }) => (
+          /*
+          if question hasn't been reported
+            > business req. implies reportable answers
+            > obj returned by API —> 'reported' === QUESTION prop
+          */
           (!reported) ?
-            <Question key={ question_id }
+            (<Question key={ question_id }
               id={ question_id }
               body={ question_body }
               date={ new Date(question_date).toLocaleDateString('en-US', {
@@ -82,44 +78,19 @@ export default function QuestionsList() {
                 year: 'numeric'
               }) }
               user={ asker_name }
-              votes={ question_helpfulness }
-              reported={ reported }
-            /> : null
+              helpfulness={ question_helpfulness }
+              reported={ reported } // <— (?)
+            />) : (null)
         ))
       }
+      <br />
+
+      <button onClick={(e) => {
+        e.preventDefault();
+        setQuestions()
+      }}>
+        See more questions
+      </button>
     </div>
   );
 }
-
-/*
-  const fetchQuestions = async() => {
-    try {
-      const res = await axios.get(`${ API_URL }/qa/questions`, {
-        headers: { Authorization: API_KEY },
-        params: {
-          product_id: product.id,
-          page: 1, // which results page
-          count: 4 // how many results per page
-
-          // not entirely sure what inputs needed
-
-          // should load <= 4 Q's by default
-        }
-      });
-
-      const { results } = res.data;
-
-      results.forEach((result) => {
-        const { answers } = result;
-
-        // convert each 'answers' obj into sorted array
-        result.sortedAnswers = Object.values(answers).sort((a, b) => b.helpfulness - a.helpfulness);
-      });
-
-      setQuestions(results);
-
-    } catch(err) {
-      console.error(`Error fetching questions: ${ err }`);
-    }
-  };
-  */
