@@ -1,38 +1,50 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { handleFetchProduct } from '../../state/productDetail/actions.js';
 import ProductForm from './ProductForm.jsx';
 import {handleFetchProducts} from "../../state/Products/actions.js";
 import Nav from "../../lib/Nav";
+import ProductGallery from "./ProductGallery";
 
 
 export default function ProductOverview() {
-  const state = useSelector(({ products, productDetail }) => ({productDetail, products}));
   const dispatch = useDispatch();
+  const {products, productDetail} = useSelector(({ products, productDetail }) => ({productDetail, products}));
+  const [selectedStyle, setSelectedStyle] = useState(null);
 
   function handleSelectProduct(id) {
     dispatch(handleFetchProduct(id))
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     dispatch(handleFetchProducts());
   }, [dispatch]);
 
+  useEffect(() => {
+    if(productDetail.product) {
+      for(let i = 0; i < productDetail.product.styles.length; i++) {
+        if(productDetail.product.styles[i]['default?']) {
+          setSelectedStyle(productDetail.product.styles[i]);
+          return;
+        }
+      }
+    }
+
+  }, [productDetail]);
+
+
+
   return (
     <>
-      {state.products.products && <Nav products={state.products.products}
+      {products.products && <Nav products={products.products}
                                        onClick={(id) => handleSelectProduct(id)}/>
       }
-      <div className="container flex-center">
-        <div className="container view">
-          <div className="container test-layout" id="product-gallery" ></div>
+      <div className="container view">
+        {selectedStyle && <ProductGallery product={selectedStyle} />}
 
-          <div className="container test-layout" id="product-form">
-            {state.productDetail.product && <ProductForm />}
-          </div>
+        {productDetail.product && <ProductForm />}
 
-          <div className="row test-layout" id="product-info"></div>
-        </div>
+        <div className="row test-layout" id="product-info"></div>
       </div>
     </>
   )
