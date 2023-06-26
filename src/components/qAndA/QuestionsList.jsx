@@ -16,7 +16,37 @@ export default function QuestionsList() {
   // console.log('product:', product);
 
   const [ questions, setQuestions ] = useState([]);
-  // const questions = [];
+
+  const fetchQuestions = async() => {
+    try {
+      const res = await axios.get(`${ API_URL }/qa/questions`, {
+        headers: { Authorization: API_KEY },
+        params: {
+          product_id: product.id,
+          page: 1, // which results page
+          count: 4 // how many results per page
+
+          // not entirely clear what these params represent
+
+          // should load <= 4 Q's by default
+        }
+      });
+
+      const { results } = res.data;
+
+      results.forEach((result) => {
+        const { answers } = result;
+
+        // convert each 'answers' obj into sorted array
+        result.sortedAnswers = Object.values(answers).sort((a, b) => b.helpfulness - a.helpfulness);
+      });
+
+      setQuestions(results);
+
+    } catch(err) {
+      console.error(`Error fetching questions: ${ err }`);
+    }
+  };
 
   useEffect(() => {
     /*
@@ -58,26 +88,6 @@ export default function QuestionsList() {
     }
     */
 
-    const fetchQuestions = async() => {
-      try {
-        const res = await axios.get(`${ API_URL }/qa/questions`, {
-          headers: { Authorization: API_KEY },
-          params: {
-            product_id: product.id,
-            page: 1, // specifies results page (??)
-            count: 5 // results per page
-
-            // anticipate manipulating 'page' & 'count'
-          }
-        });
-        const { results } = res.data;
-        setQuestions(results);
-
-      } catch(err) {
-        console.error(`Error fetching questions: ${ err }`);
-      }
-    };
-
     if (product) {
       fetchQuestions();
     }
@@ -98,7 +108,7 @@ export default function QuestionsList() {
           // sort by votes in descending order
           return b.helpfulness - a.helpfulness;
         })
-        .map(({ question_id, question_body, question_date, asker_name, question_helpfulness, reported, answers }) => (
+        .map(({ question_id, question_body, question_date, asker_name, question_helpfulness, reported, sortedAnswers }) => (
         /*
         if question hasn't been reported
           > business req. implies reportable answers
@@ -107,12 +117,14 @@ export default function QuestionsList() {
         (!reported) ?
           <Question
             key={ question_id }
+            id={ question_id }
             body={ question_body }
             date={ question_date }
             user={ asker_name }
             votes={ question_helpfulness }
             reported={ reported }
-            answers={ Object.values(answers) }
+            // convert answers obj into sorted array
+            answers={ sortedAnswers.slice(0, 2) }
           /> : null
         ))
       }

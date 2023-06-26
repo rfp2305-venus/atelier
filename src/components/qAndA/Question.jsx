@@ -11,19 +11,16 @@ accepts { question } obj
   > number of votes
   > user
 */
-export default function Question({ body, date, user, votes, reported, answers }) {
+export default function Question({ id, body, date, user, votes, reported, answers }) {
   // expanding & collapsing accordion
 
   return (
     <>
       <h3>Q: { body }</h3>
+      Helpful? <Upvote id={ id } votes={ votes } />
+      <br /><br />
 
-      {/* render answers below */}
-      <AnswersList answers={ answers } />
-
-      Helpful?
-      {/* Yes button */}
-
+      <AnswersList questionID={ id } answers={ answers } />
     </>
   );
 }
