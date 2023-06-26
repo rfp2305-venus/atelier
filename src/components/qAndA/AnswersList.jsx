@@ -5,25 +5,24 @@ import ReactDOM from 'react-dom';
 
 import Answer from './Answer';
 
-// import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 // import { useSelector } from 'react-redux';
 
-// import axios from 'axios';
+import axios from 'axios';
 
-export default function AnswersList(/* { questionID } */ { answers }) {
+export default function AnswersList({ questionID } /* { answers } */) {
 
-  // provided separate endpoint for fetching answers, but they were seemingly fetched w/ questions (??)
+  // provided separate endpoint for fetching answers, even tho they were fetched w/ questions (??)
 
-  /*
-  // const [ answers, setAnswers ] = useState([]);
+  const [ answers, setAnswers ] = useState([]);
 
-  const fetchAnswers = () => {
+  const fetchAnswers = (page, count) => {
     return axios
       .get(`${ API_URL }/qa/questions/${ questionID }/answers`, {
         headers: { Authorization: API_KEY },
         params: {
-          page: 1,
-          count: 2
+          page: page,
+          count: count
           // still unsure what numbers to input
         }
       })
@@ -32,20 +31,23 @@ export default function AnswersList(/* { questionID } */ { answers }) {
 
         const { results } = res.data;
 
-        results.sort((a, b) => {
+        const defaultAnswers = results.sort((a, b) => {
           return b.helpfulness - a.helpfulness;
-        });
 
-        setAnswers(results.slice(0, 2));
+        }).slice(0, 2);
+
+        setAnswers(defaultAnswers);
       })
       .catch((err) => {
         console.error(`Error fetching answers: ${ err }`);
       });
   };
-  fetchAnswers();
+
+  useEffect(() => {
+    fetchAnswers();
+  }, [ questionID ]);
 
   answers.forEach((a) => console.log('answer:', a));
-  */
 
   return (
     <table>
@@ -54,12 +56,11 @@ export default function AnswersList(/* { questionID } */ { answers }) {
           .sort((a, b) => {
             b.helpfulness - a.helpfulness;
           })
-          .map(({ id, body, date, answerer_name, helpfulness, photos }) => (
+          .map(({ answer_id, body, date, answerer_name, helpfulness, photos }) => (
             // if answer isn't blank
             (body.length > 0) ?
-              <Answer
-                key={ id }
-                id={ id }
+              <Answer key={ answer_id }
+                id={ answer_id }
                 body={ body }
                 // converts date to ideal format
                 date={new Date(date).toLocaleDateString('en-US', {

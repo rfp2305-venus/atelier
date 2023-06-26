@@ -12,28 +12,29 @@ accepts { answer } obj
   > user
   > isReported (boolean flag)
 */
-export default function Answer({ id, body, date, user, votes, photos }) {
+export default function Answer({ id, questionID, body, date, user, votes, photos }) {
 
   // console.log('answer:', body);
 
   return (
     <>
       <tr>
-        <th>
-          <strong>A:</strong> { body }
-        </th>
-      </tr>
-
-      <tr>
         <td>
-          {/* only bold if user === 'Seller' */}
-          By { user } — { date }
+          <strong>A:</strong> { body }
         </td>
       </tr>
 
       <tr>
         <td>
-          Helpful? <Upvote /* id={ id } */ votes={ votes } />
+          {/* if (user === 'Seller') —> BOLD */}
+          By { user /* (user === 'Seller') ? <strong>{ user }</strong> : { user } */} — { date }
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <strong>Helpful?</strong>
+          <Upvote id={ id } type={ 'answer' } votes={ votes } />
         </td>
 
         <td>
