@@ -3,7 +3,7 @@ import axios from 'axios';
 const baseURL = process.env.API_URL;
 const apiKey = process.env.API_KEY;
 
-export default function executeRequest(endpoint, method = 'get', headers = {}, body = {}) {
+export default function executeRequest(endpoint, method = 'get', headers = {}, params = {}, body = {}) {
   const url = baseURL + endpoint;
   headers = {
     Authorization: apiKey,
@@ -14,6 +14,7 @@ export default function executeRequest(endpoint, method = 'get', headers = {}, b
     url,
     method,
     headers,
+    params,
     body
   }).then(({ data }) => data)
     .catch(err => {
@@ -42,7 +43,6 @@ export async function fetchProduct(productId) {
   } catch (err) {
     console.error(err);
   }
-
 }
 
 export async function fetchProducts() {
