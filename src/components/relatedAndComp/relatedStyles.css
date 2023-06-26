@@ -17,22 +17,14 @@ body {
   padding: 10px
 }
 
-.title {
-
-}
-
 .card {
   border: 1px solid;
   height: 200px;
   width: 150px;
 }
 
-.related-card {
-
-}
-
-.outfit-card {
-
+.related-products-thumbnail {
+  height: 75px;
 }
 
 /*
