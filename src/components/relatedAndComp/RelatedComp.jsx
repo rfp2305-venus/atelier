@@ -1,43 +1,40 @@
+const {API_URL, API_KEY} = process.env;
+
 import React from 'react';
-import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
 import RelatedProducts from './RelatedProducts.jsx';
 import YourOutfit from './YourOutfit.jsx';
 import './relatedStyles.css';
-import aSimpleAction from '../../state/related/actions.js';
-import executeRequest from '../../util/api.js';
 import axios from 'axios';
-
-const baseURL = process.env.API_URL;
-const apiKey = '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';
+//redux
+import { useSelector, useDispatch } from 'react-redux';
+import aSimpleAction from '../../state/related/actions.js';
 
 export default function RelatedComp() {
-  // const state = useSelector((state) => state);
-  // const dispatch = useDispatch();
-  // console.log('state', state);
-  // useEffect(()=>{
-  //   dispatch(aSimpleAction());
-  // }, []);
-  const { product } = useSelector(({ productDetail }) => productDetail);
-  console.log('product', product);
-  let productId, endpoint, relatedProducts;
 
-  if (product !== null) {
-    console.log('product.id', product.id);
-    productId = product.id;
-    axios({
-      method: 'get',
-      url: `${baseURL}/products/${productId}/related`,
-      headers: {
-        Authorization: apiKey
-      }
-    }).then((response) => {
-      relatedProducts = response.data;
-      console.log('relatedProducts', relatedProducts);
-    }).catch((error) => {
-      console.log(error);
-    });
-  }
+  const { product } = useSelector(({ productDetail }) => productDetail);
+
+  const [ relatedProducts, setRelatedProducts ] = useState([]);
+  let productId;
+  let endpoint;
+
+  useEffect(() => {
+    if (product !== null) {
+      productId = product.id;
+      axios({
+        method: 'get',
+        url: `${API_URL}/products/${productId}/related`,
+        headers: {
+          Authorization: API_KEY
+        }
+      }).then((response) => {
+        setRelatedProducts(response.data);
+      }).catch((error) => {
+        console.log(error);
+      });
+    }
+  }, []);
+
 
   return (
     <>
@@ -52,3 +49,12 @@ export default function RelatedComp() {
     </>
   );
 }
+/*
+redux tutorial:
+  const state = useSelector((state) => state);
+  const dispatch = useDispatch();
+  console.log('state', state);
+  useEffect(()=>{
+    dispatch(aSimpleAction());
+  }, []);
+*/
