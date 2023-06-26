@@ -75,7 +75,7 @@ export default function AnswersList({ questionID } /* { answers } */) {
           ))
         }
         <tr>
-          <th>——————( delete later )——————</th>
+          <th>—————( delete later )—————</th>
         </tr>
       </tbody>
     </table>

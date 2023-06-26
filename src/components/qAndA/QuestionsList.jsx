@@ -49,7 +49,7 @@ export default function QuestionsList() {
 
   useEffect(() => {
     if (product) {
-      fetchQuestions();
+      fetchQuestions(1, 5);
     }
   }, [ product ]);
 
@@ -76,7 +76,11 @@ export default function QuestionsList() {
             <Question key={ question_id }
               id={ question_id }
               body={ question_body }
-              date={ question_date }
+              date={new Date(question_date).toLocaleDateString('en-US', {
+                month: 'long',
+                day: '2-digit',
+                year: 'numeric'
+              })}
               user={ asker_name }
               votes={ question_helpfulness }
               reported={ reported }
