@@ -5,16 +5,23 @@ import ProductForm from './ProductForm.jsx';
 import {handleFetchProducts} from "../../state/Products/actions.js";
 import Nav from "../../lib/Nav";
 import ProductGallery from "./ProductGallery";
+import useResize from "../../lib/useResize";
 
 
 export default function ProductOverview() {
   const dispatch = useDispatch();
   const {products, productDetail} = useSelector(({ products, productDetail }) => ({productDetail, products}));
   const [selectedStyle, setSelectedStyle] = useState(null);
+  const windowWidth = useResize();
 
-  function handleSelectProduct(id) {
-    setSelectedStyle(null);
-    dispatch(handleFetchProduct(id))
+  function handleSelectStyle(styleId) {
+
+    for(let i = 0; i < productDetail.product.styles.length; i++) {
+      if(styleId === productDetail.product.styles[i].style_id) {
+        setSelectedStyle(productDetail.product.styles[i]);
+        return;
+      }
+    }
   }
 
   useEffect(() => {
@@ -26,19 +33,26 @@ export default function ProductOverview() {
         }
       }
     }
-
   }, [productDetail]);
+
 
   return (
     <>
-      {products.products && <Nav products={products.products} selectedProduct={productDetail.product.id} onClick={(id) => handleSelectProduct(id)}/>}
-      <div className="container view">
-        {selectedStyle && <ProductGallery product={selectedStyle} />}
+      <section className="container view">
+        {selectedStyle &&
+          <ProductGallery product={selectedStyle} />
+        }
 
-        {productDetail.product && <ProductForm />}
+        {productDetail.product &&
+          <ProductForm
+            product={productDetail.product}
+            selectedStyle={selectedStyle}
+            onSelectStyle={handleSelectStyle}
+          />
+        }
 
         <div className="row test-layout" id="product-info"></div>
-      </div>
+      </section>
     </>
   )
 }
