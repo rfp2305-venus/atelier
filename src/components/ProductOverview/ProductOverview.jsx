@@ -6,18 +6,22 @@ import useResize from "../../lib/useResize";
 import StarRating from "../../lib/StarRating";
 import ProductStyles from "./ProductStyles";
 import SizeSelector from "../../lib/SizeSelector";
-import {Paper} from "@mui/material";
+import {FormControl, Grid, InputLabel, MenuItem, Paper, Select, Typography} from "@mui/material";
 
 
 export default function ProductOverview() {
   const productDetail = useSelector((state) => state.productDetail);
   const [selectedStyle, setSelectedStyle] = useState(null);
+  const [size, setSize] = useState(null);
+  const [quantity, setQuantity] = useState(1);
   const windowWidth = useResize();
 
   function handleSelectStyle(styleId) {
     for(let i = 0; i < productDetail.product.styles.length; i++) {
       if(styleId === productDetail.product.styles[i].style_id) {
         setSelectedStyle(productDetail.product.styles[i]);
+        setSize(null);
+        setQuantity(null);
         return;
       }
     }
@@ -35,25 +39,77 @@ export default function ProductOverview() {
   }, [productDetail]);
 
 
+  function createQuantityItems( size) {
+    const items = [];
+    for(let x = 0; x < size; x++) {
+      items.push(
+        <MenuItem key={x} value={x + 1} >
+          {x + 1}
+        </MenuItem>
+      )
+    }
+    return items;
+  }
+
   return (
-    <>
-      <section className="container view">
-        {selectedStyle &&
-          <ProductGallery product={selectedStyle} />
-        }
+    <Grid container spacing={2} >
+      <Grid item xs={12} sm={6} style={{maxWidth: '100%'}}>
+        { selectedStyle && <ProductGallery product={selectedStyle} />}
+      </Grid>
 
-        {productDetail.product && selectedStyle &&
-          <ProductForm
-            product={productDetail.product}
-            selectedStyle={selectedStyle}
-            onSelectStyle={handleSelectStyle}
-          />
-        }
+      <Grid item sm={6}>
+        {productDetail.product && selectedStyle && (
+          <div className="product-form">
+            <StarRating />
 
+            <Typography>
+              {productDetail.product.category}
+            </Typography>
+            <Typography>
+              {productDetail.product.name}
+            </Typography>
+            <Typography>
+              {productDetail.product.default_price}
+            </Typography>
+
+            <ProductStyles
+              styles={productDetail.product.styles}
+              onSelectStyle={handleSelectStyle}
+              selectedStyle={selectedStyle}
+            />
+
+            <div>
+              <SizeSelector
+                skus={selectedStyle.skus}
+                onSelect={(x) => setSize(x) }
+              />
+
+              {size && (
+
+                <FormControl sx={{m: 1, minWidth: '150px'}}>
+                  <InputLabel id="quantity">
+                    Quantity
+                  </InputLabel>
+                  <Select label="quantity"
+                          name="quantity"
+                          id="quantity-select"
+                          onChange={(e) => setQuantity(e.target.value)}
+                  >
+                    {createQuantityItems(selectedStyle.skus[size].quantity)}
+                  </Select>
+                </FormControl>
+              )}
+            </div>
+
+          </div>
+        )}
+      </Grid>
+
+      <Grid item xs={12}>
         <Paper elevation={2}>
           <div className="row test-layout" id="product-info"></div>
         </Paper>
-      </section>
-    </>
+      </Grid>
+    </Grid>
   )
 }

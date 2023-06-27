@@ -10,6 +10,7 @@ import QuestionsList from './qAndA/QuestionsList';
 import Nav from "../lib/Nav";
 import {handleFetchProduct} from "../state/productDetail/actions";
 import ReviewsList from './Ratings_Reviews/ReviewsList';
+import {Box, Container} from "@mui/material";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -26,7 +27,7 @@ export default function App() {
   }, [dispatch]);
 
   return loading ? <Loading /> : (
-    <div id="app">
+    <Box id="app">
       {products.products &&
         <Nav
           products={products.products}
@@ -36,10 +37,10 @@ export default function App() {
       }
 
       <ProductOverview />
-      <RelatedComp />
+      {/*<RelatedComp />
       <QuestionsList />
-      <ReviewsList />
+      <ReviewsList />*/}
 
-    </div>
+    </Box>
   );
 }
