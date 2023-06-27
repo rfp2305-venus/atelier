@@ -18,7 +18,7 @@ export default function Report({ id, type, reported }) {
       axios
         .put(`${ API_URL }/qa/${ type }s/${ id }/report`,
           // updates report status
-          { reported },
+          { reported: true },
           { headers: { Authorization: API_KEY } }
         )
         .then(() => {
