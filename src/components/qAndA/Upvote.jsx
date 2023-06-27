@@ -9,7 +9,6 @@ import axios from 'axios';
 
 export default function Upvote({ id, type, helpfulness }) {
 
-  // refactor to Redux
   const [ votes, setVotes ] = useState(helpfulness);
   const [ hasVoted, setVoted ] = useState(false);
 
