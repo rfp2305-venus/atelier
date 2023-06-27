@@ -13,9 +13,9 @@ import ReviewsList from './Ratings_Reviews/ReviewsList';
 
 export default function App() {
   const dispatch = useDispatch();
-  const { loading, products, productDetail } =
-    useSelector(({ app, products, productDetail }) =>
-      ({...app, products, productDetail}));
+  const loading = useSelector(state => state.app.loading);
+  const products = useSelector(state => state.products);
+  const productDetail = useSelector(state => state.productDetail);
 
   function handleSelectProduct(id) {
     dispatch(handleFetchProduct(id))
