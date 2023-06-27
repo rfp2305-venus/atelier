@@ -3,11 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import ProductForm from './ProductForm.jsx';
 import ProductGallery from "./ProductGallery";
 import useResize from "../../lib/useResize";
+import StarRating from "../../lib/StarRating";
+import ProductStyles from "./ProductStyles";
+import SizeSelector from "../../lib/SizeSelector";
 
 
 export default function ProductOverview() {
-  const dispatch = useDispatch();
-  const products = useSelector((state) => state.products);
   const productDetail = useSelector((state) => state.productDetail);
   const [selectedStyle, setSelectedStyle] = useState(null);
   const windowWidth = useResize();
@@ -40,7 +41,7 @@ export default function ProductOverview() {
           <ProductGallery product={selectedStyle} />
         }
 
-        {productDetail.product &&
+        {productDetail.product && selectedStyle &&
           <ProductForm
             product={productDetail.product}
             selectedStyle={selectedStyle}

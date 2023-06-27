@@ -5,8 +5,8 @@ import useResize from "../../lib/useResize";
 function renderMobile(photos) {
   return (
     <div className="img-row" style={{height: '35vh', maxWidth: '100%', display: 'flex', overflow: 'scroll'}}>
-      {photos.map((photo) => (
-        <img key={photo.url} src={photo.url} alt="" style={{maxHeight: '50vh'}}/>
+      {photos.map((photo, i) => (
+        <img key={i + photo.url} src={photo.url} alt="" style={{maxHeight: '50vh'}}/>
       ))}
     </div>
   );
@@ -18,6 +18,7 @@ function renderDesktop(photos, selectedImage, onSelectImage) {
       <div className="img-scroll">
         {photos.map((x, i) => (
           <img
+            key={i + x.url}
             src={x.thumbnail_url} alt=""
             onClick={() => onSelectImage(i)}
             className={
