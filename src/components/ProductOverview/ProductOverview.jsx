@@ -6,6 +6,7 @@ import useResize from "../../lib/useResize";
 import StarRating from "../../lib/StarRating";
 import ProductStyles from "./ProductStyles";
 import SizeSelector from "../../lib/SizeSelector";
+import {Paper} from "@mui/material";
 
 
 export default function ProductOverview() {
@@ -49,7 +50,9 @@ export default function ProductOverview() {
           />
         }
 
-        <div className="row test-layout" id="product-info"></div>
+        <Paper elevation={2}>
+          <div className="row test-layout" id="product-info"></div>
+        </Paper>
       </section>
     </>
   )
