@@ -16,12 +16,11 @@ export default function Report({ id, type, reported }) {
       e.preventDefault();
 
       axios
-        .put(`${ API_URL }/qa/${ type }s/${ id }/report`, {
+        .put(`${ API_URL }/qa/${ type }s/${ id }/report`,
           // updates report status
-          reported: true
-        }, {
-          headers: { Authorization: API_KEY }
-        })
+          { reported: true },
+          { headers: { Authorization: API_KEY } }
+        )
         .then(() => {
           console.log('Report request sent!');
           setReported(true);

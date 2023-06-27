@@ -60,3 +60,24 @@ body {
 .style_thumbnail {
   display: inline-block;
 }
+
+.gallery-container {
+  display: flex;
+}
+.img-scroll {
+  display: flex;
+  flex-direction: column;
+}
+.img-scroll .img-item {
+  max-width: 50px;
+}
+.img-item.selected-img {
+  border: 1px solid;
+}
+
+.gallery-main {
+
+}
+.main-img {
+  max-width: 400px;
+}
