@@ -1,41 +1,109 @@
 import React, { useState } from 'react';
+import StarRating from '../../lib/StarRating.jsx';
 
 export default function WriteReviewForm() {
-  const [overallRating, setOverallRating] = useState(0);
-  const [recommendation, setRecommendation] = useState('');
+  //handleState
+  //const [rating, setRating] = useState(0);
   const [characteristics, setCharacteristics] = useState({});
-  const [reviewSummary, setReviewSummary] = useState('');
-  const [reviewBody, setReviewBody] = useState('');
-  const [photos, setPhotos] = useState([]);
-  const [nickname, setNickname] = useState('');
+  const [recommend, setRecommend] = useState('');
+  const [summary, setSummary] = useState('');
+  const [body, setBody] = useState('');
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [photos, setPhotos] = useState([]);
 
+  // const characteristicsArray = createCharacteristicsArray(productCharacteristics, 'id');
 
-  const handleOverallRating = (rating) => {
-    setOverallRating(rating);
+  // const handleCharacteristicsChange = (e) => {
+  //   setCharacteristics({...characteristics, [e.target.name]: Number(e.target.value)});
+  // };
+
+  const handleRecommendChange = (e) => {
+    e.target.value === 'true' ? setRecommend(true) : setRecommend(false);
   };
 
-  const handleRecommendation = (value) => {
-    setRecommendation(value);
+  const handleTextChange = (e) => {
+    if (e.target.id === 'reviewSummary') {
+      setSummary(e.target.value);
+    } else if (e.target.id === 'reviewBody') {
+      setBody(e.target.value);
+    } else if (e.target.id === 'reviewName') {
+      setName(e.target.value);
+    } else if (e.target.id === 'reviewEmail') {
+      setEmail(e.target.value);
+    }
   };
 
-  const handleSubmitReview = (event) => {
-    event.preventDefault();
-    const errors = [];
+  // const starRatingMeaning = (rating) => {
+  //   if (rating === 1) {
+  //     return 'Poor';
+  //   } else if (rating === 2) {
+  //     return 'Fair';
+  //   } else if (rating === 3) {
+  //     return 'Average';
+  //   } else if (rating === 4) {
+  //     return 'Good';
+  //   } else if (rating === 5) {
+  //     return 'Great';
+  //   }
+  // };
 
-    if (overallRating === 0) {
-      errors.push('Overall rating is mandatory');
-    }
+  return (
+    <div id='reviewForm'>
+      <div>Write Your Review</div>
+      <div>About the Product Here!</div>
+      <div >
 
-    if (recommendation === '') {
-      errors.push('Recommendation is mandatory');
-    }
+        <div id='starRating '>
+            How would you rate this product?
 
+          {/* <StarRating /> */}
 
-    if (reviewBody.length < 50) {
-      errors.push('Review body must be at least 50 characters long');
-    }
+        </div>
 
-  };
+        {/* <div id='radioForm '>
+          {characteristicsArray.map((characteristic, i) => {
+            return <CharacteristicsRadio key={`characteristicRadio${i}`} characteristic={characteristic} handleCharacteristicsChange={handleCharacteristicsChange} />;
+          })}
+        </div> */}
 
+        <form id='recommendItem'>
+          <div className='recommendItem'>
+            Do you recommend this product?
+          </div>
+          <input type='radio' name='recommend' value={true} onChange={handleRecommendChange}/>Yes
+          <input type='radio' name='recommend' value={false} onChange={handleRecommendChange}/>No
+        </form>
+
+        <form id='reviewComments'>
+          <label htmlFor='reviewSummary'>Review Summary</label>
+          <textarea id='reviewSummary' onChange={handleTextChange} value={summary} maxLength='60' placeholder='Example: Best purchase ever!'></textarea>
+
+          <label htmlFor='reviewBody'>Review Body</label>
+          <textarea id='reviewBody' onChange={handleTextChange} value={body} maxLength='1000' placeholder='Why did you like the product or not?'></textarea>
+
+          <label htmlFor='reviewName'>Nickname</label>
+          <input type='text' id='reviewName' onChange={handleTextChange} value={name} maxLength='60' placeholder='Example: H.R.!'></input>
+
+          <div id='nameWarning'>For privacy reasons, do not use your full name or email address.</div>
+
+          <label htmlFor='reviewEmail'>Email Address</label>
+          <input type='text' id='reviewEmail' onChange={handleTextChange} value={email} maxLength='60' placeholder='Example: hackreactor@gmail.com'></input>
+
+          <div id='emailWarning'>For authentication reasons, you will not be emailed.</div>
+        </form>
+      </div>
+      <button id='submitButton'>
+        {/* onClick={(e) => {
+        handleSubmitReview({product_id: currentProductId, rating, characteristics, recommend, summary, body, name, email, photos});
+        handleClose();
+      }} */}
+          Submit
+      </button>
+    </div>
+  );
 }
+
+
+
+
