@@ -20,7 +20,11 @@ export default function Search({ questions, setQuestions, search, setSearch }) {
 
   return (
     <form>
-      <input value={ search } onChange={ handleSearch } />
+      <input
+        placeholder="Search questions..."
+        value={ search }
+        onChange={ handleSearch }
+      />
     </form>
   );
 }

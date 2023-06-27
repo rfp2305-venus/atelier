@@ -28,7 +28,8 @@ export default function Answer({ id, body, date, user, helpfulness, photos, repo
 
       <tr>
         <td>
-          Helpful? <Upvote id={ id } type={ 'answer' } helpfulness={ helpfulness } />
+          <strong>Helpful?</strong>
+          <Upvote id={ id } type={ 'answer' } helpfulness={ helpfulness } />
         </td>
 
         <td>

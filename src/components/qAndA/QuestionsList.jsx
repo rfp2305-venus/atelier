@@ -93,7 +93,7 @@ export default function QuestionsList() {
         )) }
       <br />
 
-      {/* NOTE: shouldn't appear if fewer than (2) questions */}
+      {/* TODO: shouldn't appear if fewer than (2) questions */}
       {/* consider dedicated component */}
       <button onClick={(e) => {
         e.preventDefault();
