@@ -57,7 +57,7 @@ export default function Loading({status}){
     render();
 
     return () => {
-      console.log(animationFrameId);
+      // console.log(animationFrameId);
 
       clearInterval(interval);
       window.cancelAnimationFrame(animationFrameId)
