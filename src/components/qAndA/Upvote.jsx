@@ -18,12 +18,11 @@ export default function Upvote({ id, type, helpfulness }) {
 
       // send PUT req to update helpfulness
       axios
-        .put(`${ API_URL }/qa/${ type }s/${ id }/helpful`, {
+        .put(`${ API_URL }/qa/${ type }s/${ id }/helpful`,
           // NOTE: increments helpfulness
-          helpfulness: helpfulness + 1
-        }, {
-          headers: { Authorization: API_KEY }
-        })
+          { helpfulness: helpfulness + 1 },
+          { headers: { Authorization: API_KEY } }
+        )
         .then(() => {
           // increment helpfulness on click
           setVotes(votes + 1);
