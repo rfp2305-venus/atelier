@@ -9,6 +9,7 @@ import Loading from '../lib/Loading';
 import QuestionsList from './qAndA/QuestionsList';
 import Nav from "../lib/Nav";
 import {handleFetchProduct} from "../state/productDetail/actions";
+import ReviewsList from './Ratings_Reviews/ReviewsList';
 
 export default function App() {
   const dispatch = useDispatch();
@@ -37,6 +38,7 @@ export default function App() {
       <ProductOverview />
       <RelatedComp />
       <QuestionsList />
+      <ReviewsList />
 
     </div>
   );

@@ -1,6 +1,7 @@
 import React from 'react';
 
 export default function SortOptions() {
+
   return (
     <div>
       <label htmlFor="sortOptions">Sort By:</label>
@@ -12,3 +13,6 @@ export default function SortOptions() {
     </div>
   );
 }
+
+
+
