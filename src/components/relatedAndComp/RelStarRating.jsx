@@ -1,7 +1,11 @@
+/*CREDIT FOR THIS PAGE GOES TO SHAY LYNES - i just refactored his work to make it compatible with props*/
+/* eslint-disable func-style */
 import React, {useEffect, useState} from "react";
-import {useSelector} from "react-redux";
+import axios from 'axios';
 
-function calculateAverage(ratings) {
+const {API_URL, API_KEY} = process.env;
+
+function calculateRelAvg(ratings) {
   const sum =
     Number(ratings[1]) +
     Number(ratings[2]) +
@@ -9,32 +13,46 @@ function calculateAverage(ratings) {
     Number(ratings[4]) +
     Number(ratings[5]);
   const average = (
-      Number(ratings[1]) +
+    Number(ratings[1]) +
       (Number(ratings[2]) * 2) +
       (Number(ratings[3]) * 3) +
       (Number(ratings[4]) * 4) +
       (Number(ratings[5]) * 5)
-    ) / sum;
+  ) / sum;
   return average;
 }
 
-export default function StarRating() {
+export default function RelStarRating({productID}) {
+  // console.log('productID in relStarRating', productID);
   const [stars, setStars] = useState(null);
-  const {rating} = useSelector(({productDetail}) => productDetail.product);
+  const [ ratings, setRatings ] = useState(null);
 
+  useEffect(()=>{
+    axios({
+      method: 'get',
+      url: `${API_URL}/reviews/meta?product_id=${productID}`,
+      headers: {
+        Authorization: API_KEY
+      }
+    }).then((response) => {
+      setRatings(response.data.ratings);
+    }).catch((error) => {
+      console.log(error);
+    });
+  }, []);
 
   useEffect(() => {
-    if (!rating) {
+    if (!ratings) {
       return;
     }
-    const average = calculateAverage(rating.ratings);
+    const average = calculateRelAvg(ratings);
     let done = false;
     let tmpStars = [];
-    for(let i = 1; i < 6; i++ ) {
-      if(i <= Math.floor(average)) {
+    for (let i = 1; i < 6; i++ ) {
+      if (i <= Math.floor(average)) {
         tmpStars.push(100);
-      } else if(!done) {
-        tmpStars.push(Math.floor((average - Math.floor(average)) * 100))
+      } else if (!done) {
+        tmpStars.push(Math.floor((average - Math.floor(average)) * 100));
         done = true;
       } else {
         tmpStars.push(0);
@@ -42,13 +60,13 @@ export default function StarRating() {
     }
 
     setStars(tmpStars);
-  }, [rating.ratings]);
+  }, [ratings]);
 
   return (
-    <div>
-      {stars && stars.map((star, indx) => renderStar(star, indx))}
-      <span>Read All Ratings</span>
-    </div>
+    (stars ?
+      (<div className='rel-prod-stars' id={productID}>
+        {stars && stars.map((star, indx) => renderStar(star, indx))}
+      </div>) : null)
   );
 }
 
@@ -87,5 +105,5 @@ function renderStar(fillPercent, id) {
         style={{display:'inline',fill:`url(#grad${id})`, stroke:'#000000', strokeWidth:5.1541,strokeDasharray:'none',strokeOpacity:1}}
       />
     </svg>
-  )
+  );
 }

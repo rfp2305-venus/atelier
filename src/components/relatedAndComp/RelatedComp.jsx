@@ -10,8 +10,8 @@ import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import aSimpleAction from '../../state/related/actions.js';
 
-export default function RelatedComp() {
 
+export default function RelatedComp() {
   const { product } = useSelector(({ productDetail }) => productDetail);
 
   const [ relatedProducts, setRelatedProducts ] = useState([]);
