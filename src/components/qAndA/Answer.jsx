@@ -33,7 +33,7 @@ export default function Answer({ id, body, date, user, helpfulness, photos, repo
 
         <td>
           {/* NOTE: no 'reported' prop on obj */}
-          <Report id={ id } type={ 'answer' } reported={ (reported) ? (reported) : (false) } />
+          <Report id={ id } type={ 'answer' } reported={ reported } />
         </td>
       </tr>
     </>
