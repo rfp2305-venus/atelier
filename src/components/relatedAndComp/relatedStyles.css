@@ -2,7 +2,7 @@ html,
 body {
   margin: 0;
 }
-
+/* Vicky's stuff ======================= */
 #related-and-comp {
   max-width: 100%;
   display: flex;
@@ -26,9 +26,12 @@ body {
 .related-products-thumbnail {
   height: 75px;
 }
+.card-first-row {
+  display: flex;
+  justify-content: space-between;
+}
 
-
-
+/* Charlene's stuff ======================= */
 .reviewCard {
   width: 100%;
   margin-bottom: 1.5em;
