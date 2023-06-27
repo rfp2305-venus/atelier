@@ -6,8 +6,6 @@ import Report from './Report';
 
 export default function Answer({ id, body, date, user, helpfulness, photos, reported }) {
 
-  // console.log('answer:', body);
-
   return (
     <>
       <tr>

@@ -20,14 +20,15 @@ export default function QuestionsList() {
 
   const fetchQuestions = (page = 1, count = 20 /* placeholder values */) => {
 
-    return axios.get(`${ API_URL }/qa/questions`, {
-      headers: { Authorization: API_KEY },
-      params: {
-        product_id: product.id,
-        page: page,
-        count: count
-      }
-    })
+    axios
+      .get(`${ API_URL }/qa/questions`, {
+        headers: { Authorization: API_KEY },
+        params: {
+          product_id: product.id,
+          page: page,
+          count: count
+        }
+      })
       .then((res) => {
         const { results } = res.data;
 
@@ -49,16 +50,18 @@ export default function QuestionsList() {
     }
   }, [ product ]);
 
+  /*
   // check if questions fetched correctly
   questions.forEach((q, i) => {
     console.log(`question ${ i }: ${ JSON.stringify(q) }`);
   });
+  */
 
   return (
     <div>
       <h1>Q&A:</h1>
 
-      {questions
+      { questions
         // set length of array based on current state
         .slice(0, length)
         .map(({ question_id, question_body, question_date, asker_name, question_helpfulness, reported }) => (
@@ -81,8 +84,7 @@ export default function QuestionsList() {
               helpfulness={ question_helpfulness }
               reported={ reported } // <— (?)
             />) : (null)
-        ))
-      }
+        )) }
       <br />
 
       {/* NOTE: shouldn't appear if fewer than (2) questions */}
@@ -91,7 +93,7 @@ export default function QuestionsList() {
         e.preventDefault();
 
         if (!isExpanded) {
-          setLength(questions.length);
+          setLength(length + 2);
 
           setExpanded(true);
 

@@ -19,7 +19,8 @@ export default function AnswersList({ questionID }) {
   const [ isExpanded, setExpanded ] = useState(false);
 
   const fetchAnswers = (page = 1, count = 20 /* placeholder values */) => {
-    return axios
+
+    axios
       .get(`${ API_URL }/qa/questions/${ questionID }/answers`, {
         headers: { Authorization: API_KEY },
         params: {
@@ -49,15 +50,17 @@ export default function AnswersList({ questionID }) {
   }, [ product /* questionID */]);
   // does not seem to resolve multiple API calls —> backlog
 
+  /*
   // check if answers fetched correctly
   answers.forEach((a, i) => {
     console.log(`answer ${ i }: ${ JSON.stringify(a) }`);
   });
+  */
 
   return (
     <table>
       <tbody>
-        {answers
+        { answers
           .slice(0, length)
           .map(({ answer_id, body, date, answerer_name, helpfulness, photos }) => (
             // if answer isn't blank
@@ -75,11 +78,11 @@ export default function AnswersList({ questionID }) {
                 helpfulness={ helpfulness }
                 photos={ photos }
               />) : (null)
-          ))
-        }
+          )) }
 
         <tr>
           <th>
+            {/* consider dedicated component */}
             <button onClick={(e) => {
               e.preventDefault();
 
