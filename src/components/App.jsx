@@ -37,9 +37,9 @@ export default function App() {
       }
 
       <ProductOverview />
-      {/*<RelatedComp />
+      <RelatedComp />
       <QuestionsList />
-      <ReviewsList />*/}
+      <ReviewsList />
 
     </Box>
   );
