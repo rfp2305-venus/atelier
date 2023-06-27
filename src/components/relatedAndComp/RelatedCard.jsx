@@ -3,6 +3,8 @@ const {API_URL, API_KEY} = process.env;
 import React from 'react';
 import { useEffect, useState } from 'react';
 import RelStarRating from './RelStarRating';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 
 export default function RelatedCard({ productID }) {
