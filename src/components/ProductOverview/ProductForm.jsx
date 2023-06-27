@@ -5,7 +5,7 @@ import ProductStyles from "./ProductStyles.jsx";
 export default function ProductForm({product, ...props}) {
 
   return (
-    <div>
+    <div className="product-form">
       <StarRating />
       <h4>{product.category}</h4>
       <h2>{product.name}</h2>
