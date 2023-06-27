@@ -10,6 +10,8 @@ import { useSelector } from 'react-redux';
 
 import axios from 'axios';
 
+import getDate from './util/getDate';
+
 export default function AnswersList({ questionID }) {
 
   const { product } = useSelector(({ productDetail }) => productDetail);
@@ -18,8 +20,9 @@ export default function AnswersList({ questionID }) {
   const [ length, setLength ] = useState(2);
   const [ isExpanded, setExpanded ] = useState(false);
 
-  const fetchAnswers = (page = 1, count = 20 /* placeholder values */) => {
-    return axios
+  const fetchAnswers = (page = 1, count = 50 /* placeholder values */) => {
+
+    axios
       .get(`${ API_URL }/qa/questions/${ questionID }/answers`, {
         headers: { Authorization: API_KEY },
         params: {
@@ -28,14 +31,17 @@ export default function AnswersList({ questionID }) {
         }
       })
       .then((res) => {
-        // console.log('Answers successfully fetched!');
-
         const { results } = res.data;
 
-        // sort answers by helpfulness
-        results.sort((a, b) => {
-          return b.helpfulness - a.helpfulness;
-        });
+        results
+          // sort answers by helpfulness
+          .sort((a, b) => {
+            return b.helpfulness - a.helpfulness;
+          })
+          // (bonus): for incoming answers w/ no 'reported' prop
+          .forEach((answer) => {
+            answer.reported ||= false;
+          });
 
         setAnswers(results);
       })
@@ -49,60 +55,53 @@ export default function AnswersList({ questionID }) {
   }, [ product /* questionID */]);
   // does not seem to resolve multiple API calls —> backlog
 
+  /*
   // check if answers fetched correctly
   answers.forEach((a, i) => {
     console.log(`answer ${ i }: ${ JSON.stringify(a) }`);
   });
+  */
 
   return (
-    <table>
-      <tbody>
-        {answers
-          .slice(0, length)
-          .map(({ answer_id, body, date, answerer_name, helpfulness, photos }) => (
-            // if answer isn't blank
-            (body.length > 0) ?
-              (<Answer key={ answer_id }
-                id={ answer_id }
-                body={ body }
-                // converts date to ideal format
-                date={new Date(date).toLocaleDateString('en-US', {
-                  month: 'long',
-                  day: '2-digit',
-                  year: 'numeric'
-                })}
-                user={ answerer_name }
-                helpfulness={ helpfulness }
-                photos={ photos }
-              />) : (null)
-          ))
-        }
+    <>
+      <table>
+        <tbody>
+          { answers
+            .slice(0, length)
+            .map(({ answer_id, body, date, answerer_name, helpfulness, photos, reported }) => (
+              // if answer isn't blank
+              (body.length > 0 && !reported) ?
+                (<Answer key={ answer_id }
+                  id={ answer_id }
+                  body={ body }
+                  date={ getDate(date) }
+                  user={ answerer_name }
+                  helpfulness={ helpfulness }
+                  photos={ photos }
+                />) : (null)
+            )) }
 
-        <tr>
-          <th>
-            <button onClick={(e) => {
-              e.preventDefault();
+          <tr>
+            <th>
+              {/* consider dedicated component */}
+              ———<button onClick={(e) => {
+                e.preventDefault();
 
-              if (!isExpanded) {
-                setLength(answers.length);
-
-                setExpanded(true);
-
-              } else {
-                setLength(2);
-
-                setExpanded(false);
-              }
-            }}>
-              { (isExpanded) ? ('Collapse answers') : ('See more answers') }
-            </button>
-          </th>
-        </tr>
-
-        <tr>
-          <th>—————( delete later )—————</th>
-        </tr>
-      </tbody>
-    </table>
+                if (!isExpanded) {
+                  setLength(answers.length);
+                  setExpanded(true);
+                } else {
+                  setLength(2);
+                  setExpanded(false);
+                }
+              }}>
+                { (isExpanded) ? ('Collapse answers') : ('See more answers') }
+              </button>———
+            </th>
+          </tr>
+        </tbody>
+      </table>
+      <br /><br />
+    </>
   );
 }

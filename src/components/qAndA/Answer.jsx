@@ -6,8 +6,6 @@ import Report from './Report';
 
 export default function Answer({ id, body, date, user, helpfulness, photos, reported }) {
 
-  // console.log('answer:', body);
-
   return (
     <>
       <tr>
@@ -30,12 +28,13 @@ export default function Answer({ id, body, date, user, helpfulness, photos, repo
 
       <tr>
         <td>
-          Helpful? <Upvote id={ id } type={ 'answer' } helpfulness={ helpfulness } />
+          <strong>Helpful?</strong>
+          <Upvote id={ id } type={ 'answer' } helpfulness={ helpfulness } />
         </td>
 
         <td>
           {/* NOTE: no 'reported' prop on obj */}
-          <Report id={ id } type={ 'answer' } reported={ (reported) ? (reported) : (false) } />
+          <Report id={ id } type={ 'answer' } reported={ reported } />
         </td>
       </tr>
     </>
