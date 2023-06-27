@@ -9,6 +9,9 @@ import { useState, useEffect } from 'react'; // tech debt
 import { useSelector } from 'react-redux';
 
 import Question from './Question';
+import Search from './Search';
+
+import getDate from './util/getDate';
 
 export default function QuestionsList() {
 
@@ -18,7 +21,9 @@ export default function QuestionsList() {
   const [ length, setLength ] = useState(4);
   const [ isExpanded, setExpanded ] = useState(false);
 
-  const fetchQuestions = (page = 1, count = 20 /* placeholder values */) => {
+  const [ search, setSearch ] = useState('');
+
+  const fetchQuestions = (page = 1, count = 50 /* placeholder values */) => {
 
     axios
       .get(`${ API_URL }/qa/questions`, {
@@ -60,26 +65,27 @@ export default function QuestionsList() {
   return (
     <div>
       <h1>Q&A:</h1>
+      <Search
+        questions={ questions }
+        setQuestions={ setQuestions }
+        search={ search }
+        setSearch={ setSearch }
+      />
 
       { questions
         // set length of array based on current state
         .slice(0, length)
         .map(({ question_id, question_body, question_date, asker_name, question_helpfulness, reported }) => (
           /*
-          if question hasn't been reported
+          (NOTE):
             > business req. implies reportable answers
             > obj returned by API —> 'reported' === QUESTION prop
           */
-          (!reported) ?
+          (question_body.length > 0 && !reported) ?
             (<Question key={ question_id }
               id={ question_id }
               body={ question_body }
-              // converts date to ideal format
-              date={ new Date(question_date).toLocaleDateString('en-US', {
-                month: 'long',
-                day: '2-digit',
-                year: 'numeric'
-              }) }
+              date={ getDate(question_date) }
               user={ asker_name }
               helpfulness={ question_helpfulness }
               reported={ reported } // <— (?)
@@ -94,12 +100,9 @@ export default function QuestionsList() {
 
         if (!isExpanded) {
           setLength(length + 2);
-
           setExpanded(true);
-
         } else {
           setLength(4);
-
           setExpanded(false);
         }
       }}>

@@ -10,6 +10,8 @@ import { useSelector } from 'react-redux';
 
 import axios from 'axios';
 
+import getDate from './util/getDate';
+
 export default function AnswersList({ questionID }) {
 
   const { product } = useSelector(({ productDetail }) => productDetail);
@@ -18,7 +20,7 @@ export default function AnswersList({ questionID }) {
   const [ length, setLength ] = useState(2);
   const [ isExpanded, setExpanded ] = useState(false);
 
-  const fetchAnswers = (page = 1, count = 20 /* placeholder values */) => {
+  const fetchAnswers = (page = 1, count = 50 /* placeholder values */) => {
 
     axios
       .get(`${ API_URL }/qa/questions/${ questionID }/answers`, {
@@ -72,12 +74,7 @@ export default function AnswersList({ questionID }) {
                 (<Answer key={ answer_id }
                   id={ answer_id }
                   body={ body }
-                  // converts date to ideal format
-                  date={ new Date(date).toLocaleDateString('en-US', {
-                    month: 'long',
-                    day: '2-digit',
-                    year: 'numeric'
-                  }) }
+                  date={ getDate(date) }
                   user={ answerer_name }
                   helpfulness={ helpfulness }
                   photos={ photos }
