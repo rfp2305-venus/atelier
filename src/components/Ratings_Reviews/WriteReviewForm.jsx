@@ -12,12 +12,6 @@ export default function WriteReviewForm() {
   const [email, setEmail] = useState('');
   const [photos, setPhotos] = useState([]);
 
-  // const characteristicsArray = createCharacteristicsArray(productCharacteristics, 'id');
-
-  // const handleCharacteristicsChange = (e) => {
-  //   setCharacteristics({...characteristics, [e.target.name]: Number(e.target.value)});
-  // };
-
   const handleRecommendChange = (e) => {
     e.target.value === 'true' ? setRecommend(true) : setRecommend(false);
   };
@@ -34,20 +28,6 @@ export default function WriteReviewForm() {
     }
   };
 
-  // const starRatingMeaning = (rating) => {
-  //   if (rating === 1) {
-  //     return 'Poor';
-  //   } else if (rating === 2) {
-  //     return 'Fair';
-  //   } else if (rating === 3) {
-  //     return 'Average';
-  //   } else if (rating === 4) {
-  //     return 'Good';
-  //   } else if (rating === 5) {
-  //     return 'Great';
-  //   }
-  // };
-
   return (
     <div id='reviewForm'>
       <div>Write Your Review</div>
@@ -60,12 +40,6 @@ export default function WriteReviewForm() {
           {/* <StarRating /> */}
 
         </div>
-
-        {/* <div id='radioForm '>
-          {characteristicsArray.map((characteristic, i) => {
-            return <CharacteristicsRadio key={`characteristicRadio${i}`} characteristic={characteristic} handleCharacteristicsChange={handleCharacteristicsChange} />;
-          })}
-        </div> */}
 
         <form id='recommendItem'>
           <div className='recommendItem'>
@@ -107,3 +81,28 @@ export default function WriteReviewForm() {
 
 
 
+// const characteristicsArray = createCharacteristicsArray(productCharacteristics, 'id');
+
+// const handleCharacteristicsChange = (e) => {
+//   setCharacteristics({...characteristics, [e.target.name]: Number(e.target.value)});
+// };
+  
+// const starRatingMeaning = (rating) => {
+//   if (rating === 1) {
+//     return 'Poor';
+//   } else if (rating === 2) {
+//     return 'Fair';
+//   } else if (rating === 3) {
+//     return 'Average';
+//   } else if (rating === 4) {
+//     return 'Good';
+//   } else if (rating === 5) {
+//     return 'Great';
+//   }
+// };
+
+{ /* <div id='characteristics' '>
+          {characteristicsArray.map((characteristic, i) => {
+            return <CharacteristicsRadio key={`characteristicRadio${i}`} characteristic={characteristic} handleCharacteristicsChange={handleCharacteristicsChange} />;
+          })}
+        </div> */ }

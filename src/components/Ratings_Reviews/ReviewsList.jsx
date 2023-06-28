@@ -9,18 +9,24 @@ import WriteReviewForm from './WriteReviewForm';
 
 
 
-export default function ReviewsList() {
+export default function ReviewsList({currentProductId, reviewSort, handleSortSelect}) {
 
   const { product } = useSelector(({ productDetail }) => productDetail);
   //const review = useSelector(({ reviews }) => reviews);
   const [reviews, setReviews] = useState([]);
   //const [showMore, setShowMore] = useState(2);
   const [page, setPage] = useState(1);
-  const reviewList = [];
+
+
+  // const filteredReviewsList = [];
+  // for (let review of reviewsList) {
+  //   if (ratingsFilter.hasOwnProperty(review.rating) && ratingsFilter[review.rating] === true) {
+  //     filteredReviewsList.push(review);
+  //   }
+  // }
 
   const showMore = () => {
     setPage(page => page + 1);
-    //fetchReviews(page, 2);
   };
 
   const fetchReviews = (page = 1, count = 2) => {
@@ -35,7 +41,7 @@ export default function ReviewsList() {
       .then((res) => {
 
         const { results } = res.data;
-        // console.log('RESULTS', results);
+        console.log('RESULTS', results);
         setReviews(results);
 
         // setReviews((reviews) => [...reviews, results]);
@@ -57,15 +63,20 @@ export default function ReviewsList() {
   return (
 
     <div>
-      <h3 className='reviews'>Ratings & Reviews</h3>
-      {reviews.map((review) => (
-        <ReviewTile key={review.review_id} review={review} id={review.review_id}/>
-
-      ))}
-      <div><button className='showMoreButton' onClick={showMore}>show more...</button></div>
-      <WriteReviewForm/>
+      {/* <span className='reviewsListHeaderText'>{`${filteredReviewsList.length > 0 ? filteredReviewsList.length : reviewsList.length} review${filteredReviewsList.length > 1 || reviewsList.length > 1 ? 's' : ''}, sorted by`}</span>
+      <span>
+        <SortOptions currentProductId={currentProductId} reviewSort={reviewSort} handleSortSelect={handleSortSelect} />
+      </span> */}
+      <SortOptions/>
+      <div>
+        <h3 className='reviews'>Ratings & Reviews</h3>
+        {reviews.map((review) => (
+          <ReviewTile key={review.review_id} review={review} id={review.review_id}/>
+        ))}
+        <div><button className='showMoreButton' onClick={showMore}>show more...</button></div>
+        <WriteReviewForm/>
+      </div>
     </div>
-
   );
 }
 

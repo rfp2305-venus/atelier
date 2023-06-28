@@ -1,16 +1,20 @@
 import React from 'react';
 
-export default function SortOptions() {
+export default function SortOptions({currentProductId, reviewSort, handleSortSelect}) {
+
+  const handleSelected = (event) => {
+    getReviewData(event.target.value);
+  };
+
 
   return (
-    <div>
-      <label htmlFor="sortOptions">Sort By:</label>
-      <select id="sortOptions">
-        <option value="helpful">Helpful</option>
-        <option value="newest">Newest</option>
-        <option value="relevant">Relevant</option>
+    <form>
+      <select className='sortSelect' name='sortBy' onChange={e => handleChange(e)} value={reviewSort}>
+        {['relevance', 'helpful', 'newest'].map((sortBy, i) => {
+          return <option key={`reviewSort${i}`} value={sortBy}>{sortBy}</option>;
+        })}
       </select>
-    </div>
+    </form>
   );
 }
 
