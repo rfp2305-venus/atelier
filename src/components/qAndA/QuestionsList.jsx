@@ -58,12 +58,12 @@ export default function QuestionsList() {
     }
   }, [product]);
 
-  // /*
+  /*
   // check if questions fetched correctly
   questions.forEach((q, i) => {
     console.log(`question ${ i }: ${ JSON.stringify(q) }`);
   });
-  // */
+  */
 
   return (
     <Box width="800px" margin="auto">
