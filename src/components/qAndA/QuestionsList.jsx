@@ -4,22 +4,23 @@ import { useSelector } from 'react-redux';
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
-import axios from 'axios';
+import { Accordion, AccordionSummary, AccordionDetails, Typography, Box } from '@mui/material';
+
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 import getDate from './util/getDate';
 import Question from './Question';
 import Search from './Search';
+import SeeMore from './SeeMore';
 
-import { Accordion, AccordionSummary, AccordionDetails, Typography, Button, Box } from '@mui/material';
-
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import axios from 'axios';
 
 export default function QuestionsList() {
 
   const [ questions, setQuestions ] = useState([]);
 
   const [ length, setLength ] = useState(4);
-  const [ isExpanded, setExpanded ] = useState(false);
+  // const [ isExpanded, setExpanded ] = useState(false);
 
   const [ search, setSearch ] = useState('');
 
@@ -99,11 +100,34 @@ export default function QuestionsList() {
         )) }
       <br />
 
-      {/* TODO: shouldn't appear if fewer than (2) questions */}
-      {/* consider dedicated component */}
-      <Button
+      {/* disappears when:
+        > (2) questions or fewer
+        > all questions displayed */}
+      { (questions.length > 2) && (length < questions.length) &&
+        (<SeeMore type="question" length={ length } setLength={ setLength } />) }
+    </Box>
+  );
+}
+
+/*
+{ (questions.length > 2) ?
+        <Button onClick={(e) => {
+          e.preventDefault();
+
+          if (!isExpanded) {
+            setLength(length + 2);
+            setExpanded(true);
+          } else {
+            setLength(4);
+            setExpanded(false);
+          }
+        }}>
+
+        </Button> }
+      {/* <Button
         onClick={(e) => {
           e.preventDefault();
+
 
           if (!isExpanded) {
             setLength(length + 2);
@@ -115,7 +139,4 @@ export default function QuestionsList() {
         }}
       >
         { isExpanded ? 'Less Answered Questions' : 'More Answered Questions' }
-      </Button>
-    </Box>
-  );
-}
+      </Button> */
