@@ -39,9 +39,9 @@ export default function AnswersList({ questionID }) {
             return b.helpfulness - a.helpfulness;
           })
           // (bonus): for incoming answers w/ no 'reported' prop
-          // .forEach((answer) => {
-          //   answer.reported ||= false;
-          // });
+          .forEach((answer) => {
+            answer.reported ||= false;
+          });
 
         setAnswers(results);
       })
