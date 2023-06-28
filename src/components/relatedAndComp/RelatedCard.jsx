@@ -3,14 +3,30 @@ const {API_URL, API_KEY} = process.env;
 import React from 'react';
 import { useEffect, useState } from 'react';
 import RelStarRating from './RelStarRating';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
+import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
+import { IconButton } from '@mui/material';
+import ComparisonModal from './ComparisonModal';
+//redux
+import { useSelector, useDispatch } from 'react-redux';
+import openModal from '../../state/related/actions.js';
+import closeModal from '../../state/related/actions.js';
+import aSimpleAction from '../../state/related/actions.js';
+
 
 export default function RelatedCard({ productID }) {
+  const modalStatus = useSelector((state) => state.modalStatus);
+  const dispatch = useDispatch();
+  // console.log('modalStatus:', modalStatus);
+
   const [ product, setProduct ] = useState({});
   const [ productStyles, setProductStyles ] = useState({});
   const [ productPhoto, setProductPhoto ] = useState('');
+  const [ modalOpen, setModalOpen ] = useState('false');
+
+  useEffect(()=>{
+    dispatch(openModal());
+  }, []);
 
   useEffect(()=>{
     axios({
@@ -41,11 +57,21 @@ export default function RelatedCard({ productID }) {
     });
   }, [product]);
 
+  // eslint-disable-next-line func-style
+  function handleIcon(event) {
+    alert(`that tickled! my id is ${event.target.id}`);
+  }
+
   return (
     <>
       <div className="card">
-        <div className="related-product-pic">
+        <div className="card-first-row">
           <img src={productPhoto} alt={product.name} className='related-products-thumbnail'/>
+          <span>
+            <IconButton id={product.id} onClick={event => handleIcon(event)}>
+              <StarBorderOutlinedIcon id={product.id} />
+            </IconButton>
+          </span>
         </div>
         <p>{product.category}</p>
         <h4>{product.name}</h4>
@@ -55,3 +81,4 @@ export default function RelatedCard({ productID }) {
     </>
   );
 }
+

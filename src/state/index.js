@@ -9,7 +9,7 @@ const rootReducer = combineReducers({
   app: AppReducer,
   productDetail: ProductDetailReducer,
   products: ProductsReducer,
-  related: relatedReducer,
+  modalStatus: relatedReducer
 });
 
 export const store = createStore(
