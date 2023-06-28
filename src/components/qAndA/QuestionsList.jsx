@@ -108,35 +108,3 @@ export default function QuestionsList() {
     </Box>
   );
 }
-
-/*
-{ (questions.length > 2) ?
-        <Button onClick={(e) => {
-          e.preventDefault();
-
-          if (!isExpanded) {
-            setLength(length + 2);
-            setExpanded(true);
-          } else {
-            setLength(4);
-            setExpanded(false);
-          }
-        }}>
-
-        </Button> }
-      {/* <Button
-        onClick={(e) => {
-          e.preventDefault();
-
-
-          if (!isExpanded) {
-            setLength(length + 2);
-            setExpanded(true);
-          } else {
-            setLength(4);
-            setExpanded(false);
-          }
-        }}
-      >
-        { isExpanded ? 'Less Answered Questions' : 'More Answered Questions' }
-      </Button> */
