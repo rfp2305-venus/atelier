@@ -3,14 +3,15 @@ const { API_URL, API_KEY } = process.env;
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import getDate from './util/getDate';
+
 import Answer from './Answer';
+import SeeMore from './SeeMore';
 
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 import axios from 'axios';
-
-import getDate from './util/getDate';
 
 export default function AnswersList({ questionID }) {
 
@@ -52,7 +53,7 @@ export default function AnswersList({ questionID }) {
 
   useEffect(() => {
     fetchAnswers();
-  }, [ product /* questionID */]);
+  }, [/* product, questionID */]);
   // does not seem to resolve multiple API calls —> backlog
 
   /*
@@ -83,20 +84,12 @@ export default function AnswersList({ questionID }) {
 
           <tr>
             <th>
-              {/* consider dedicated component */}
-              ———<button onClick={(e) => {
-                e.preventDefault();
-
-                if (!isExpanded) {
-                  setLength(answers.length);
-                  setExpanded(true);
-                } else {
-                  setLength(2);
-                  setExpanded(false);
-                }
-              }}>
-                { (isExpanded) ? ('Collapse answers') : ('See more answers') }
-              </button>———
+              ———{ (answers.length > 2) ?
+                (<SeeMore
+                  type="answer" aLength={ answers.length }
+                  length={ length } setLength={ setLength }
+                  isExpanded={ isExpanded } setExpanded={ setExpanded }
+                />) : (null) }———
             </th>
           </tr>
         </tbody>

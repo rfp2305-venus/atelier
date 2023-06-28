@@ -10,7 +10,7 @@ export default function Answer({ id, body, date, user, helpfulness, photos, repo
     <>
       <tr>
         <th>
-          ———( ANSWERS HERE )———
+          ———( ANSWER HERE )———
         </th>
       </tr>
       <tr>
@@ -29,12 +29,12 @@ export default function Answer({ id, body, date, user, helpfulness, photos, repo
       <tr>
         <td>
           <strong>Helpful?</strong>
-          <Upvote id={ id } type={ 'answer' } helpfulness={ helpfulness } />
+          <Upvote id={ id } type="answer" helpfulness={ helpfulness } />
         </td>
 
         <td>
           {/* NOTE: no 'reported' prop on obj */}
-          <Report id={ id } type={ 'answer' } reported={ reported } />
+          <Report id={ id } type="answer" reported={ reported } />
         </td>
       </tr>
     </>

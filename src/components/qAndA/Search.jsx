@@ -16,6 +16,10 @@ export default function Search({ questions, setQuestions, search, setSearch }) {
       });
       setQuestions(filtered);
     }
+
+    if (input.length < 3) {
+      setQuestions(questions);
+    }
   };
 
   return (
