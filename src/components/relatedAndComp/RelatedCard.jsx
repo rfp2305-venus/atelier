@@ -1,3 +1,4 @@
+/* eslint-disable func-style */
 const {API_URL, API_KEY} = process.env;
 
 import React from 'react';
@@ -5,28 +6,47 @@ import { useEffect, useState } from 'react';
 import RelStarRating from './RelStarRating';
 import axios from 'axios';
 import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
-import { IconButton, Card, CardMedia, CardContent, Typography } from '@mui/material';
-import ComparisonModal from './ComparisonModal';
+import { IconButton, Card, CardMedia, CardContent, Typography, Dialog, DialogTitle } from '@mui/material';
+// import ComparisonModal from './ComparisonModal';
 //redux
 import { useSelector, useDispatch } from 'react-redux';
-import openModal from '../../state/related/actions.js';
-import closeModal from '../../state/related/actions.js';
+import handleModal from '../../state/related/actions.js';
 import aSimpleAction from '../../state/related/actions.js';
 
+export function ComparisonModal({ handleClose, setModalOpen }) {
+  const { modalStatus } = useSelector(({ modalStatus }) => modalStatus);
+  // console.log('modalStatus in comparison', modalStatus);
+
+  function onClose() {
+    handleClose();
+    setModalOpen(false);
+  }
+
+  return (
+    modalStatus ? (
+      <Dialog handleClose={handleClose}>
+        <DialogTitle>
+          COMPARING
+        </DialogTitle>
+      </Dialog>) : null
+  );
+}
 
 export default function RelatedCard({ productID }) {
   const modalStatus = useSelector((state) => state.modalStatus);
+  const state = useSelector((state) => state);
   const dispatch = useDispatch();
-  // console.log('modalStatus:', modalStatus);
 
   const [ product, setProduct ] = useState({});
   const [ productStyles, setProductStyles ] = useState({});
   const [ productPhoto, setProductPhoto ] = useState('');
-  const [ modalOpen, setModalOpen ] = useState('false');
+  const [ modal, setOpen ] = useState('false');
 
   useEffect(()=>{
-    dispatch(openModal());
-  }, []);
+    dispatch(handleModal(true));
+    // console.log('modalStatus:', modalStatus);
+    // console.log('state:', state);
+  }, [modalOpen]);
 
   useEffect(()=>{
     axios({
@@ -59,7 +79,12 @@ export default function RelatedCard({ productID }) {
 
   // eslint-disable-next-line func-style
   function handleIcon(event) {
-    alert(`that tickled! my id is ${event.target.id}`);
+    // alert(`that tickled! my id is ${event.target.id}`);
+    setOpen(true);
+  }
+
+  function handleClose(value) {
+    setOpen(false);
   }
 
   return (
@@ -85,6 +110,7 @@ export default function RelatedCard({ productID }) {
           <RelStarRating productID={productID}/>
         </CardContent>
       </Card>
+      <ComparisonModal handleClose={handleClose} setModalOpen={setModalOpen}/>
 
     </>
   );

@@ -1,3 +1,4 @@
+
 import { fetchProduct } from '../../util/api.js';
 import { handleSetLoading } from '../app/actions.js';
 export const HANDLE_SET_PRODUCT = 'HANDLE_SET_PRODUCT';
