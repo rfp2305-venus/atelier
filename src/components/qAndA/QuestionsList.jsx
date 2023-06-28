@@ -1,32 +1,36 @@
 const { API_URL, API_KEY } = process.env;
 
-import React from 'react';
+import { useSelector } from 'react-redux';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
+
+import { Accordion, AccordionSummary, AccordionDetails, Typography, Box } from '@mui/material';
+
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+
+import getDate from './util/getDate';
+import Question from './Question';
+import Search from './Search';
+import SeeMore from './SeeMore';
 
 import axios from 'axios';
 
-import { useState, useEffect } from 'react'; // tech debt
-import { useSelector } from 'react-redux';
-
-import Question from './Question';
-import Search from './Search';
-
-import getDate from './util/getDate';
-
 export default function QuestionsList() {
 
-  const { product } = useSelector(({ productDetail }) => productDetail);
-
   const [ questions, setQuestions ] = useState([]);
+
   const [ length, setLength ] = useState(4);
-  const [ isExpanded, setExpanded ] = useState(false);
+  // const [ isExpanded, setExpanded ] = useState(false);
 
   const [ search, setSearch ] = useState('');
+
+  // REDUX
+  const { product } = useSelector(({ productDetail }) => productDetail);
 
   const fetchQuestions = (page = 1, count = 50 /* placeholder values */) => {
 
     axios
-      .get(`${ API_URL }/qa/questions`, {
+      .get(`${API_URL}/qa/questions`, {
         headers: { Authorization: API_KEY },
         params: {
           product_id: product.id,
@@ -45,7 +49,7 @@ export default function QuestionsList() {
         setQuestions(results);
       })
       .catch((err) => {
-        console.error(`Error fetching questions: ${ err }`);
+        console.error(`Error fetching questions: ${err}`);
       });
   };
 
@@ -53,7 +57,7 @@ export default function QuestionsList() {
     if (product) {
       fetchQuestions();
     }
-  }, [ product ]);
+  }, [product]);
 
   /*
   // check if questions fetched correctly
@@ -63,7 +67,7 @@ export default function QuestionsList() {
   */
 
   return (
-    <div>
+    <Box width="800px" margin="auto">
       <h1>Q&A:</h1>
       <Search
         questions={ questions }
@@ -73,41 +77,34 @@ export default function QuestionsList() {
       />
 
       { questions
-        // set length of array based on current state
         .slice(0, length)
         .map(({ question_id, question_body, question_date, asker_name, question_helpfulness, reported }) => (
-          /*
-          (NOTE):
-            > business req. implies reportable answers
-            > obj returned by API —> 'reported' === QUESTION prop
-          */
-          (question_body.length > 0 && !reported) ?
-            (<Question key={ question_id }
-              id={ question_id }
-              body={ question_body }
-              date={ getDate(question_date) }
-              user={ asker_name }
-              helpfulness={ question_helpfulness }
-              reported={ reported } // <— (?)
-            />) : (null)
+
+          (question_body.length > 0 && !reported) ? (
+            <Accordion key={ question_id }>
+              <AccordionSummary expandIcon={ <ExpandMoreIcon /> }>
+                <Typography variant="h6">{ question_body }</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Question
+                  id={ question_id }
+                  body={ question_body }
+                  date={ getDate(question_date) }
+                  user={ asker_name }
+                  helpfulness={ question_helpfulness }
+                  reported={ reported }
+                />
+              </AccordionDetails>
+            </Accordion>
+          ) : (null)
         )) }
       <br />
 
-      {/* TODO: shouldn't appear if fewer than (2) questions */}
-      {/* consider dedicated component */}
-      <button onClick={(e) => {
-        e.preventDefault();
-
-        if (!isExpanded) {
-          setLength(length + 2);
-          setExpanded(true);
-        } else {
-          setLength(4);
-          setExpanded(false);
-        }
-      }}>
-        { (isExpanded) ? ('Less Answered Questions') : ('More Answered Questions') }
-      </button>
-    </div>
+      {/* disappears when:
+        > (2) questions or fewer
+        > all questions displayed */}
+      { (questions.length > 2) && (length < questions.length) &&
+        (<SeeMore type="question" length={ length } setLength={ setLength } />) }
+    </Box>
   );
 }

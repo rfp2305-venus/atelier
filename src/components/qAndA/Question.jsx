@@ -15,8 +15,8 @@ export default function Question({ id, body, date, user, helpfulness, reported }
       <br /><br />
 
       <strong>Helpful?</strong>
-      <Upvote id={ id } type={ 'question' } helpfulness={ helpfulness } />
-      <Report id={ id } type={ 'question' } reported={ reported } />
+      <Upvote id={ id } type="question" helpfulness={ helpfulness } />
+      <Report id={ id } type="question" reported={ reported } />
       <br /><br />
 
       <AnswersList questionID={ id } />

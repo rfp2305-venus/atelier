@@ -35,7 +35,7 @@ export default function ReviewsList() {
       .then((res) => {
 
         const { results } = res.data;
-        console.log('RESULTS', results);
+        // console.log('RESULTS', results);
         setReviews(results);
 
         // setReviews((reviews) => [...reviews, results]);
@@ -46,9 +46,9 @@ export default function ReviewsList() {
   };
 
   useEffect(() => {
-    console.log('before', product && product.id);
+    // console.log('before', product && product.id);
     if (product) {
-      console.log('after', product.id);
+      // console.log('after', product.id);
       fetchReviews();
     }
   }, [ product ]);
