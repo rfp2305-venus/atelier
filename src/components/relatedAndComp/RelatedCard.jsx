@@ -13,13 +13,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import handleModal from '../../state/related/actions.js';
 import aSimpleAction from '../../state/related/actions.js';
 
-export function ComparisonModal({ handleClose, setModalOpen }) {
+export function ComparisonModal({ handleClose, setOpen }) {
   const { modalStatus } = useSelector(({ modalStatus }) => modalStatus);
   // console.log('modalStatus in comparison', modalStatus);
 
   function onClose() {
     handleClose();
-    setModalOpen(false);
+    setOpen(false);
   }
 
   return (
@@ -40,13 +40,13 @@ export default function RelatedCard({ productID }) {
   const [ product, setProduct ] = useState({});
   const [ productStyles, setProductStyles ] = useState({});
   const [ productPhoto, setProductPhoto ] = useState('');
-  const [ modal, setOpen ] = useState('false');
+  const [ open, setOpen ] = useState('false');
 
   useEffect(()=>{
     dispatch(handleModal(true));
     // console.log('modalStatus:', modalStatus);
     // console.log('state:', state);
-  }, [modalOpen]);
+  }, [open]);
 
   useEffect(()=>{
     axios({
@@ -82,7 +82,6 @@ export default function RelatedCard({ productID }) {
     // alert(`that tickled! my id is ${event.target.id}`);
     setOpen(true);
   }
-
   function handleClose(value) {
     setOpen(false);
   }
@@ -110,7 +109,7 @@ export default function RelatedCard({ productID }) {
           <RelStarRating productID={productID}/>
         </CardContent>
       </Card>
-      <ComparisonModal handleClose={handleClose} setModalOpen={setModalOpen}/>
+      <ComparisonModal handleClose={handleClose} setOpen={setOpen}/>
 
     </>
   );
