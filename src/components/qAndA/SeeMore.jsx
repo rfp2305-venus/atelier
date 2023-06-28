@@ -11,9 +11,11 @@ export default function SeeMore({ type, aLength, length, setLength, isExpanded, 
       setLength(length + 2);
 
     } else {
+
       if (isExpanded) {
         setLength(2);
         setExpanded(false);
+
       } else {
         setLength(aLength);
         setExpanded(true);

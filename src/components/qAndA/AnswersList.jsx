@@ -53,7 +53,7 @@ export default function AnswersList({ questionID }) {
 
   useEffect(() => {
     fetchAnswers();
-  }, [ product /* questionID */]);
+  }, [/* product, questionID */]);
   // does not seem to resolve multiple API calls —> backlog
 
   /*
@@ -84,27 +84,12 @@ export default function AnswersList({ questionID }) {
 
           <tr>
             <th>
-              {/* consider dedicated component */}
               ———{ (answers.length > 2) ?
                 (<SeeMore
                   type="answer" aLength={ answers.length }
                   length={ length } setLength={ setLength }
                   isExpanded={ isExpanded } setExpanded={ setExpanded }
                 />) : (null) }———
-
-              {/* ———<button onClick={(e) => {
-                e.preventDefault();
-
-                if (!isExpanded) {
-                  setLength(answers.length);
-                  setExpanded(true);
-                } else {
-                  setLength(2);
-                  setExpanded(false);
-                }
-              }}>
-                { (isExpanded) ? ('Collapse answers') : ('See more answers') }
-              </button>——— */}
             </th>
           </tr>
         </tbody>
