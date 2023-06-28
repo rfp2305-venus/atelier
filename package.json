@@ -47,5 +47,9 @@
     "webpack": "^5.88.0",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.15.1"
+  },
+  "devDependencies": {
+    "@testing-library/react": "^14.0.0",
+    "jest-environment-jsdom": "^29.5.0"
   }
 }
