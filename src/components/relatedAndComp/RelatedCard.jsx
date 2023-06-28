@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import RelStarRating from './RelStarRating';
 import axios from 'axios';
 import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
-import { IconButton } from '@mui/material';
+import { IconButton, Card, CardMedia, CardContent, Typography } from '@mui/material';
 import ComparisonModal from './ComparisonModal';
 //redux
 import { useSelector, useDispatch } from 'react-redux';
@@ -64,7 +64,35 @@ export default function RelatedCard({ productID }) {
 
   return (
     <>
-      <div className="card">
+      <Card className="card">
+        <div className="card-first-row">
+          <CardMedia
+            className='related-products-thumbnail'
+            component='img'
+            alt={product.name}
+            image={productPhoto}
+          />
+          <span>
+            <IconButton id={product.id} onClick={event => handleIcon(event)}>
+              <StarBorderOutlinedIcon id={product.id} />
+            </IconButton>
+          </span>
+        </div>
+        <CardContent>
+          <Typography component='p'>{product.category}</Typography>
+          <Typography component='h6' variant='h6'>{product.name}</Typography>
+          <Typography component='p'>{product.default_price}</Typography>
+          <RelStarRating productID={productID}/>
+        </CardContent>
+      </Card>
+
+    </>
+  );
+}
+
+/*
+
+<div className="card">
         <div className="card-first-row">
           <img src={productPhoto} alt={product.name} className='related-products-thumbnail'/>
           <span>
@@ -78,7 +106,6 @@ export default function RelatedCard({ productID }) {
         <p>{product.default_price}</p>
         <RelStarRating productID={productID}/>
       </div>
-    </>
-  );
-}
 
+
+*/
