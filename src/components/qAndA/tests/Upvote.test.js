@@ -5,7 +5,7 @@
 const { API_URL, API_KEY } = process.env;
 
 import React from 'react';
-import { render, fireEvent, waitFor, /* screen */} from '@testing-library/react';
+import { render, fireEvent, waitFor } from '@testing-library/react';
 import axios from 'axios';
 
 import Upvote from '../Upvote';
