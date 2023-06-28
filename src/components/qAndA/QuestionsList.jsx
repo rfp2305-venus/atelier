@@ -76,11 +76,7 @@ export default function QuestionsList() {
         // set length of array based on current state
         .slice(0, length)
         .map(({ question_id, question_body, question_date, asker_name, question_helpfulness, reported }) => (
-          /*
-          (NOTE):
-            > business req. implies reportable answers
-            > obj returned by API —> 'reported' === QUESTION prop
-          */
+
           (question_body.length > 0 && !reported) ?
             (<Question key={ question_id }
               id={ question_id }
