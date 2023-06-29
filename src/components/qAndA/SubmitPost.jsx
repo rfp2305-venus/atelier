@@ -56,7 +56,14 @@ export default function SubmitPost({ type }) {
   };
 
   const modalContent = (
-    <Box sx={{ width: 500, height: 300 }}>
+    <Box sx={{
+      width: 500,
+      height: 300,
+      display: 'flex',
+      alignItems: 'center',
+      // justifyContent: 'center',
+      height: '100%'
+    }}>
       <Typography variant="h6" component="h2">
         { (type === 'question') ? ('Ask Your Question') : ('Submit Your Answer') }
       </Typography>
@@ -132,6 +139,8 @@ export default function SubmitPost({ type }) {
         onClose={() => setOpen(false)}
         aria-labelledby="add-submission"
         aria-describedby="post-submission-for-given-product"
+        // inline styling to make modal more visible
+        sx={{ backgroundColor: 'rgba(255, 255, 255, 0.95)' }}
       >
         { modalContent }
       </Modal>

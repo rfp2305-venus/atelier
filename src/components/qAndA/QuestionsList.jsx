@@ -106,7 +106,7 @@ export default function QuestionsList() {
       { (questions.length > 2) && (length < questions.length) &&
         (<SeeMore type="question" length={ length } setLength={ setLength } />) }
 
-      <SubmitPost type="question" />
+      { product && <SubmitPost type="question" /> }
     </Box>
   );
 }

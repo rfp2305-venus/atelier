@@ -10,7 +10,7 @@ export default function Answer({ id, body, date, user, helpfulness, photos, repo
     <>
       <tr>
         <th>
-          ———( ANSWER HERE )———
+          ———( ANSWER )———
         </th>
       </tr>
       <tr>
