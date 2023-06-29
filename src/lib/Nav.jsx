@@ -13,8 +13,10 @@ export default function Nav({products, selectedProduct, onClick} ) {
         onChange={(x) => {onClick(x.target.value)}}
         value={selectedProduct}
       >
-        {products.map((product) => (
-          <MenuItem key={product.id} value={product.id}>
+        {products.map((product, i) => (
+          <MenuItem
+            key={product.id + '_' + i}
+            value={product.id}>
             {product.name}
           </MenuItem>
         ))}

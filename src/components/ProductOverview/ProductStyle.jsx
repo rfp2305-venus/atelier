@@ -17,7 +17,7 @@ export default function ProductStyle({style, onSelectStyle}) {
         className="style_thumbnail"
         style={createThumbnail()}
         onClick={() => onSelectStyle(style.style_id)}
-      ></div>
+      />
       {/*<img src={style.photos[0].thumbnail_url} alt=""/>*/}
     </>
   )

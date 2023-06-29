@@ -10,6 +10,7 @@ export function handleFetchProduct(productId) {
     fetchProduct(productId)
       .then((product) => {
         dispatch(handleSetProduct(product))
+        console.log(product);
       })
       .catch((err) => {
         console.error(err);
