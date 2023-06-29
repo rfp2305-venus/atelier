@@ -20,3 +20,11 @@ export const store = createStore(
   rootReducer,
   applyMiddleware(thunk)
 );
+
+export function getStoreWithState(preloadedState = {}) {
+  return createStore(
+    rootReducer,
+    preloadedState,
+    applyMiddleware(thunk)
+  );
+}

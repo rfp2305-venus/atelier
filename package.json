@@ -7,7 +7,8 @@
     "client-dev": "webpack --config webpack.config.js --watch",
     "server-dev": "webpack serve",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
   },
   "repository": {
     "type": "git",
@@ -20,37 +21,55 @@
   },
   "homepage": "https://github.com/rfp2305-venus/atelier#readme",
   "dependencies": {
-    "@babel/core": "^7.22.5",
-    "@babel/preset-env": "^7.22.5",
-    "@babel/preset-react": "^7.22.5",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@fontsource/roboto": "^5.0.3",
     "@mui/icons-material": "^5.11.16",
     "@mui/material": "^5.13.6",
     "@mui/system": "^5.13.6",
+    "@reduxjs/toolkit": "^1.9.5",
     "axios": "^1.4.0",
-    "babel": "^6.23.0",
-    "babel-jest": "^29.5.0",
-    "babel-loader": "^9.1.2",
-    "css-loader": "^6.8.1",
     "dotenv": "^16.3.1",
-    "eslint-config-hackreactor": "github:reactorcore/eslint-config-hackreactor",
-    "html-webpack-plugin": "^5.5.3",
-    "jest": "^29.5.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.1.1",
     "react-test-renderer": "^18.2.0",
     "redux": "^4.2.1",
-    "redux-thunk": "^2.4.2",
+    "redux-mock-store": "^1.5.4",
+    "redux-thunk": "^2.4.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.22.5",
+    "@babel/preset-env": "^7.22.5",
+    "@babel/preset-react": "^7.22.5",
+    "@testing-library/jest-dom": "^5.16.5",
+    "babel": "^6.23.0",
+    "babel-jest": "^29.5.0",
+    "babel-loader": "^9.1.2",
+    "css-loader": "^6.8.1",
     "style-loader": "^3.3.3",
     "webpack": "^5.88.0",
     "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^4.15.1"
-  },
-  "devDependencies": {
+    "webpack-dev-server": "^4.15.1",
+    "eslint-config-hackreactor": "github:reactorcore/eslint-config-hackreactor",
+    "html-webpack-plugin": "^5.5.3",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^29.5.0",
+    "jest-canvas-mock": "^2.5.2",
+    "jest-config": "^29.5.0",
     "@testing-library/react": "^14.0.0",
     "jest-environment-jsdom": "^29.5.0"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx}"
+    ],
+    "testEnvironment": "jsdom",
+    "setupFilesAfterEnv": [
+      "<rootDir>/jest-setup.js"
+    ],
+    "moduleNameMapper": {
+      "\\.(css|less)$": "identity-obj-proxy"
+    }
   }
 }
