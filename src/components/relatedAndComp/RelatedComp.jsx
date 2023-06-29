@@ -6,10 +6,9 @@ import RelatedProducts from './RelatedProducts.jsx';
 import YourOutfit from './YourOutfit.jsx';
 import './relatedStyles.css';
 import axios from 'axios';
-//redux
+//REDUX
 import { useSelector, useDispatch } from 'react-redux';
-import aSimpleAction from '../../state/related/actions.js';
-
+// import aSimpleAction from '../../state/related/actions.js';
 
 export default function RelatedComp() {
   const { product } = useSelector(({ productDetail }) => productDetail);
@@ -34,7 +33,6 @@ export default function RelatedComp() {
       });
     }
   }, []);
-
 
   return (
     <>

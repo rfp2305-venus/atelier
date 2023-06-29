@@ -1,22 +1,22 @@
+const { API_URL, API_KEY } = process.env;
 import React, { useState } from 'react';
 import StarRating from '../../lib/StarRating.jsx';
+import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 export default function WriteReviewForm() {
   //handleState
   //const [rating, setRating] = useState(0);
+
+  const { product } = useSelector(({ productDetail }) => productDetail);
   const [characteristics, setCharacteristics] = useState({});
+  const [rating, setRating] = useState('');
   const [recommend, setRecommend] = useState('');
   const [summary, setSummary] = useState('');
   const [body, setBody] = useState('');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [photos, setPhotos] = useState([]);
-
-  // const characteristicsArray = createCharacteristicsArray(productCharacteristics, 'id');
-
-  // const handleCharacteristicsChange = (e) => {
-  //   setCharacteristics({...characteristics, [e.target.name]: Number(e.target.value)});
-  // };
 
   const handleRecommendChange = (e) => {
     e.target.value === 'true' ? setRecommend(true) : setRecommend(false);
@@ -34,19 +34,25 @@ export default function WriteReviewForm() {
     }
   };
 
-  // const starRatingMeaning = (rating) => {
-  //   if (rating === 1) {
-  //     return 'Poor';
-  //   } else if (rating === 2) {
-  //     return 'Fair';
-  //   } else if (rating === 3) {
-  //     return 'Average';
-  //   } else if (rating === 4) {
-  //     return 'Good';
-  //   } else if (rating === 5) {
-  //     return 'Great';
-  //   }
-  // };
+  const handleSubmitReview = (e) => {
+    axios.post(`${ API_URL }/reviews`, {
+      headers: { Authorization: API_KEY },
+      body: {
+        product_id: product.id,
+        rating: rating,
+        summary: summary,
+        body: body,
+        recommend: recommend,
+        name: name,
+        email: email,
+        photos: photos,
+        characteristics: characteristics
+      }
+    }).then((res) => {
+
+
+    });
+  }
 
   return (
     <div id='reviewForm'>
@@ -60,12 +66,6 @@ export default function WriteReviewForm() {
           {/* <StarRating /> */}
 
         </div>
-
-        {/* <div id='radioForm '>
-          {characteristicsArray.map((characteristic, i) => {
-            return <CharacteristicsRadio key={`characteristicRadio${i}`} characteristic={characteristic} handleCharacteristicsChange={handleCharacteristicsChange} />;
-          })}
-        </div> */}
 
         <form id='recommendItem'>
           <div className='recommendItem'>
@@ -93,7 +93,7 @@ export default function WriteReviewForm() {
           <div id='emailWarning'>For authentication reasons, you will not be emailed.</div>
         </form>
       </div>
-      <button id='submitButton'>
+      <button id='submitButton' onClick={handleSubmitReview}>
         {/* onClick={(e) => {
         handleSubmitReview({product_id: currentProductId, rating, characteristics, recommend, summary, body, name, email, photos});
         handleClose();
@@ -107,3 +107,28 @@ export default function WriteReviewForm() {
 
 
 
+// const characteristicsArray = createCharacteristicsArray(productCharacteristics, 'id');
+
+// const handleCharacteristicsChange = (e) => {
+//   setCharacteristics({...characteristics, [e.target.name]: Number(e.target.value)});
+// };
+
+// const starRatingMeaning = (rating) => {
+//   if (rating === 1) {
+//     return 'Poor';
+//   } else if (rating === 2) {
+//     return 'Fair';
+//   } else if (rating === 3) {
+//     return 'Average';
+//   } else if (rating === 4) {
+//     return 'Good';
+//   } else if (rating === 5) {
+//     return 'Great';
+//   }
+// };
+
+{ /* <div id='characteristics' '>
+          {characteristicsArray.map((characteristic, i) => {
+            return <CharacteristicsRadio key={`characteristicRadio${i}`} characteristic={characteristic} handleCharacteristicsChange={handleCharacteristicsChange} />;
+          })}
+        </div> */ }

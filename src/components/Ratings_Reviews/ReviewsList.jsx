@@ -6,37 +6,48 @@ import axios from 'axios';
 import ReviewTile from './ReviewTile';
 import SortOptions from './SortOptions.jsx';
 import WriteReviewForm from './WriteReviewForm';
+import RatingBreakdown from './RatingBreakdown';
+import './RatingsReviews.css';
 
 
 
-export default function ReviewsList() {
+export default function ReviewsList({currentProductId, reviewSort, handleSortSelect}) {
 
   const { product } = useSelector(({ productDetail }) => productDetail);
   //const review = useSelector(({ reviews }) => reviews);
   const [reviews, setReviews] = useState([]);
   //const [showMore, setShowMore] = useState(2);
   const [page, setPage] = useState(1);
-  const reviewList = [];
+  const [count, setCount] = useState(2);
+  const [sortby, setSortby] = useState('relevant');
+
+
+  // const filteredReviewsList = [];
+  // for (let review of reviewsList) {
+  //   if (ratingsFilter.hasOwnProperty(review.rating) && ratingsFilter[review.rating] === true) {
+  //     filteredReviewsList.push(review);
+  //   }
+  // }
 
   const showMore = () => {
     setPage(page => page + 1);
-    //fetchReviews(page, 2);
   };
 
-  const fetchReviews = (page = 1, count = 2) => {
+  const fetchReviews = () => {
     return axios.get(`${ API_URL }/reviews`, {
       headers: { Authorization: API_KEY },
       params: {
         product_id: product.id,
         page: page,
-        count: count
+        count: count,
+        sort: sortby
       }
     })
       .then((res) => {
 
         const { results } = res.data;
-        // console.log('RESULTS', results);
-        setReviews(results);
+
+        setReviews(reviews.concat(results));
 
         // setReviews((reviews) => [...reviews, results]);
       })
@@ -46,26 +57,30 @@ export default function ReviewsList() {
   };
 
   useEffect(() => {
-    // console.log('before', product && product.id);
+    console.log('before', product && product.id);
     if (product) {
-      // console.log('after', product.id);
+      console.log('after', product.id);
       fetchReviews();
     }
-  }, [ product ]);
+  }, [ product, page, sortby ]);
 
-
+  console.log('REVIEWS', reviews);
   return (
 
     <div>
-      <h3 className='reviews'>Ratings & Reviews</h3>
-      {reviews.map((review) => (
-        <ReviewTile key={review.review_id} review={review} id={review.review_id}/>
-
-      ))}
-      <div><button className='showMoreButton' onClick={showMore}>show more...</button></div>
-      <WriteReviewForm/>
+      <span>
+        <RatingBreakdown reviews={reviews}/>
+      </span>
+      <SortOptions setReviews={setReviews} setSortby={setSortby}/>
+      <div>
+        <h3 className='reviews'>Ratings & Reviews</h3>
+        {reviews.map((review) => (
+          <ReviewTile key={review.review_id} review={review} id={review.review_id}/>
+        ))}
+        <div><button className='showMoreButton' onClick={showMore}>More Reviews</button></div>
+        <WriteReviewForm/>
+      </div>
     </div>
-
   );
 }
 

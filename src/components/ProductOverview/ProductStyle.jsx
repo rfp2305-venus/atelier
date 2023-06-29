@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 
-export default function ProductStyle({style, onSelectStyle}) {
+export default function ProductStyle({style, selectedStyle, onSelectStyle}) {
   function createThumbnail() {
     return {
       height: '75px',
@@ -14,10 +14,14 @@ export default function ProductStyle({style, onSelectStyle}) {
   return (
     <>
       <div
-        className="style_thumbnail"
+        className={`
+          style_thumbnail
+          ${selectedStyle.style_id === style.style_id ? ' selected-style' : ''}
+        `}
         style={createThumbnail()}
         onClick={() => onSelectStyle(style.style_id)}
-      ></div>
+        data-testid={`style-thumbnail-${style.style_id}`}
+      />
       {/*<img src={style.photos[0].thumbnail_url} alt=""/>*/}
     </>
   )

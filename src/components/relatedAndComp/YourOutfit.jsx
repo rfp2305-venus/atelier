@@ -1,16 +1,17 @@
 import OutfitCard from './OutfitCard.jsx';
+import { Box, Typography } from '@mui/material';
 
 export default function YourOutfit() {
   return (
     <>
-      <h3 className="title">Your Outfit</h3>
-      <div className="carousel" id="your-outfit">
+      <Typography component='p' className="title">YOUR OUTFIT</Typography>
+      <Box className="carousel" id="your-outfit">
         <OutfitCard />
         <OutfitCard />
         <OutfitCard />
         <OutfitCard />
         <OutfitCard />
-      </div>
+      </Box>
     </>
   );
 }

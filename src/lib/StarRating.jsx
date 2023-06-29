@@ -45,7 +45,7 @@ export default function StarRating() {
   }, [rating.ratings]);
 
   return (
-    <div>
+    <div data-testid="star-rating">
       {stars && stars.map((star, indx) => renderStar(star, indx))}
       <span>Read All Ratings</span>
     </div>

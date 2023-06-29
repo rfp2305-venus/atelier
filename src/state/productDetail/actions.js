@@ -1,3 +1,4 @@
+
 import { fetchProduct } from '../../util/api.js';
 import { handleSetLoading } from '../app/actions.js';
 export const HANDLE_SET_PRODUCT = 'HANDLE_SET_PRODUCT';
@@ -9,6 +10,7 @@ export function handleFetchProduct(productId) {
     fetchProduct(productId)
       .then((product) => {
         dispatch(handleSetProduct(product))
+        console.log(product);
       })
       .catch((err) => {
         console.error(err);

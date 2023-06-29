@@ -57,7 +57,6 @@ export default function Loading({status}){
     render();
 
     return () => {
-      // console.log(animationFrameId);
 
       clearInterval(interval);
       window.cancelAnimationFrame(animationFrameId)
@@ -65,6 +64,11 @@ export default function Loading({status}){
   },[canvasRef]);
 
   return (
-    <canvas ref={canvasRef} style={{position: 'absolute', top: 0, left: 0}}></canvas>
+    <canvas
+      data-testid='loading'
+      ref={canvasRef}
+      style={{position: 'absolute', top: 0, left: 0}}
+      role="loading"
+    ></canvas>
   );
 }

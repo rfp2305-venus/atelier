@@ -9,16 +9,16 @@
 
 export const COMPARISON = 'COMPARISON MODAL';
 
-export function openModal() {
+export default function handleModal(value) {
   return {
     type: COMPARISON,
-    modalstatus: true
+    modalStatus: value
   };
 }
 
-export default function closeModal() {
-  return {
-    type: COMPARISON,
-    modalstatus: false
-  };
-}
+// export function closeModal() {
+//   return {
+//     type: COMPARISON,
+//     modalStatus: false
+//   };
+// }
