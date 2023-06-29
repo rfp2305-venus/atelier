@@ -6,7 +6,7 @@ import useResize from "../../lib/useResize";
 import StarRating from "../../lib/StarRating";
 import ProductStyles from "./ProductStyles";
 import SizeSelector from "../../lib/SizeSelector";
-import {FormControl, Grid, InputLabel, MenuItem, Paper, Select, Typography} from "@mui/material";
+import {Container, FormControl, Grid, InputLabel, MenuItem, Paper, Select, Typography} from "@mui/material";
 
 
 export default function ProductOverview() {
@@ -52,64 +52,67 @@ export default function ProductOverview() {
   }
 
   return (
-    <Grid container spacing={2} >
-      <Grid item xs={12} sm={6} style={{maxWidth: '100%'}}>
-        { selectedStyle && <ProductGallery product={selectedStyle} />}
-      </Grid>
+    <Container data-testid="product-overview-component">
+      <Grid container spacing={2} sx={{maxWidth: '1200px'}}>
+        <Grid item xs={12} sm={8} style={{maxWidth: '100%'}}>
+          { selectedStyle && <ProductGallery product={selectedStyle} />}
+        </Grid>
 
-      <Grid item sm={6}>
-        {productDetail.product && selectedStyle && (
-          <div className="product-form">
-            <StarRating />
+        <Grid item sm={4}>
+          {productDetail.product && selectedStyle && (
+            <div className="product-form">
+              <StarRating />
 
-            <Typography>
-              {productDetail.product.category}
-            </Typography>
-            <Typography>
-              {productDetail.product.name}
-            </Typography>
-            <Typography>
-              {productDetail.product.default_price}
-            </Typography>
+              <Typography>
+                {productDetail.product.category}
+              </Typography>
+              <Typography>
+                {productDetail.product.name}
+              </Typography>
+              <Typography>
+                {productDetail.product.default_price}
+              </Typography>
 
-            <ProductStyles
-              styles={productDetail.product.styles}
-              onSelectStyle={handleSelectStyle}
-              selectedStyle={selectedStyle}
-            />
-
-            <div>
-              <SizeSelector
-                skus={selectedStyle.skus}
-                onSelect={(x) => setSize(x) }
+              <ProductStyles
+                styles={productDetail.product.styles}
+                onSelectStyle={handleSelectStyle}
+                selectedStyle={selectedStyle}
               />
 
-              {size && (
+              <div>
+                <SizeSelector
+                  skus={selectedStyle.skus}
+                  onSelect={(x) => setSize(x) }
+                />
 
-                <FormControl sx={{m: 1, minWidth: '150px'}}>
-                  <InputLabel id="quantity">
-                    Quantity
-                  </InputLabel>
-                  <Select label="quantity"
-                          name="quantity"
-                          id="quantity-select"
-                          onChange={(e) => setQuantity(e.target.value)}
-                  >
-                    {createQuantityItems(selectedStyle.skus[size].quantity)}
-                  </Select>
-                </FormControl>
-              )}
+                {size && (
+
+                  <FormControl sx={{m: 1, minWidth: '150px'}}>
+                    <InputLabel id="quantity">
+                      Quantity
+                    </InputLabel>
+                    <Select label="quantity"
+                            name="quantity"
+                            id="quantity-select"
+                            value={quantity}
+                            onChange={(e) => setQuantity(e.target.value)}
+                    >
+                      {createQuantityItems(selectedStyle.skus[size].quantity)}
+                    </Select>
+                  </FormControl>
+                )}
+              </div>
+
             </div>
+          )}
+        </Grid>
 
-          </div>
-        )}
+        <Grid item xs={12}>
+          <Paper elevation={2}>
+            <div className="row test-layout" id="product-info"></div>
+          </Paper>
+        </Grid>
       </Grid>
-
-      <Grid item xs={12}>
-        <Paper elevation={2}>
-          <div className="row test-layout" id="product-info"></div>
-        </Paper>
-      </Grid>
-    </Grid>
+    </Container>
   )
 }

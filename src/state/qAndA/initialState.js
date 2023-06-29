@@ -1,15 +1,15 @@
 // tentative
 export const initialQ = {
-  id,
-  body,
-  user,
-  votes = 0,
+  id: null,
+  body: null,
+  user: null,
+  votes: 0,
 };
 
 export const initialA = {
-  id,
-  body,
-  user,
-  votes = 0,
-  isReported = false,
+  id: null,
+  body: null,
+  user: null,
+  votes: 0,
+  isReported: false,
 };

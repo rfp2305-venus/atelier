@@ -23,7 +23,9 @@ export default function App() {
   }
 
   useEffect(() => {
-    dispatch(handleFetchProducts())
+    if(!products.products) {
+      dispatch(handleFetchProducts())
+    }
   }, [dispatch]);
 
   return loading ? <Loading /> : (
@@ -31,15 +33,19 @@ export default function App() {
       {products.products &&
         <Nav
           products={products.products}
-          selectedProduct={productDetail.product.id}
-          onClick={(id) => handleSelectProduct(id)}
+          selectedProduct={productDetail.product ? productDetail.product.id : ''}
+          onSelectProduct={(id) => handleSelectProduct(id)}
         />
       }
 
-      <ProductOverview />
-      <RelatedComp />
-      <QuestionsList />
-      <ReviewsList />
+      {productDetail.product && (
+        <>
+          <ProductOverview />
+          <RelatedComp />
+          <QuestionsList />
+          <ReviewsList />
+        </>
+      )}
 
     </Box>
   );
