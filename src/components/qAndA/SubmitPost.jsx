@@ -30,7 +30,7 @@ export default function SubmitPost({ id, body, type }) {
       (NOTE: possibly more validation for email format) */
     if (user !== '' && email !== '' && submission !== '') {
 
-      // POST req w/ relevant data
+      /* POST req w/ relevant data
       axios
         .post(endpoint, {
           product_id: product.id,
@@ -39,7 +39,18 @@ export default function SubmitPost({ id, body, type }) {
           body: submission,
         }, {
           headers: { Authorization: API_KEY },
-        })
+        }) */
+
+      axios({
+        method: 'post',
+        url: endpoint,
+        data: {
+          product_id: product.id,
+          name: user,
+          email: email,
+          body: submission
+        }
+      })
         .then(() => {
           console.log(`Post from ${ user }: ${ submission }`);
         })
