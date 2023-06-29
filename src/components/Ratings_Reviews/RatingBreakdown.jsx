@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 import Rating from '@mui/material/Rating';
 
@@ -19,6 +20,8 @@ export default function RatingBreakdown({reviews}) {
       console.log(error);
     });
   }, []);
+
+  return (<h1>rating breakdown</h1>)
 
 //   return (
 //     <>

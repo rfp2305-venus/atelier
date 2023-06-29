@@ -110,9 +110,9 @@ export default function ProductGallery({product, ...props}) {
   }, [product]);
 
   return selectedImage !== null && (
-    /*windowWidth < 600
+    windowWidth <= 600
       ? renderMobile(product.photos, selectedImage, handleSelectImage)
-      : */(
+      : (
         <Grid container spacing={1}>
           <Grid item xs={12} sm={2} >
             <div className="img-scroll" >
@@ -128,8 +128,6 @@ export default function ProductGallery({product, ...props}) {
               onMouseLeave={handleMouseLeave}
               style={{
                 height: '50vw',
-                maxHeight: '600px',
-                maxWidth: '500px',
                 backgroundImage: `url(${product.photos[selectedImage].url})`,
                 backgroundPosition: 'center top',
                 backgroundSize: 'cover',

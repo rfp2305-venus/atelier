@@ -6,13 +6,27 @@ import useResize from "../../lib/useResize";
 import StarRating from "../../lib/StarRating";
 import ProductStyles from "./ProductStyles";
 import SizeSelector from "../../lib/SizeSelector";
-import {Container, FormControl, Grid, InputLabel, MenuItem, Paper, Select, Typography} from "@mui/material";
+import {
+  Button,
+  Container,
+  FormControl,
+  Grid,
+  IconButton,
+  InputLabel,
+  MenuItem,
+  Paper,
+  Select,
+  Typography
+} from "@mui/material";
+import QuantitySelector from "../../lib/QuantitySelector";
+import {Favorite, FavoriteBorder} from "@mui/icons-material";
 
 
 export default function ProductOverview() {
   const productDetail = useSelector((state) => state.productDetail);
   const [selectedStyle, setSelectedStyle] = useState(null);
-  const [size, setSize] = useState(null);
+  const [favorite, setFavorite] = useState(false);
+  const [size, setSize] = useState('');
   const [quantity, setQuantity] = useState(1);
   const windowWidth = useResize();
 
@@ -20,11 +34,16 @@ export default function ProductOverview() {
     for(let i = 0; i < productDetail.product.styles.length; i++) {
       if(styleId === productDetail.product.styles[i].style_id) {
         setSelectedStyle(productDetail.product.styles[i]);
-        setSize(null);
-        setQuantity(null);
+        setSize('');
+        setQuantity('');
         return;
       }
     }
+  }
+
+  function handleSetSize(size) {
+    setSize(size);
+    setQuantity('');
   }
 
   useEffect(() => {
@@ -38,18 +57,14 @@ export default function ProductOverview() {
     }
   }, [productDetail]);
 
-
-  function createQuantityItems( size) {
-    const items = [];
-    for(let x = 0; x < size; x++) {
-      items.push(
-        <MenuItem key={x} value={x + 1} >
-          {x + 1}
-        </MenuItem>
-      )
+  useEffect(() => {
+    if(size) {
+      setQuantity(selectedStyle.skus[size].quantity);
+    } else {
+      setQuantity('');
     }
-    return items;
-  }
+  }, [size])
+
 
   return (
     <Container data-testid="product-overview-component">
@@ -58,7 +73,7 @@ export default function ProductOverview() {
           { selectedStyle && <ProductGallery product={selectedStyle} />}
         </Grid>
 
-        <Grid item sm={4}>
+        <Grid item xs={12} sm={4}>
           {productDetail.product && selectedStyle && (
             <div className="product-form">
               <StarRating />
@@ -82,26 +97,42 @@ export default function ProductOverview() {
               <div>
                 <SizeSelector
                   skus={selectedStyle.skus}
-                  onSelect={(x) => setSize(x) }
+                  selectedSize={size}
+                  onSelect={handleSetSize}
                 />
 
-                {size && (
-
-                  <FormControl sx={{m: 1, minWidth: '150px'}}>
-                    <InputLabel id="quantity">
-                      Quantity
-                    </InputLabel>
-                    <Select label="quantity"
-                            name="quantity"
-                            id="quantity-select"
-                            value={quantity}
-                            onChange={(e) => setQuantity(e.target.value)}
-                    >
-                      {createQuantityItems(selectedStyle.skus[size].quantity)}
-                    </Select>
-                  </FormControl>
-                )}
+                <QuantitySelector
+                  quantity={
+                    selectedStyle && size
+                      ? selectedStyle.skus[size].quantity
+                      : 1
+                  }
+                  selected={quantity}
+                  onSelect={setQuantity}
+                />
               </div>
+
+              <FormControl sx={{m: 1}}>
+                <Button
+                  variant="outlined"
+                >
+                  Add To Cart
+                </Button>
+              </FormControl>
+
+              <FormControl sx={{m: 1}}>
+                <IconButton
+                  aria-label="favorite"
+                  size="large"
+                  onClick={() => setFavorite(!favorite)}
+                >
+                  {
+                    favorite
+                      ? <Favorite fontSize="inherit" />
+                      : <FavoriteBorder fontSize="inherit" />
+                  }
+                </IconButton>
+              </FormControl>
 
             </div>
           )}

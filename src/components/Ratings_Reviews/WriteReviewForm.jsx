@@ -36,18 +36,17 @@ export default function WriteReviewForm() {
 
   const handleSubmitReview = (e) => {
     axios.post(`${ API_URL }/reviews`, {
+      product_id: product.id,
+      rating: rating,
+      summary: summary,
+      body: body,
+      recommend: recommend,
+      name: name,
+      email: email,
+      photos: photos,
+      characteristics: characteristics
+    }, {
       headers: { Authorization: API_KEY },
-      body: {
-        product_id: product.id,
-        rating: rating,
-        summary: summary,
-        body: body,
-        recommend: recommend,
-        name: name,
-        email: email,
-        photos: photos,
-        characteristics: characteristics
-      }
     }).then((res) => {
 
 

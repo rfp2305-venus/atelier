@@ -8,6 +8,7 @@ export default function ImgScroll({photos, selected, onSelect}) {
 
   return photos.map((x, i) => (
     <div
+      key={x.url}
       className={
         i === selected
           ? 'img-item selected-img'
