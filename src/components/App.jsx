@@ -34,7 +34,7 @@ export default function App() {
         <Nav
           products={products.products}
           selectedProduct={productDetail.product ? productDetail.product.id : ''}
-          onClick={(id) => handleSelectProduct(id)}
+          onSelectProduct={(id) => handleSelectProduct(id)}
         />
       }
 

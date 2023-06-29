@@ -52,7 +52,7 @@ export default function ProductOverview() {
   }
 
   return (
-    <Container>
+    <Container data-testid="product-overview-component">
       <Grid container spacing={2} sx={{maxWidth: '1200px'}}>
         <Grid item xs={12} sm={8} style={{maxWidth: '100%'}}>
           { selectedStyle && <ProductGallery product={selectedStyle} />}
