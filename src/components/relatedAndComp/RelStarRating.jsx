@@ -5,7 +5,7 @@ import axios from 'axios';
 
 const {API_URL, API_KEY} = process.env;
 
-function calculateRelAvg(ratings) {
+export function calculateRelAvg(ratings) {
   const sum =
     Number(ratings[1]) +
     Number(ratings[2]) +
