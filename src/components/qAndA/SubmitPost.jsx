@@ -8,7 +8,7 @@ import { Modal, Box, Button, Typography, TextField } from '@mui/material';
 
 import axios from 'axios';
 
-export default function SubmitPost({ type }) {
+export default function SubmitPost({ id, body, type }) {
 
   const { product } = useSelector(({ productDetail }) => productDetail);
 
@@ -22,13 +22,17 @@ export default function SubmitPost({ type }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    // endpoint for posting question vs answer
+    const endpoint = (type === 'question') ?
+      (`${ API_URL }/qa/${ type }s`) : (`${ API_URL }/qa/questions/${ id }/${ type }s`);
+
     /* only exec if all input fields filled correctly
-      (NOTE: extra validation step for email format) */
+      (NOTE: possibly more validation for email format) */
     if (user !== '' && email !== '' && submission !== '') {
 
       // POST req w/ relevant data
       axios
-        .post(`${ API_URL }/qa/${ type }s`, {
+        .post(endpoint, {
           product_id: product.id,
           name: user,
           email: email,
@@ -69,7 +73,7 @@ export default function SubmitPost({ type }) {
       </Typography>
 
       <Typography variant="subtitle1">
-        { (type === 'question') ? (`About ${ product.name }`) : (`${ product.name }: ${ question.body }`) }
+        { (type === 'question') ? (`About ${ product.name }`) : (`${ product.name }: ${ body }`) }
         {/* need to pass question (suspect via answer ID) */}
       </Typography>
 
@@ -80,7 +84,7 @@ export default function SubmitPost({ type }) {
       <form onSubmit={ handleSubmit }>
         <strong>Your nickname: **</strong>
         <TextField
-          placeholder="jackson11!"
+          placeholder="jackson69!"
           value={ user }
           onChange={ (e) => setUser(e.target.value) }
           // NOTE: very useful props below! **

@@ -2,14 +2,15 @@ const { API_URL, API_KEY } = process.env;
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { useSelector } from 'react-redux';
+import { useState, useEffect } from 'react';
 
 import getDate from './util/getDate';
 
 import Answer from './Answer';
 import SeeMore from './SeeMore';
 
-import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import SubmitPost from './SubmitPost';
 
 import axios from 'axios';
 
@@ -56,12 +57,12 @@ export default function AnswersList({ questionID }) {
   }, [/* product, questionID */]);
   // does not seem to resolve multiple API calls —> backlog
 
-  /*
+  // /*
   // check if answers fetched correctly
   answers.forEach((a, i) => {
     console.log(`answer ${ i }: ${ JSON.stringify(a) }`);
   });
-  */
+  // */
 
   return (
     <>
