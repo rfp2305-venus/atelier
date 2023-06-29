@@ -79,7 +79,7 @@ export default function RelatedCard({ productID }) {
 
   // eslint-disable-next-line func-style
   function handleIcon(event) {
-    // alert(`that tickled! my id is ${event.target.id}`);
+    alert(`that tickled! my id is ${event.target.id}`);
     setOpen(true);
   }
   function handleClose(value) {
