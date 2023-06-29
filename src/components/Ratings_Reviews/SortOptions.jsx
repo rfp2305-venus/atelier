@@ -1,22 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-export default function SortOptions({currentProductId, reviewSort, handleSortSelect}) {
-
-  const handleSelected = (event) => {
-    getReviewData(event.target.value);
-  };
-
+export default function SortOptions({setReviews, setSortby}) {
 
   return (
-    <form>
-      <select className='sortSelect' name='sortBy' onChange={e => handleChange(e)} value={reviewSort}>
-        {['relevance', 'helpful', 'newest'].map((sortBy, i) => {
-          return <option key={`reviewSort${i}`} value={sortBy}>{sortBy}</option>;
-        })}
+    <div>
+      <label htmlFor="sortOrder">Sort by:</label>
+      <select id="sortOrder" onChange={e => {setReviews([]); setSortby(e.target.value); }}>
+        <option value="relevant">Relevant</option>
+        <option value="helpful">Helpful</option>
+        <option value="newest">Newest</option>
       </select>
-    </form>
+    </div>
   );
+
 }
 
 
 
+// return (
+//   <form>
+//     <select className='sortSelect' name='sortBy' onChange={e => handleSelected(e)} value={selection}>
+//       {['relevance', 'helpful', 'newest'].map((sortBy, i) => {
+//         return <option key={`option${i}`} value={sortBy}>{sortBy}</option>;
+//       })}
+//     </select>
+//   </form>
+// );

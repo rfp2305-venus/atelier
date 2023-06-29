@@ -1,15 +1,16 @@
-import { initialState } from './initialState.js';
-import { HANDLE_SET_PRODUCT } from './actions.js';
+import {HANDLE_RECEIVE_REVIEWS} from "./actions";
 
-export default function ProductDetail(state = initialState, action) {
-  switch (action.type) {
-    case HANDLE_SET_PRODUCT:
+const initialState = {
+  reviews: null
+};
+
+export default function ReviewsReducer(state = initialState, action) {
+  switch(action.type) {
+    case HANDLE_RECEIVE_REVIEWS:
       return {
         ...state,
-        product: action.product
+        reviews: action.reviews
       }
-      break;
-
     default:
       return {
         ...state

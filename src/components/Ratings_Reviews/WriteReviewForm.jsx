@@ -1,10 +1,16 @@
+const { API_URL, API_KEY } = process.env;
 import React, { useState } from 'react';
 import StarRating from '../../lib/StarRating.jsx';
+import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 export default function WriteReviewForm() {
   //handleState
   //const [rating, setRating] = useState(0);
+
+  const { product } = useSelector(({ productDetail }) => productDetail);
   const [characteristics, setCharacteristics] = useState({});
+  const [rating, setRating] = useState('');
   const [recommend, setRecommend] = useState('');
   const [summary, setSummary] = useState('');
   const [body, setBody] = useState('');
@@ -27,6 +33,26 @@ export default function WriteReviewForm() {
       setEmail(e.target.value);
     }
   };
+
+  const handleSubmitReview = (e) => {
+    axios.post(`${ API_URL }/reviews`, {
+      headers: { Authorization: API_KEY },
+      body: {
+        product_id: product.id,
+        rating: rating,
+        summary: summary,
+        body: body,
+        recommend: recommend,
+        name: name,
+        email: email,
+        photos: photos,
+        characteristics: characteristics
+      }
+    }).then((res) => {
+
+
+    });
+  }
 
   return (
     <div id='reviewForm'>
@@ -67,7 +93,7 @@ export default function WriteReviewForm() {
           <div id='emailWarning'>For authentication reasons, you will not be emailed.</div>
         </form>
       </div>
-      <button id='submitButton'>
+      <button id='submitButton' onClick={handleSubmitReview}>
         {/* onClick={(e) => {
         handleSubmitReview({product_id: currentProductId, rating, characteristics, recommend, summary, body, name, email, photos});
         handleClose();
@@ -86,7 +112,7 @@ export default function WriteReviewForm() {
 // const handleCharacteristicsChange = (e) => {
 //   setCharacteristics({...characteristics, [e.target.name]: Number(e.target.value)});
 // };
-  
+
 // const starRatingMeaning = (rating) => {
 //   if (rating === 1) {
 //     return 'Poor';

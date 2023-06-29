@@ -6,6 +6,8 @@ import axios from 'axios';
 import ReviewTile from './ReviewTile';
 import SortOptions from './SortOptions.jsx';
 import WriteReviewForm from './WriteReviewForm';
+import RatingBreakdown from './RatingBreakdown';
+import './RatingsReviews.css';
 
 
 
@@ -16,6 +18,8 @@ export default function ReviewsList({currentProductId, reviewSort, handleSortSel
   const [reviews, setReviews] = useState([]);
   //const [showMore, setShowMore] = useState(2);
   const [page, setPage] = useState(1);
+  const [count, setCount] = useState(2);
+  const [sortby, setSortby] = useState('relevant');
 
 
   // const filteredReviewsList = [];
@@ -29,20 +33,21 @@ export default function ReviewsList({currentProductId, reviewSort, handleSortSel
     setPage(page => page + 1);
   };
 
-  const fetchReviews = (page = 1, count = 2) => {
+  const fetchReviews = () => {
     return axios.get(`${ API_URL }/reviews`, {
       headers: { Authorization: API_KEY },
       params: {
         product_id: product.id,
         page: page,
-        count: count
+        count: count,
+        sort: sortby
       }
     })
       .then((res) => {
 
         const { results } = res.data;
-        console.log('RESULTS', results);
-        setReviews(results);
+
+        setReviews(reviews.concat(results));
 
         // setReviews((reviews) => [...reviews, results]);
       })
@@ -52,28 +57,27 @@ export default function ReviewsList({currentProductId, reviewSort, handleSortSel
   };
 
   useEffect(() => {
-    // console.log('before', product && product.id);
+    console.log('before', product && product.id);
     if (product) {
-      // console.log('after', product.id);
+      console.log('after', product.id);
       fetchReviews();
     }
-  }, [ product ]);
+  }, [ product, page, sortby ]);
 
-
+  console.log('REVIEWS', reviews);
   return (
 
     <div>
-      {/* <span className='reviewsListHeaderText'>{`${filteredReviewsList.length > 0 ? filteredReviewsList.length : reviewsList.length} review${filteredReviewsList.length > 1 || reviewsList.length > 1 ? 's' : ''}, sorted by`}</span>
       <span>
-        <SortOptions currentProductId={currentProductId} reviewSort={reviewSort} handleSortSelect={handleSortSelect} />
-      </span> */}
-      <SortOptions/>
+        <RatingBreakdown reviews={reviews}/>
+      </span>
+      <SortOptions setReviews={setReviews} setSortby={setSortby}/>
       <div>
         <h3 className='reviews'>Ratings & Reviews</h3>
         {reviews.map((review) => (
           <ReviewTile key={review.review_id} review={review} id={review.review_id}/>
         ))}
-        <div><button className='showMoreButton' onClick={showMore}>show more...</button></div>
+        <div><button className='showMoreButton' onClick={showMore}>More Reviews</button></div>
         <WriteReviewForm/>
       </div>
     </div>
