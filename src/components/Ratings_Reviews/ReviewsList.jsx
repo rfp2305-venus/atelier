@@ -22,13 +22,6 @@ export default function ReviewsList({currentProductId, reviewSort, handleSortSel
   const [sortby, setSortby] = useState('relevant');
 
 
-  // const filteredReviewsList = [];
-  // for (let review of reviewsList) {
-  //   if (ratingsFilter.hasOwnProperty(review.rating) && ratingsFilter[review.rating] === true) {
-  //     filteredReviewsList.push(review);
-  //   }
-  // }
-
   const showMore = () => {
     setPage(page => page + 1);
   };
@@ -57,14 +50,15 @@ export default function ReviewsList({currentProductId, reviewSort, handleSortSel
   };
 
   useEffect(() => {
-    console.log('before', product && product.id);
+    //console.log('before', product && product.id);
     if (product) {
-      console.log('after', product.id);
+      //console.log('after', product.id);
       fetchReviews();
     }
   }, [ product, page, sortby ]);
 
   console.log('REVIEWS', reviews);
+
   return (
 
     <div>

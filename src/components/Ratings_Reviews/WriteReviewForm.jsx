@@ -1,16 +1,16 @@
 const { API_URL, API_KEY } = process.env;
 import React, { useState } from 'react';
-import StarRating from '../../lib/StarRating.jsx';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
+import HoverRating from './NewReviewStars';
+
 
 export default function WriteReviewForm() {
-  //handleState
-  //const [rating, setRating] = useState(0);
 
   const { product } = useSelector(({ productDetail }) => productDetail);
+
   const [characteristics, setCharacteristics] = useState({});
-  const [rating, setRating] = useState('');
+  const [rating, setRating] = useState();
   const [recommend, setRecommend] = useState('');
   const [summary, setSummary] = useState('');
   const [body, setBody] = useState('');
@@ -34,10 +34,15 @@ export default function WriteReviewForm() {
     }
   };
 
+  const handleStarChange = () => {
+    setRating(rating);
+    console.log(rating);
+  };
+
   const handleSubmitReview = (e) => {
     axios.post(`${ API_URL }/reviews`, {
       headers: { Authorization: API_KEY },
-      body: {
+      params: {
         product_id: product.id,
         rating: rating,
         summary: summary,
@@ -49,10 +54,11 @@ export default function WriteReviewForm() {
         characteristics: characteristics
       }
     }).then((res) => {
-
-
+      console.log(res);
+    }).catch(error => {
+      console.log('error', error);
     });
-  }
+  };
 
   return (
     <div id='reviewForm'>
@@ -62,9 +68,7 @@ export default function WriteReviewForm() {
 
         <div id='starRating '>
             How would you rate this product?
-
-          {/* <StarRating /> */}
-
+          <HoverRating value={rating} onClick={handleStarChange} />
         </div>
 
         <form id='recommendItem'>
@@ -94,10 +98,6 @@ export default function WriteReviewForm() {
         </form>
       </div>
       <button id='submitButton' onClick={handleSubmitReview}>
-        {/* onClick={(e) => {
-        handleSubmitReview({product_id: currentProductId, rating, characteristics, recommend, summary, body, name, email, photos});
-        handleClose();
-      }} */}
           Submit
       </button>
     </div>
