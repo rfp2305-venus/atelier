@@ -44,6 +44,7 @@ export default function SubmitPost({ id, body, type }) {
       axios({
         method: 'post',
         url: endpoint,
+        headers: { Authorization: API_KEY },
         data: {
           product_id: product.id,
           name: user,
