@@ -7,12 +7,14 @@
 //   };
 // }
 
-export const COMPARISON = 'COMPARISON MODAL';
 
-export default function handleModal(value) {
+
+export const COMPARISON = 'COMPARISON PRODUCT';
+
+export default function handleSetComparisonProduct(product) {
   return {
     type: COMPARISON,
-    modalStatus: value
+    comparisonDetail: product
   };
 }
 

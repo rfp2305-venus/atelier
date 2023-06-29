@@ -6,31 +6,13 @@ import { useEffect, useState } from 'react';
 import RelStarRating from './RelStarRating';
 import axios from 'axios';
 import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
-import { IconButton, Card, CardMedia, CardContent, Typography, Dialog, DialogTitle } from '@mui/material';
-// import ComparisonModal from './ComparisonModal';
+import { Card, CardMedia, CardContent, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, IconButton, Typography } from '@mui/material';
+import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined';
+import ComparisonModal from './ComparisonModal';
 //redux
 import { useSelector, useDispatch } from 'react-redux';
 import handleModal from '../../state/related/actions.js';
 import aSimpleAction from '../../state/related/actions.js';
-
-export function ComparisonModal({ handleClose, setOpen }) {
-  const { modalStatus } = useSelector(({ modalStatus }) => modalStatus);
-  // console.log('modalStatus in comparison', modalStatus);
-
-  function onClose() {
-    handleClose();
-    setOpen(false);
-  }
-
-  return (
-    modalStatus ? (
-      <Dialog handleClose={handleClose}>
-        <DialogTitle>
-          COMPARING
-        </DialogTitle>
-      </Dialog>) : null
-  );
-}
 
 export default function RelatedCard({ productID }) {
   const modalStatus = useSelector((state) => state.modalStatus);
@@ -40,12 +22,12 @@ export default function RelatedCard({ productID }) {
   const [ product, setProduct ] = useState({});
   const [ productStyles, setProductStyles ] = useState({});
   const [ productPhoto, setProductPhoto ] = useState('');
-  const [ open, setOpen ] = useState('false');
+  const [ open, setOpen ] = useState(false);
 
   useEffect(()=>{
     dispatch(handleModal(true));
     // console.log('modalStatus:', modalStatus);
-    // console.log('state:', state);
+    console.log('state:', state);
   }, [open]);
 
   useEffect(()=>{
@@ -79,7 +61,7 @@ export default function RelatedCard({ productID }) {
 
   // eslint-disable-next-line func-style
   function handleIcon(event) {
-    alert(`that tickled! my id is ${event.target.id}`);
+    // alert(`that tickled! my id is ${event.target.id}`);
     setOpen(true);
   }
   function handleClose(value) {
@@ -100,17 +82,16 @@ export default function RelatedCard({ productID }) {
             <IconButton id={product.id} onClick={event => handleIcon(event)}>
               <StarBorderOutlinedIcon id={product.id} />
             </IconButton>
+            <ComparisonModal open={open} onClose={handleClose} productID={productID}/>
           </span>
         </div>
         <CardContent>
           <Typography component='p'>{product.category}</Typography>
-          <Typography component='h6' variant='h6'>{product.name}</Typography>
+          <Typography component='p'>{product.name}</Typography>
           <Typography component='p'>{product.default_price}</Typography>
           <RelStarRating productID={productID}/>
         </CardContent>
       </Card>
-      <ComparisonModal handleClose={handleClose} setOpen={setOpen}/>
-
     </>
   );
 }

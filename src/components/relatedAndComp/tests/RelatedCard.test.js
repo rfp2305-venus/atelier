@@ -13,7 +13,7 @@ describe('RelatedCard Component', () => {
     expect(RelatedCard).not.toBe(null);
   });
 
-  // test('Comparison Modal renders correctly', () => {
+  // test('RelatedCard renders correctly', () => {
   //   const tree = renderer
   //     .create(<RelatedCard />)
   //     .toJSON();
