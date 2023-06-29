@@ -12,20 +12,20 @@ import getDate from './util/getDate';
 import Question from './Question';
 import Search from './Search';
 import SeeMore from './SeeMore';
+import SubmitPost from './SubmitPost';
 
 import axios from 'axios';
 
 export default function QuestionsList() {
 
   const [ questions, setQuestions ] = useState([]);
-
   const [ length, setLength ] = useState(4);
-  // const [ isExpanded, setExpanded ] = useState(false);
 
   const [ search, setSearch ] = useState('');
 
   // REDUX
   const { product } = useSelector(({ productDetail }) => productDetail);
+  // console.log(`product: ${ JSON.stringify(product) }`);
 
   const fetchQuestions = (page = 1, count = 50 /* placeholder values */) => {
 
@@ -57,7 +57,7 @@ export default function QuestionsList() {
     if (product) {
       fetchQuestions();
     }
-  }, [product]);
+  }, [ product ]);
 
   /*
   // check if questions fetched correctly
@@ -105,6 +105,8 @@ export default function QuestionsList() {
         > all questions displayed */}
       { (questions.length > 2) && (length < questions.length) &&
         (<SeeMore type="question" length={ length } setLength={ setLength } />) }
+
+      <SubmitPost type="question" />
     </Box>
   );
 }
