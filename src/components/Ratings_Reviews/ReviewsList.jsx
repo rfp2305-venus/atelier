@@ -6,7 +6,7 @@ import axios from 'axios';
 import ReviewTile from './ReviewTile';
 import SortOptions from './SortOptions.jsx';
 import WriteReviewForm from './WriteReviewForm';
-import RatingBreakdown from './RatingBreakdown';
+//import RatingBreakdown from './RatingBreakdown';
 import './RatingsReviews.css';
 
 
@@ -68,9 +68,6 @@ export default function ReviewsList({currentProductId, reviewSort, handleSortSel
   return (
 
     <div>
-      <span>
-        <RatingBreakdown reviews={reviews}/>
-      </span>
       <SortOptions setReviews={setReviews} setSortby={setSortby}/>
       <div>
         <h3 className='reviews'>Ratings & Reviews</h3>
