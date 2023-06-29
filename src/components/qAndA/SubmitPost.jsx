@@ -31,15 +31,17 @@ export default function SubmitPost({ id, body, type }) {
     if (user !== '' && email !== '' && submission !== '') {
 
       // POST req w/ relevant data
-      axios
-        .post(endpoint, {
+      axios({
+        method: 'post',
+        url: endpoint,
+        headers: { Authorization: API_KEY },
+        data: {
           product_id: product.id,
           name: user,
           email: email,
-          body: submission,
-        }, {
-          headers: { Authorization: API_KEY },
-        })
+          body: submission
+        }
+      })
         .then(() => {
           console.log(`Post from ${ user }: ${ submission }`);
         })
