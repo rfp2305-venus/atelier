@@ -25,6 +25,9 @@ export default function QuestionsList() {
 
   const [ search, setSearch ] = useState('');
 
+  // controls state of modal
+  const [ open, setOpen ] = useState(false);
+
   const fetchQuestions = (page = 1, count = 50 /* placeholder values */) => {
 
     axios
@@ -95,6 +98,8 @@ export default function QuestionsList() {
                     id={ question_id }
                     body={ question_body }
                     type="answer"
+                    open={ open }
+                    setOpen={ setOpen }
                   />
                 </AccordionSummary>
                 <AccordionDetails>
@@ -120,7 +125,7 @@ export default function QuestionsList() {
       { (questions.length > 2) && (length < questions.length) &&
         <SeeMore type="question" length={ length } setLength={ setLength } /> }
 
-      { product && <SubmitPost type="question" /> }
+      { product && <SubmitPost type="question" open={ open } setOpen={ setOpen } /> }
     </Box>
   );
 }

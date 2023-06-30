@@ -8,11 +8,9 @@ import { Dialog, DialogTitle, DialogContent, DialogActions, Box, Button, Typogra
 
 import axios from 'axios';
 
-export default function SubmitPost({ id, body, type }) {
+export default function SubmitPost({ id, body, type, open, setOpen }) {
 
   const { product } = useSelector(({ productDetail }) => productDetail);
-
-  const [ open, setOpen ] = useState(false);
 
   // user inputs **
   const [ submission, setSubmission ] = useState('');
@@ -78,6 +76,7 @@ export default function SubmitPost({ id, body, type }) {
         onClose={ () => setOpen(false) }
         aria-labelledby="add-submission"
         aria-describedby="post-submission-for-given-product"
+        onClick={ (e) => e.stopPropagation() } // NOTE: prevents event from bubbling up to Accordion
       >
         <DialogTitle>
           { (type === 'question')
