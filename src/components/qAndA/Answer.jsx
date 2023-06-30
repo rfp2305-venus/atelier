@@ -19,8 +19,7 @@ export default function Answer({ id, body, date, user, isSeller, helpfulness, ph
       </Typography>
 
       <Typography variant="body2" sx={{ marginBottom: '30px' }}>
-        Helpful?
-        <Upvote id={ id } type="answer" helpfulness={ helpfulness } />
+        Helpful? <Upvote id={ id } type="answer" helpfulness={ helpfulness } />
         <Report id={ id } type="answer" reported={ reported } />
       </Typography>
     </Box>

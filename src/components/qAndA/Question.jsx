@@ -20,8 +20,7 @@ export default function Question({ id, body, date, user, helpfulness, reported }
       </Typography>
 
       <Typography variant="body2" sx={{ marginBottom: '25px' }}>
-        Helpful?
-        <Upvote id={ id } type="question" helpfulness={ helpfulness } />
+        Helpful? <Upvote id={ id } type="question" helpfulness={ helpfulness } />
         <Report id={ id } type="question" reported={ reported } />
       </Typography>
 
