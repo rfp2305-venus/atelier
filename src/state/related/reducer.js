@@ -10,10 +10,10 @@ export default function relatedReducer(state, action) {
       data: action.data
     }
     break;
-  case 'COMPARISON PRODUCT':
+  case 'COMPARISON_PRODUCT':
     return {
       ...state,
-      comparisonDetail: action.product
+      comparisonDetail: action.comparisonDetail
     }
     break;
   default:

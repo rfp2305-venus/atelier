@@ -11,7 +11,7 @@ const rootReducer = combineReducers({
   app: AppReducer,
   productDetail: ProductDetailReducer,
   products: ProductsReducer,
-  modalStatus: relatedReducer,
+  comparisonDetail: relatedReducer,
   reviews: ReviewsReducer
 
 });
