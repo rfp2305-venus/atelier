@@ -26,9 +26,9 @@ export default function RelatedCard({ productID }) {
   const [ open, setOpen ] = useState(false);
   const [comparisonExists, setComparisonExists] = useState(false);
 
-  useEffect(()=>{
-    console.log('state:', state);
-  }, [open]);
+  // useEffect(()=>{
+  //   console.log('state:', state);
+  // }, [open]);
 
   useEffect(()=>{
     axios({

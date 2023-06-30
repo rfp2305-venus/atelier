@@ -22,7 +22,6 @@ export default function ComparisonModal({open, onClose, productID, comparisonExi
 
   function AssignComparisonProduct(productID) {
     dispatch(handleFetchComparisonProduct(productID));
-
   }
 
   return (comparison ?
