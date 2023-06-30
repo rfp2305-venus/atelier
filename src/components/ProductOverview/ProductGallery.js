@@ -115,18 +115,21 @@ export default function ProductGallery({product, ...props}) {
       setSelectedImage(0);
   }, [product]);
 
-  const wrapperClassList = [];
-
-  console.log('fullScreen : ', fullScreen);
   return selectedImage !== null && (/*
     windowWidth <= 600
       ? renderMobile(product.photos, selectedImage, handleSelectImage)
       : */(
       <div className={fullScreen ? 'gallery-wrapper full-screen' : 'gallery-wrapper'}
-           style={{background: 'rgb(54 57 59)', padding: '16px', borderRadius: '10px'}}>
+           style={{
+             background: 'rgb(54 57 59)',
+             padding: '16px',
+             borderRadius: '10px',
+             height: '550px'
+           }}>
         <Box
              sx={{
                minHeight: '550px',
+               height: '100%',
                display: 'flex',
                justifyContent: 'center',
                alignItems: 'center',
@@ -168,6 +171,10 @@ export default function ProductGallery({product, ...props}) {
           <div
             style={{
               position: 'relative',
+              height: '100%',
+              display: 'flex',
+              justifyContent: 'center',
+              flexDirection: 'column',
             }}
             onMouseMove={mouseIn ? handleMouseMove : null}
             onMouseEnter={handleMouseEnter}
@@ -180,7 +187,7 @@ export default function ProductGallery({product, ...props}) {
               className="gallery-main"
               style={{
                 // height: '500px',
-                maxHeight: '75vh',
+                maxHeight: '100%',
                 maxWidth: '100%',
                 borderRadius: '2%',
               }}
