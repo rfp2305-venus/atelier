@@ -12,7 +12,7 @@ export default function Question({ id, body, date, user, helpfulness, reported }
   return (
     <Box>
       <Typography variant="h6" component="h3">
-        Q: { body }
+        <strong>Q:</strong> { body }
       </Typography>
 
       <Typography variant="body2">
