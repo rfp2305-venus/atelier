@@ -22,9 +22,13 @@ export default function SubmitPost({ id, body, type }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // endpoint for posting question vs answer
-    const endpoint = (type === 'question') ?
-      (`${ API_URL }/qa/${ type }s`) : (`${ API_URL }/qa/questions/${ id }/${ type }s`);
+    let endpoint;
+
+    if (type === 'question') {
+      endpoint = `${ API_URL }/qa/${ type }s`;
+    } else {
+      endpoint = `${ API_URL }/qa/questions/${ id }/${ type }s`;
+    }
 
     /* only exec if all input fields filled correctly
       (NOTE: possibly more validation for email format) */
@@ -65,17 +69,19 @@ export default function SubmitPost({ id, body, type }) {
     <Box sx={{
       width: 500,
       height: 300,
-      display: 'flex',
-      alignItems: 'center',
+      // display: 'flex',
+      // alignItems: 'center',
       // justifyContent: 'center',
-      height: '100%'
+      // height: '100%'
     }}>
       <Typography variant="h6" component="h2">
         { (type === 'question') ? ('Ask Your Question') : ('Submit Your Answer') }
       </Typography>
 
       <Typography variant="subtitle1">
-        { (type === 'question') ? (`About ${ product.name }`) : (`${ product.name }: ${ body }`) }
+        { (type === 'question')
+          ? (`About "${ product.name }"`)
+          : (`${ product.name }: ${ body }`) }
         {/* need to pass question (suspect via answer ID) */}
       </Typography>
 

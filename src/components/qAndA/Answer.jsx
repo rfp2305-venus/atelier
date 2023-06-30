@@ -1,42 +1,27 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import { Box, Typography } from '@mui/material';
+
 import Upvote from './Upvote';
 import Report from './Report';
 
-export default function Answer({ id, body, date, user, helpfulness, photos, reported }) {
+export default function Answer({ id, body, date, user, isSeller, helpfulness, photos, reported }) {
 
   return (
-    <>
-      <tr>
-        <th>
-          ———( ANSWER )———
-        </th>
-      </tr>
-      <tr>
-        <td>
-          <strong>A:</strong> { body }
-        </td>
-      </tr>
+    <Box sx={{ marginTop: '20px' }}>
+      <Typography variant="subtitle1">
+        <strong>A:</strong> { body }
+      </Typography>
 
-      <tr>
-        <td>
-          {/* if (user === 'Seller') —> BOLD */}
-          By { user /* (user === 'Seller') ? <strong>{ user }</strong> : { user } */} — { date }
-        </td>
-      </tr>
+      <Typography variant="body2">
+        By { (isSeller) ? (<strong>Seller</strong>) : (user) } — { date }
+      </Typography>
 
-      <tr>
-        <td>
-          <strong>Helpful?</strong>
-          <Upvote id={ id } type="answer" helpfulness={ helpfulness } />
-        </td>
-
-        <td>
-          {/* NOTE: no 'reported' prop on obj */}
-          <Report id={ id } type="answer" reported={ reported } />
-        </td>
-      </tr>
-    </>
+      <Typography variant="body2" sx={{ marginBottom: '30px' }}>
+        Helpful? <Upvote id={ id } type="answer" helpfulness={ helpfulness } />
+        <Report id={ id } type="answer" reported={ reported } />
+      </Typography>
+    </Box>
   );
 }

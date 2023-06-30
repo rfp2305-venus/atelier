@@ -24,7 +24,7 @@ export default function QuestionsList() {
 
   const [ search, setSearch ] = useState('');
 
-  // REDUX
+  // redux
   const { product } = useSelector(({ productDetail }) => productDetail);
   // console.log(`product: ${ JSON.stringify(product) }`);
 
@@ -69,7 +69,7 @@ export default function QuestionsList() {
 
   return (
     <Box width="800px" margin="auto">
-      <h1>Q&A:</h1>
+      <Typography variant="h3" sx={{ marginTop: '5px' }}>Q&A:</Typography>
       <Search
         questions={ questions }
         setQuestions={ setQuestions }
@@ -85,7 +85,7 @@ export default function QuestionsList() {
             (question_body.length > 0 && !reported) ? (
               <Accordion key={ question_id }>
                 <AccordionSummary expandIcon={ <ExpandMoreIcon /> }>
-                  <Typography variant="h6">{ question_body }</Typography>
+                  <Typography variant="h5">{ question_body }</Typography>
                   <SubmitPost
                     id={ question_id }
                     body={ question_body }
