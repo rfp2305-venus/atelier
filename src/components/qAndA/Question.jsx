@@ -19,7 +19,7 @@ export default function Question({ id, body, date, user, helpfulness, reported }
         By { (user === 'Seller') ? (<strong>Seller</strong>) : (user) } — { date }
       </Typography>
 
-      <Typography variant="body2" sx={{ marginBottom: '25px' }}>
+      <Typography variant="body2" sx={{ marginBottom: '20px' }}>
         Helpful? <Upvote id={ id } type="question" helpfulness={ helpfulness } />
         <Report id={ id } type="question" reported={ reported } />
       </Typography>
