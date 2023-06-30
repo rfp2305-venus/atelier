@@ -8,9 +8,9 @@ export default function RelatedProducts({ relatedProducts }) {
   return (
     <>
       <Typography component='p' className="title">RELATED PRODUCTS</Typography>
-      <Box className="carousel" id="related-products">
+      <div className="carousel" id="related-products">
         {cardList}
-      </Box>
+      </div>
     </>
 
   );
