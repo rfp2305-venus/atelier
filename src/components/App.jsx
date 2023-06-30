@@ -39,12 +39,12 @@ export default function App() {
       }
 
       {productDetail.product && (
-        <>
+        <Container spacing={0} sx={{padding: '0'}}>
           <ProductOverview />
           <RelatedComp />
           <QuestionsList />
           <ReviewsList />
-        </>
+        </Container>
       )}
 
     </Box>
