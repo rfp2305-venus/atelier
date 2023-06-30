@@ -1,8 +1,6 @@
 const { API_URL, API_KEY } = process.env;
 
 import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
-
 import { Button } from '@mui/material';
 
 import axios from 'axios';
@@ -13,7 +11,7 @@ export default function Upvote({ id, type, helpfulness }) {
   const [ hasVoted, setVoted ] = useState(false);
 
   return (
-    <Button disabled={ hasVoted } onClick={(e) => {
+    <Button disabled={ hasVoted } onClick={ (e) => {
       e.preventDefault();
 
       // send PUT req to update helpfulness

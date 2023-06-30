@@ -31,7 +31,7 @@ export default function SubmitPost({ id, body, type }) {
     }
 
     // only exec if all input fields filled correctly
-    // NOTE: possibly more validation for email format
+    // regex to verify email (boo)
     if (user !== '' && email !== '' && submission !== '') {
       // ^ technically superfluous since 'required' prop used below
 
@@ -49,6 +49,7 @@ export default function SubmitPost({ id, body, type }) {
       })
         .then(() => {
           console.log(`${ user } posted ${ type }: ${ submission }`);
+          setOpen(false);
         })
         .catch((err) => {
           console.error(`Error posting submission: ${ err }`);
@@ -57,8 +58,8 @@ export default function SubmitPost({ id, body, type }) {
       // close modal after submission **
       setOpen(false);
 
-    } else {
-      // otherwise alert user
+    } else { // otherwise alert user
+      // also superfluous
       alert(`This error will occur if :
       1. Any mandatory fields are blank
       2. The email address provided is not in the correct format
@@ -120,6 +121,7 @@ export default function SubmitPost({ id, body, type }) {
               placeholder="spongebob69@jeemail.gov"
               value={ email }
               onChange={ (e) => setEmail(e.target.value) }
+              type="email" // enforces email format validation!
               required
               inputProps={{ maxLength: 60 }}
             />
@@ -133,7 +135,11 @@ export default function SubmitPost({ id, body, type }) {
               <strong>Your { type }: **</strong>
             </Typography>
             <TextField
-              placeholder={ (type === 'question') ? ('What\'s the deal with airline food?') : ('Here\'s the deal with airline food...') }
+              placeholder={
+                (type === 'question')
+                  ? ('So what\'s the deal with airline food?')
+                  : ('So here\'s the deal with airline food...')
+              }
               value={ submission }
               onChange={ (e) => setSubmission(e.target.value) }
               fullWidth
@@ -156,98 +162,3 @@ export default function SubmitPost({ id, body, type }) {
     </Box>
   );
 }
-
-/*
-  const modalContent = (
-    <Box sx={{
-      width: 500,
-      height: 300,
-      // display: 'flex',
-      // alignItems: 'center',
-      // justifyContent: 'center',
-      // height: '100%'
-    }}>
-      <Typography variant="h6" component="h2">
-        { (type === 'question') ? ('Ask Your Question') : ('Submit Your Answer') }
-      </Typography>
-
-      <Typography variant="subtitle1">
-        { (type === 'question')
-          ? (`About "${ product.name }"`)
-          : (`${ product.name }: ${ body }`) }
-      </Typography>
-
-      <Typography variant="body2" sx={{ fontStyle: 'italic' }}>
-        NOTE: Mandatory fields denoted by asterisks
-      </Typography>
-
-      <form onSubmit={ handleSubmit }>
-        <strong>Your nickname: **</strong>
-        <TextField
-          placeholder="jackson69!"
-          value={ user }
-          onChange={ (e) => setUser(e.target.value) }
-          // NOTE: useful props below!
-          required
-          inputProps={{ maxLength: 60 }}
-        />
-
-        <br />
-        <Typography variant="body2">
-          For privacy reasons, do not use your full name or email address
-        </Typography>
-
-        <strong>Your email: **</strong>
-        <TextField
-          placeholder="spongebob69@jeemail.gov"
-          value={ email }
-          onChange={ (e) => setEmail(e.target.value) }
-          required
-          inputProps={{ maxLength: 60 }}
-        />
-
-        <br />
-        <Typography variant="body2">
-          For authentication reasons, you will not be emailed
-        </Typography>
-
-        <strong>Your { type }: **</strong>
-        <TextField
-          placeholder={ (type === 'question') ? ('What\'s the deal with airline food?') : ('Here\'s the deal with airline food...') }
-          value={ submission }
-          onChange={ (e) => setSubmission(e.target.value) }
-          fullWidth
-          required
-          inputProps={{ maxLength: 1000 }}
-        />
-
-        <Button type="submit">
-          Submit { type }
-        </Button>
-      </form>
-    </Box>
-  );
-
-  return (
-    <>
-      <Button onClick={(e) => {
-        e.preventDefault();
-        // open modal **
-        setOpen(true);
-      }}>
-        Add { type }
-      </Button>
-
-      <Modal
-        open={ open }
-        onClose={() => setOpen(false)}
-        aria-labelledby="add-submission"
-        aria-describedby="post-submission-for-given-product"
-        // inline styling to make modal more visible
-        sx={{ backgroundColor: 'rgba(255, 255, 255, 0.95)' }}
-      >
-        { modalContent }
-      </Modal>
-    </>
-  );
-*/

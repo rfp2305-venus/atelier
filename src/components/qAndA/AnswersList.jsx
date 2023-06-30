@@ -1,7 +1,6 @@
 const { API_URL, API_KEY } = process.env;
 
 import React, { useState, useEffect } from 'react';
-import ReactDOM from 'react-dom';
 import { useSelector } from 'react-redux';
 
 import { Box } from '@mui/material';
