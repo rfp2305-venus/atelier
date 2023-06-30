@@ -14,8 +14,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import handleModal from '../../state/related/actions.js';
 import aSimpleAction from '../../state/related/actions.js';
 
+
 export default function RelatedCard({ productID }) {
-  const modalStatus = useSelector((state) => state.modalStatus);
+
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
 
@@ -23,10 +24,9 @@ export default function RelatedCard({ productID }) {
   const [ productStyles, setProductStyles ] = useState({});
   const [ productPhoto, setProductPhoto ] = useState('');
   const [ open, setOpen ] = useState(false);
+  const [comparisonExists, setComparisonExists] = useState(false);
 
   useEffect(()=>{
-    dispatch(handleModal(true));
-    // console.log('modalStatus:', modalStatus);
     console.log('state:', state);
   }, [open]);
 
@@ -61,7 +61,6 @@ export default function RelatedCard({ productID }) {
 
   // eslint-disable-next-line func-style
   function handleIcon(event) {
-    // alert(`that tickled! my id is ${event.target.id}`);
     setOpen(true);
   }
   function handleClose(value) {
@@ -82,7 +81,7 @@ export default function RelatedCard({ productID }) {
             <IconButton id={product.id} onClick={event => handleIcon(event)}>
               <StarBorderOutlinedIcon id={product.id} />
             </IconButton>
-            <ComparisonModal open={open} onClose={handleClose} productID={productID}/>
+            <ComparisonModal open={open} onClose={handleClose} productID={productID} comparison={comparisonExists} setComparison={setComparisonExists}/>
           </span>
         </div>
         <CardContent>
@@ -95,23 +94,3 @@ export default function RelatedCard({ productID }) {
     </>
   );
 }
-
-/*
-
-<div className="card">
-        <div className="card-first-row">
-          <img src={productPhoto} alt={product.name} className='related-products-thumbnail'/>
-          <span>
-            <IconButton id={product.id} onClick={event => handleIcon(event)}>
-              <StarBorderOutlinedIcon id={product.id} />
-            </IconButton>
-          </span>
-        </div>
-        <p>{product.category}</p>
-        <h4>{product.name}</h4>
-        <p>{product.default_price}</p>
-        <RelStarRating productID={productID}/>
-      </div>
-
-
-*/
