@@ -7,7 +7,7 @@ import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined';
 export default function OutfitCard() {
   return (
 
-    <Card className="card outfit-card">
+    <Card className="card">
       <div className="card-first-row">
         <CardMedia
           className='related-products-thumbnail'
@@ -23,7 +23,7 @@ export default function OutfitCard() {
       </div>
       <CardContent>
         <Typography component='p'>category</Typography>
-        <Typography component='h6' variant='h6'>product name</Typography>
+        <Typography component='p'>product name</Typography>
         <Typography component='p'>$123</Typography>
       </CardContent>
     </Card>

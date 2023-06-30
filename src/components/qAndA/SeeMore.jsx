@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import { Button } from '@mui/material';
 
 export default function SeeMore({ type, aLength, length, setLength, isExpanded, setExpanded }) {
+
   const handleClick = (e) => {
     e.preventDefault();
 
@@ -26,7 +27,11 @@ export default function SeeMore({ type, aLength, length, setLength, isExpanded, 
   return (
     <Button onClick={ handleClick }>
       {
-        (type === 'question') ? ('More Answered Questions') : (!isExpanded) ? ('See More Answers') : ('Collapse Answers')
+        (type === 'question')
+          ? ('More Answered Questions')
+          : (!isExpanded)
+            ? ('See More Answers')
+            : ('Collapse Answers')
       }
     </Button>
   );
