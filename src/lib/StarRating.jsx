@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
+import {Button, Stack} from "@mui/material";
 
 function calculateAverage(ratings) {
   const sum =
@@ -45,10 +46,14 @@ export default function StarRating() {
   }, [rating.ratings]);
 
   return (
-    <div data-testid="star-rating">
-      {stars && stars.map((star, indx) => renderStar(star, indx))}
-      <span>Read All Ratings</span>
-    </div>
+    <Stack direction="row" sx={{justifyContent: 'space-between', alignItems: 'center'}} data-testid="star-rating">
+      <div style={{height: '15px'}}>
+        {stars && stars.map((star, indx) => renderStar(star, indx))}
+      </div>
+      <Button variant='text' sx={{color: 'black'}}>
+        Read All Ratings
+      </Button>
+    </Stack>
   );
 }
 
@@ -56,7 +61,7 @@ function renderStar(fillPercent, id) {
   return (
     <svg
       key={id}
-      style={{height: '15px'}}
+      style={{height: '100%'}}
       viewBox="0 0 576 512"
       xmlns="http://www.w3.org/2000/svg">
       <defs>
