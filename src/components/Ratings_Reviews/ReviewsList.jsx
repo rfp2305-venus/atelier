@@ -6,7 +6,7 @@ import axios from 'axios';
 import ReviewTile from './ReviewTile';
 import SortOptions from './SortOptions.jsx';
 import WriteReviewForm from './WriteReviewForm';
-//import RatingBreakdown from './RatingBreakdown';
+import RatingsBreakdown from './RatingsBreakdown';
 import './RatingsReviews.css';
 
 
@@ -59,12 +59,15 @@ export default function ReviewsList({currentProductId, reviewSort, handleSortSel
 
   console.log('REVIEWS', reviews);
 
+
   return (
 
     <div>
+      <div>
+        <RatingsBreakdown reviews={reviews}/>
+      </div>
       <SortOptions setReviews={setReviews} setSortby={setSortby}/>
       <div>
-        <h3 className='reviews'>Ratings & Reviews</h3>
         {reviews.map((review) => (
           <ReviewTile key={review.review_id} review={review} id={review.review_id}/>
         ))}

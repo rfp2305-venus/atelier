@@ -8,6 +8,7 @@ export default function ImgScroll({photos, selected, onSelect}) {
 
   return photos.map((x, i) => (
     <div
+      key={x.url}
       className={
         i === selected
           ? 'img-item selected-img'
@@ -17,10 +18,12 @@ export default function ImgScroll({photos, selected, onSelect}) {
       style={{
         width: '75px',
         height: '75px',
+        marginBottom: '8px',
+        flexShrink: 0,
         backgroundImage: `url(${x.thumbnail_url})`,
         backgroundPosition: 'center center',
         backgroundSize: 'cover',
-        borderRadius: '2%'
+        borderRadius: '10px'
       }}
     />
   ))

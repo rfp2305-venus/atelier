@@ -3,7 +3,7 @@ const { API_URL, API_KEY } = process.env;
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import { Modal, Box, Button, Typography, TextField } from '@mui/material';
+import { Dialog, DialogTitle, DialogContent, DialogActions, Box, Button, Typography, TextField } from '@mui/material';
 // <TextField> analogous to <input>
 
 import axios from 'axios';
@@ -30,9 +30,10 @@ export default function SubmitPost({ id, body, type }) {
       endpoint = `${ API_URL }/qa/questions/${ id }/${ type }s`;
     }
 
-    /* only exec if all input fields filled correctly
-      (NOTE: possibly more validation for email format) */
+    // only exec if all input fields filled correctly
+    // NOTE: possibly more validation for email format
     if (user !== '' && email !== '' && submission !== '') {
+      // ^ technically superfluous since 'required' prop used below
 
       // POST req w/ relevant data
       axios({
@@ -47,10 +48,10 @@ export default function SubmitPost({ id, body, type }) {
         }
       })
         .then(() => {
-          console.log(`Post from ${ user }: ${ submission }`);
+          console.log(`${ user } posted ${ type }: ${ submission }`);
         })
         .catch((err) => {
-          console.error(`Error posting user submission: ${ err }`);
+          console.error(`Error posting submission: ${ err }`);
         });
 
       // close modal after submission **
@@ -65,6 +66,98 @@ export default function SubmitPost({ id, body, type }) {
     }
   };
 
+  return (
+    <Box>
+      <Button onClick={ () => setOpen(true) }>
+        Add { type }
+      </Button>
+
+      <Dialog
+        open={ open }
+        onClose={ () => setOpen(false) }
+        aria-labelledby="add-submission"
+        aria-describedby="post-submission-for-given-product"
+      >
+        <DialogTitle>
+          { (type === 'question')
+            ? ('Ask Your Question')
+            : ('Submit Your Answer') }
+        </DialogTitle>
+
+        <DialogContent>
+          <Typography variant="subtitle1">
+            { (type === 'question')
+              ? (`About "${ product.name }"`)
+              : (`${ product.name }: ${ body }`) }
+          </Typography>
+
+          <Typography variant="body2" sx={{ marginTop: '15px', marginBottom: '15px' }}>
+            NOTE: Mandatory fields denoted by asterisks
+          </Typography>
+
+          <form onSubmit={ handleSubmit }>
+            <Typography variant="body1">
+              <strong>Your nickname: **</strong>
+            </Typography>
+            <TextField
+              placeholder="jackson69!"
+              value={ user }
+              onChange={ (e) => setUser(e.target.value) }
+              // NOTE: useful props below!
+              required
+              inputProps={{ maxLength: 60 }}
+            />
+
+            <br />
+            <Typography variant="body2" sx={{ marginTop: '15px', marginBottom: '15px' }}>
+              For privacy reasons, do not use your full name or email address
+            </Typography>
+
+            <Typography variant="body1">
+              <strong>Your email: **</strong>
+            </Typography>
+            <TextField
+              placeholder="spongebob69@jeemail.gov"
+              value={ email }
+              onChange={ (e) => setEmail(e.target.value) }
+              required
+              inputProps={{ maxLength: 60 }}
+            />
+
+            <br />
+            <Typography variant="body2" sx={{ marginTop: '15px', marginBottom: '15px' }}>
+              For authentication reasons, you will not be emailed
+            </Typography>
+
+            <Typography variant="body1">
+              <strong>Your { type }: **</strong>
+            </Typography>
+            <TextField
+              placeholder={ (type === 'question') ? ('What\'s the deal with airline food?') : ('Here\'s the deal with airline food...') }
+              value={ submission }
+              onChange={ (e) => setSubmission(e.target.value) }
+              fullWidth
+              required
+              inputProps={{ maxLength: 1000 }}
+            />
+          </form>
+        </DialogContent>
+
+        <DialogActions>
+          <Button onClick={ () => setOpen(false) }>
+            Cancel
+          </Button>
+
+          <Button type="submit" onClick={ handleSubmit }>
+            Submit { type }
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </Box>
+  );
+}
+
+/*
   const modalContent = (
     <Box sx={{
       width: 500,
@@ -82,7 +175,6 @@ export default function SubmitPost({ id, body, type }) {
         { (type === 'question')
           ? (`About "${ product.name }"`)
           : (`${ product.name }: ${ body }`) }
-        {/* need to pass question (suspect via answer ID) */}
       </Typography>
 
       <Typography variant="body2" sx={{ fontStyle: 'italic' }}>
@@ -95,7 +187,7 @@ export default function SubmitPost({ id, body, type }) {
           placeholder="jackson69!"
           value={ user }
           onChange={ (e) => setUser(e.target.value) }
-          // NOTE: very useful props below! **
+          // NOTE: useful props below!
           required
           inputProps={{ maxLength: 60 }}
         />
@@ -107,7 +199,7 @@ export default function SubmitPost({ id, body, type }) {
 
         <strong>Your email: **</strong>
         <TextField
-          placeholder="spongebob420@jeemail.gov"
+          placeholder="spongebob69@jeemail.gov"
           value={ email }
           onChange={ (e) => setEmail(e.target.value) }
           required
@@ -158,4 +250,4 @@ export default function SubmitPost({ id, body, type }) {
       </Modal>
     </>
   );
-}
+*/

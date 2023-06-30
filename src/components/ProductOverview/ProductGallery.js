@@ -1,8 +1,9 @@
 
 import React, {useEffect, useRef, useState} from "react";
 import useResize from "../../lib/useResize";
-import {Container, Grid} from "@mui/material";
+import {Box, Container, Grid, IconButton, Paper} from "@mui/material";
 import ImgScroll from "../../lib/ImgScroll";
+import {Expand, Fullscreen} from "@mui/icons-material";
 
 function renderMobile(photos, selectedImage, onSelectImage) {
   const styles = {
@@ -53,11 +54,12 @@ function renderDesktop(photos, selectedImage, onSelectImage) {
 
 export default function ProductGallery({product, ...props}) {
   const [selectedImage, setSelectedImage] = useState(null);
-  const [mouseIn, setMouseIn] = useState(false);
-  const [mouse, setMouse] = useState({x: 0, y: 0, backgroundPosition: null});
   const windowWidth = useResize();
   const mainImgRef = useRef(null);
   const glassImgRef = useRef(null);
+  const [mouseIn, setMouseIn] = useState(false);
+  const [mouse, setMouse] = useState({x: 0, y: 0, backgroundPosition: null});
+  const [fullScreen, setFullScreen] = useState(false);
 
   function handleSelectImage(index) {
     setSelectedImage(index);
@@ -104,23 +106,113 @@ export default function ProductGallery({product, ...props}) {
     console.log(w, h);
   }
 
+  function toggleFullScreen() {
+    setFullScreen(!fullScreen);
+  }
+
   useEffect(() => {
     if(product.photos.length)
       setSelectedImage(0);
   }, [product]);
 
-  return selectedImage !== null && (
-    /*windowWidth < 600
+  const wrapperClassList = [];
+
+  console.log('fullScreen : ', fullScreen);
+  return selectedImage !== null && (/*
+    windowWidth <= 600
       ? renderMobile(product.photos, selectedImage, handleSelectImage)
       : */(
-        <Grid container spacing={1}>
-          <Grid item xs={12} sm={2} >
-            <div className="img-scroll" >
-              <ImgScroll photos={product.photos} selected={selectedImage} onSelect={handleSelectImage}/>
-            </div>
-          </Grid>
-          <Grid item xs={12} sm={10} >
+      <div className={fullScreen ? 'gallery-wrapper full-screen' : 'gallery-wrapper'}
+           style={{background: 'rgb(54 57 59)', padding: '16px', borderRadius: '10px'}}>
+        <Box
+             sx={{
+               minHeight: '550px',
+               display: 'flex',
+               justifyContent: 'center',
+               alignItems: 'center',
+               position: 'relative'
+             }}
+        >
+
+          <IconButton
+            onClick={toggleFullScreen}
+            style={{
+              position: 'absolute',
+              right: 0,
+              top: 0,
+              zIndex: 1,
+              color: 'white'
+            }}
+          >
+            <Fullscreen />
+          </IconButton>
+
+          <div className="img-scroll" style={{
+            position: 'absolute',
+            height: '525px',
+            maxHeight: '525px',
+            overflow: 'scroll',
+            background: '#0e0e0ea1',
+            padding: '8px',
+            borderRadius: '10px',
+            left: '-16px',
+            zIndex: 1,
+            // boxShadow: 'rgb(0 37 255 / 72%) 0px 1px 5px 0px'
+          }}>
+            <ImgScroll
+              photos={product.photos} selected={selectedImage}
+              onSelect={handleSelectImage}
+            />
+          </div>
+
+          <div
+            style={{
+              position: 'relative',
+            }}
+            onMouseMove={mouseIn ? handleMouseMove : null}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
+            <img
+              src={product.photos[selectedImage].url}
+              ref={mainImgRef}
+              alt=""
+              className="gallery-main"
+              style={{
+                // height: '500px',
+                maxHeight: '75vh',
+                maxWidth: '100%',
+                borderRadius: '2%',
+              }}
+            />
+            {mouseIn &&
             <div
+              ref={glassImgRef}
+              style={{
+                position: 'absolute',
+                height: '300px',
+                width: '300px',
+                borderRadius: '50%',
+                ...mouse
+              }}
+            />
+            }
+          </div>
+
+        </Box>
+      </div>
+
+    )
+
+  );
+}
+
+
+
+
+
+
+{/*<div
               ref={mainImgRef}
               className="gallery-main"
               onMouseMove={mouseIn ? handleMouseMove : null}
@@ -128,30 +220,25 @@ export default function ProductGallery({product, ...props}) {
               onMouseLeave={handleMouseLeave}
               style={{
                 height: '50vw',
-                maxHeight: '600px',
-                maxWidth: '500px',
                 backgroundImage: `url(${product.photos[selectedImage].url})`,
                 backgroundPosition: 'center top',
                 backgroundSize: 'cover',
                 borderRadius: '2%',
                 position: 'relative'
               }}>
+              <div className="img-scroll" >
+                <ImgScroll photos={product.photos} selected={selectedImage} onSelect={handleSelectImage}/>
+              </div>
               {mouseIn &&
-                <div
-                  ref={glassImgRef}
-                  style={{
-                    position: 'absolute',
-                    height: '300px',
-                    width: '300px',
-                    borderRadius: '50%',
-                    ...mouse
-                  }}
-                />
+              <div
+                ref={glassImgRef}
+                style={{
+                  position: 'absolute',
+                  height: '300px',
+                  width: '300px',
+                  borderRadius: '50%',
+                  ...mouse
+                }}
+              />
               }
-            </div>
-          </Grid>
-        </Grid>
-      )
-
-  );
-}
+            </div>*/}
