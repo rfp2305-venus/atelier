@@ -4,10 +4,12 @@ import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import * as React from 'react';
+import Characteristics from './Characteristics';
 import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
-import LinearProgress from '@mui/joy/LinearProgress';
+import { createTheme } from '@mui/material/styles';
+import LinearProgress from '@mui/material/LinearProgress';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 
@@ -94,21 +96,10 @@ export default function RatingsBreakdown({reviews}) {
     }
     averageRating = Number((totalRating / totalReviews).toFixed(1));
     return `${averageRating}`;
-    //return Number((totalRating / totalReviews).toFixed(1));
   };
 
 
-
-
-  // useEffect(() => {
-  //   setAverageRating(calculateRating(ratings));
-  // }, [ratings]);
-
   console.log('TOTALREVIEWS', totalReviews);
-
-
-
-
 
 
 
@@ -132,28 +123,19 @@ export default function RatingsBreakdown({reviews}) {
         <div id='starsBreakdown'>
           {Object.entries(starPercentages).reverse().map(([key, value]) => (
             <div key={key} >
-              <span><Link href="#" underline="always">{key + ' stars' }</Link></span>
-              <span><LinearProgress determinate value={value} color="primary" sx={{
-                '--LinearProgress-thickness': '10px',
-                '--LinearProgress-radius': '1px',
-                width: '20%'
-              }}/></span>
-              <span>{Math.round(value * totalReviews / 100)}</span>
+              <Box ml={3} sx={{ width: 300 }}>
+                <span><Link href="#" underline="always">{key + ' stars' }</Link></span>
+                <span><LinearProgress variant="determinate" value={value} sx={{
+                }}/></span>
+                <span>{Math.round(value * totalReviews / 100)}</span>
+              </Box>
             </div>
           ))}
         </div>
         <div id='characteristics'>
-          {/* {Object.entries(starPercentages).reverse().map(([key, value]) => (
-            <div key={key} >
-              <span><Link href="#" underline="always">{key + ' stars' }</Link></span>
-              <span><LinearProgress determinate value={value} color="primary" sx={{
-                '--LinearProgress-thickness': '10px',
-                '--LinearProgress-radius': '1px',
-                width: '20%'
-              }}/></span>
-              <span>{Math.round(value * totalReviews / 100)}</span>
-            </div>
-          ))} */}
+          {Object.keys(characteristics).map((char) => (
+            <Characteristics characteristic={char} id={characteristics[char].id} charValue={characteristics[char].value}/>
+          ))}
         </div>
         <button id='addReview'
         >
