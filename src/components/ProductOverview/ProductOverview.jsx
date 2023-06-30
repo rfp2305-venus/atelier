@@ -65,15 +65,14 @@ export default function ProductOverview() {
     }
   }, [size])
 
-
   return (
     <Container data-testid="product-overview-component">
       <Grid container spacing={2} sx={{maxWidth: '1200px'}}>
-        <Grid item xs={12} sm={8} style={{maxWidth: '100%'}}>
+        <Grid item xs={12} md={8} style={{maxWidth: '100%', background: 'rgb(54 57 59)', padding: '16px', borderRadius: '10px'}}>
           { selectedStyle && <ProductGallery product={selectedStyle} />}
         </Grid>
 
-        <Grid item xs={12} sm={4}>
+        <Grid item xs={12} md={4}>
           {productDetail.product && selectedStyle && (
             <div className="product-form">
               <StarRating />

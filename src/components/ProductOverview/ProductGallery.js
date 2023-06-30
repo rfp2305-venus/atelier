@@ -1,7 +1,7 @@
 
 import React, {useEffect, useRef, useState} from "react";
 import useResize from "../../lib/useResize";
-import {Container, Grid} from "@mui/material";
+import {Box, Container, Grid, Paper} from "@mui/material";
 import ImgScroll from "../../lib/ImgScroll";
 
 function renderMobile(photos, selectedImage, onSelectImage) {
@@ -109,47 +109,95 @@ export default function ProductGallery({product, ...props}) {
       setSelectedImage(0);
   }, [product]);
 
-  return selectedImage !== null && (
+  return selectedImage !== null && (/*
     windowWidth <= 600
       ? renderMobile(product.photos, selectedImage, handleSelectImage)
-      : (
-        <Grid container spacing={1}>
-          <Grid item xs={12} sm={2} >
+      : */(
+        <Box sx={{minHeight: '550px', display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative'}}>
+
+        <div className="img-scroll" style={{
+          position: 'absolute',
+          height: '525px',
+          maxHeight: '525px',
+          overflow: 'scroll',
+          background: '#0e0e0ea1',
+          padding: '8px',
+          borderRadius: '10px',
+          left: '-16px',
+          zIndex: 1,
+          // boxShadow: 'rgb(0 37 255 / 72%) 0px 1px 5px 0px'
+        }}>
+          <ImgScroll
+            photos={product.photos} selected={selectedImage}
+            onSelect={handleSelectImage}
+          />
+        </div>
+
+        <div
+          style={{position: 'relative'}}
+          onMouseMove={mouseIn ? handleMouseMove : null}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
+          <img
+            src={product.photos[selectedImage].url}
+            ref={mainImgRef}
+            alt=""
+            className="gallery-main"
+            style={{
+              // height: '500px',
+              maxHeight: '75vh',
+              maxWidth: '100%',
+              borderRadius: '2%',
+            }}
+          />
+          {mouseIn &&
+          <div
+            ref={glassImgRef}
+            style={{
+              position: 'absolute',
+              height: '300px',
+              width: '300px',
+              borderRadius: '50%',
+              ...mouse
+            }}
+          />
+          }
+        </div>
+
+
+        {/*<div
+            ref={mainImgRef}
+            className="gallery-main"
+            onMouseMove={mouseIn ? handleMouseMove : null}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            style={{
+              height: '50vw',
+              backgroundImage: `url(${product.photos[selectedImage].url})`,
+              backgroundPosition: 'center top',
+              backgroundSize: 'cover',
+              borderRadius: '2%',
+              position: 'relative'
+            }}>
             <div className="img-scroll" >
               <ImgScroll photos={product.photos} selected={selectedImage} onSelect={handleSelectImage}/>
             </div>
-          </Grid>
-          <Grid item xs={12} sm={10} >
+            {mouseIn &&
             <div
-              ref={mainImgRef}
-              className="gallery-main"
-              onMouseMove={mouseIn ? handleMouseMove : null}
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
+              ref={glassImgRef}
               style={{
-                height: '50vw',
-                backgroundImage: `url(${product.photos[selectedImage].url})`,
-                backgroundPosition: 'center top',
-                backgroundSize: 'cover',
-                borderRadius: '2%',
-                position: 'relative'
-              }}>
-              {mouseIn &&
-                <div
-                  ref={glassImgRef}
-                  style={{
-                    position: 'absolute',
-                    height: '300px',
-                    width: '300px',
-                    borderRadius: '50%',
-                    ...mouse
-                  }}
-                />
-              }
-            </div>
-          </Grid>
-        </Grid>
-      )
+                position: 'absolute',
+                height: '300px',
+                width: '300px',
+                borderRadius: '50%',
+                ...mouse
+              }}
+            />
+            }
+          </div>*/}
+      </Box>
+    )
 
   );
 }
