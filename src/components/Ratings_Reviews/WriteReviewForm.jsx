@@ -34,7 +34,7 @@ export default function WriteReviewForm() {
     }
   };
 
-  const handleStarChange = () => {
+  const handleStarChange = (e) => {
     setRating(rating);
     console.log(rating);
   };
