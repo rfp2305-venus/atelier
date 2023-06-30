@@ -6,7 +6,7 @@ import axios from 'axios';
 import ReviewTile from './ReviewTile';
 import SortOptions from './SortOptions.jsx';
 import WriteReviewForm from './WriteReviewForm';
-import RatingBreakdown from './RatingBreakdown';
+//import RatingBreakdown from './RatingBreakdown';
 import './RatingsReviews.css';
 
 
@@ -21,13 +21,6 @@ export default function ReviewsList({currentProductId, reviewSort, handleSortSel
   const [count, setCount] = useState(2);
   const [sortby, setSortby] = useState('relevant');
 
-
-  // const filteredReviewsList = [];
-  // for (let review of reviewsList) {
-  //   if (ratingsFilter.hasOwnProperty(review.rating) && ratingsFilter[review.rating] === true) {
-  //     filteredReviewsList.push(review);
-  //   }
-  // }
 
   const showMore = () => {
     setPage(page => page + 1);
@@ -57,20 +50,18 @@ export default function ReviewsList({currentProductId, reviewSort, handleSortSel
   };
 
   useEffect(() => {
-    console.log('before', product && product.id);
+    //console.log('before', product && product.id);
     if (product) {
-      console.log('after', product.id);
+      //console.log('after', product.id);
       fetchReviews();
     }
   }, [ product, page, sortby ]);
 
   console.log('REVIEWS', reviews);
+
   return (
 
     <div>
-      <span>
-        <RatingBreakdown reviews={reviews}/>
-      </span>
       <SortOptions setReviews={setReviews} setSortby={setSortby}/>
       <div>
         <h3 className='reviews'>Ratings & Reviews</h3>

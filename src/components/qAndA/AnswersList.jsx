@@ -1,15 +1,14 @@
 const { API_URL, API_KEY } = process.env;
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { useSelector } from 'react-redux';
-import { useState, useEffect } from 'react';
+
+import { Box } from '@mui/material';
 
 import getDate from './util/getDate';
-
 import Answer from './Answer';
 import SeeMore from './SeeMore';
-
 import SubmitPost from './SubmitPost';
 
 import axios from 'axios';
@@ -38,7 +37,16 @@ export default function AnswersList({ questionID }) {
         results
           // sort answers by helpfulness
           .sort((a, b) => {
-            return b.helpfulness - a.helpfulness;
+            // ensure Seller's name always at top
+            if (a.answerer_name === 'Seller' && b.answerer_name !== 'Seller') {
+              return -1;
+
+            } else if (a.answerer_name !== 'Seller' && b.answerer_name === 'Seller') {
+              return 1;
+
+            } else {
+              return b.helpfulness - a.helpfulness;
+            }
           })
           // (bonus): for incoming answers w/ no 'reported' prop
           .forEach((answer) => {
@@ -57,45 +65,39 @@ export default function AnswersList({ questionID }) {
   }, [/* product, questionID */]);
   // does not seem to resolve multiple API calls —> backlog
 
-  // /*
+  /*
   // check if answers fetched correctly
   answers.forEach((a, i) => {
     console.log(`answer ${ i }: ${ JSON.stringify(a) }`);
   });
-  // */
+  */
 
   return (
-    <>
-      <table>
-        <tbody>
-          { answers
-            .slice(0, length)
-            .map(({ answer_id, body, date, answerer_name, helpfulness, photos, reported }) => (
-              // if answer isn't blank
-              (body.length > 0 && !reported) ?
-                (<Answer key={ answer_id }
-                  id={ answer_id }
-                  body={ body }
-                  date={ getDate(date) }
-                  user={ answerer_name }
-                  helpfulness={ helpfulness }
-                  photos={ photos }
-                />) : (null)
-            )) }
+    <Box sx={{ width: '50vh', overflow: 'auto' }}>
+      { answers
+        .slice(0, length)
+        .map(({ answer_id, body, date, answerer_name, helpfulness, photos, reported }) => (
+          // if answer isn't blank
+          (body.length > 0 && !reported) ?
+            (<Answer key={ answer_id }
+              id={ answer_id }
+              body={ body }
+              date={ getDate(date) }
+              user={ answerer_name }
+              // add extra "seller check" for boldening
+              isSeller={ answerer_name === 'Seller' }
+              helpfulness={ helpfulness }
+              photos={ photos }
+            />) : (null)
+        )) }
 
-          <tr>
-            <th>
-              ———{ (answers.length > 2) ?
-                (<SeeMore
-                  type="answer" aLength={ answers.length }
-                  length={ length } setLength={ setLength }
-                  isExpanded={ isExpanded } setExpanded={ setExpanded }
-                />) : (null) }———
-            </th>
-          </tr>
-        </tbody>
-      </table>
+      ———{ (answers.length > 2) ?
+        (<SeeMore
+          type="answer" aLength={ answers.length }
+          length={ length } setLength={ setLength }
+          isExpanded={ isExpanded } setExpanded={ setExpanded }
+        />) : (null) }———
       <br /><br />
-    </>
+    </Box>
   );
 }

@@ -1,9 +1,9 @@
 const { API_URL, API_KEY } = process.env;
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
-import { useState, useEffect } from 'react';
+import { Button } from '@mui/material';
 
 import axios from 'axios';
 
@@ -12,7 +12,7 @@ export default function Report({ id, type, reported }) {
   const [ isReported, setReported ] = useState(reported);
 
   return (
-    <button disabled={ isReported } onClick={(e) => {
+    <Button disabled={ isReported } onClick={(e) => {
       e.preventDefault();
 
       axios
@@ -30,6 +30,6 @@ export default function Report({ id, type, reported }) {
         });
     }}>
       { (isReported) ? ('Reported') : ('Report') }
-    </button>
+    </Button>
   );
 }
