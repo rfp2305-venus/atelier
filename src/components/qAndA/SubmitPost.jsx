@@ -17,6 +17,9 @@ export default function SubmitPost({ id, body, type, open, setOpen }) {
   const [ user, setUser ] = useState('');
   const [ email, setEmail ] = useState('');
 
+  // const [ open, setOpen ] = useState(false);
+  // NOTE: local state prevents alternate scrollbar color, but at cost of minor event bubbling
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
