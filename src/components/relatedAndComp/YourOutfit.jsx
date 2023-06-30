@@ -11,19 +11,19 @@ export default function YourOutfit() {
   const [ outfit, setOutfit ] = useState([]);
 
   //declare add to outfit fn - pass into AddToOutfit prop
-  function wearArticle() {
-
+  function wearArticle(id) {
+    //axios call to get category, name, price, and star rating 
   }
   //declare remove from outfit fn - pass into each OutfitCard
-  function removeArticle() {
-    
+  function removeArticle(id) {
+
   }
 
   return (
     <>
       <Typography component='p' className="title">YOUR OUTFIT</Typography>
       <div className="carousel" id="your-outfit">
-        <AddToOutfit />
+        <AddToOutfit wearArticle={wearArticle}/>
         <OutfitCard />
         <OutfitCard />
         <OutfitCard />
