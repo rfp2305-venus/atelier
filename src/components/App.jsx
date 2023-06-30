@@ -41,9 +41,9 @@ export default function App() {
       {productDetail.product && (
         <>
           <ProductOverview />
-          {/*<RelatedComp />
+          <RelatedComp />
           <QuestionsList />
-          <ReviewsList />*/}
+          <ReviewsList />
         </>
       )}
 
