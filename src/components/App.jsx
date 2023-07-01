@@ -30,14 +30,15 @@ export default function App() {
     }
   }, [dispatch]);
 
-  return loading ? <Loading /> : (
+  return (
     <Box>
-
       <Nav
         products={products}
         selectedProduct={productDetail.product ? productDetail.product.id : ''}
         onSelectProduct={(id) => handleSelectProduct(id)}
       />
+
+      {loading && <Loading/>}
 
       <Box id="app">
         {productDetail.product && (
@@ -45,7 +46,7 @@ export default function App() {
             <ProductOverview />
             <RelatedComp />
             <QuestionsList />
-            {/*<ReviewsList />*/}
+            <ReviewsList />
           </Container>
         )}
       </Box>

@@ -57,6 +57,14 @@ body {
   flex-grow: 1;
 }
 
+.icon-top-right {
+  position: absolute!important;
+  right: 0;
+  top: 0;
+  z-index: 1;
+  color: white!important;
+}
+
 .style_thumbnail {
   display: inline-block;
 }
@@ -68,18 +76,30 @@ body {
 .img-scroll {
   z-index: 1;
   background: #0e0e0ea1;
-  position: absolute;
-  left: -16px;
-  height: 525px;
+  /*position: absolute;*/
+  /*left: -16px;*/
+  /*height: 525px;*/
   overflow: scroll;
-  max-height: 525px;
+  /*max-height: 525px;*/
   overflow-x: hidden;
   overflow-y: auto;
   padding: 8px;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
+  /*height: 100%;*/
+  min-width: 100px;
   /*// boxShadow: 'rgb(0 37 255 / 72%) 0px 1px 5px 0px'*/
+}
+
+.img-item {
+  margin: 0 auto;
+  width: 75px;
+  height: 75px;
+  flex-shrink: 0;
+  background-position: center center;
+  background-size: cover;
+  border-radius: 10px;
 }
 
 .img-item.selected-img {
@@ -104,15 +124,17 @@ body {
 
 .gallery-wrapper {
   background: rgb(54 57 59);
-  padding: 16px;
   border-radius: 10px;
-  height: 550px;
+  height: 64vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .gallery-wrapper.full-screen {
   position: absolute;
   height: auto;
-  top: 10px;
+  top: 72px;
   left: 10px;
   right: 10px;
   bottom: 10px;
@@ -120,24 +142,29 @@ body {
 }
 
 .gallery-main {
-
-}
-.main-img {
   max-width: 100%;
+  max-height: 100%;
+  border-radius: 2%;
+}
+
+.full-screen .gallery-main {
+  max-height: 75vh;
 }
 
 @media screen and (max-width: 599px) {
   .gallery-wrapper {
-    height: 450px;
-    padding: 16px;
+    height: 550px;
+    padding: 0px;
     border-radius: 10px;
     background: rgb(54 57 59);
+    flex-direction: column-reverse;
+  }
+  .gallery-main {
+    max-height: 400px;
   }
   .img-scroll {
     max-height: 100px;
-    bottom: -16px;
-    left: -16px;
-    right: -16px;
+    min-height: 100px;
     justify-content: center;
   }
   .img-scroll-stack {
@@ -149,6 +176,23 @@ body {
 
   .img-item {
     margin: 10px;
+  }
+}
+
+.style_thumbnail {
+  flex: 1 0 50%;
+  widows: 10vw;
+  height: 10vw;
+  background-position: center center;
+  background-size: cover;
+  border-radius: 10px;
+}
+
+@media screen and (max-width: 899px) {
+  .style_thumbnail {
+    flex: 1 0 25%!important;
+    height: 175px!important;
+    flex-grow: 0!important;
   }
 }
 

@@ -66,14 +66,15 @@ export default function ProductOverview() {
     }
   }, [size])
 
+  console.log(productDetail);
 
   return (
     <Grid container spacing={1} sx={{padding: 0, maxWidth: '1200px'}}>
-      <Grid item xs={12} md={8} style={{maxWidth: '100%'}}>
+      <Grid item xs={12} md={9} style={{maxWidth: '100%', minHeight: '50vh'}}>
         { selectedStyle && <ProductGallery product={selectedStyle} />}
       </Grid>
 
-      <Grid item xs={12} md={4}>
+      <Grid item xs={12} md={3}>
         {productDetail.product && selectedStyle && (
           <div className="product-form">
             <StarRating />
@@ -84,8 +85,12 @@ export default function ProductOverview() {
             <Typography>
               {productDetail.product.name}
             </Typography>
-            <Typography>
-              {productDetail.product.default_price}
+            <Typography sx={{color: selectedStyle.sale_price ? 'green' : 'initial'}}>
+              {
+                selectedStyle.sale_price
+                  ? selectedStyle.sale_price
+                  : productDetail.product.default_price
+              }
             </Typography>
 
             <ProductStyles
@@ -142,7 +147,7 @@ export default function ProductOverview() {
         <Container
           sx={{
             maxWidth: '800px',
-            margin: '100px auto'
+            margin: '50px auto'
           }}
         >
 
@@ -159,7 +164,7 @@ export default function ProductOverview() {
             <Divider orientation="vertical" variant="middle" flexItem />
             <List>
               {productDetail.product.features.map((feat) => (
-                <ListItem>
+                <ListItem key={'productFeature' + feat.feature}>
                   <ListItemIcon>
                     <Check />
                   </ListItemIcon>

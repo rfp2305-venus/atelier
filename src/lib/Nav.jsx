@@ -47,6 +47,7 @@ export default function Nav({products, selectedProduct, onSelectProduct} ) {
         >
           {products.products && products.products.map((product) => (
             <MenuItem
+              key={`productMenuItem${product.id}`}
               onClick={() => {
                 handleClose();
                 onSelectProduct(product.id);

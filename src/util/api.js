@@ -48,8 +48,8 @@ export async function fetchProduct(productId) {
 export async function fetchProducts() {
   const endpoint = '/products?count=100';
   try {
-    const products = await executeRequest(endpoint, 'get');
-    return products;
+    return executeRequest(endpoint, 'get')
+
   } catch(err) {
 
   }

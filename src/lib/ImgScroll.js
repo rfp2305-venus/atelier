@@ -21,14 +21,7 @@ export default function ImgScroll({photos, selected, onSelect}) {
             }
             onClick={() => onSelect(i)}
             style={{
-              width: '75px',
-              height: '75px',
-              marginBottom: '8px',
-              flexShrink: 0,
               backgroundImage: `url(${x.thumbnail_url})`,
-              backgroundPosition: 'center center',
-              backgroundSize: 'cover',
-              borderRadius: '10px'
             }}
           />
         ))}

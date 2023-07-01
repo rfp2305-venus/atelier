@@ -115,61 +115,49 @@ export default function ProductGallery({product, ...props}) {
     windowWidth <= 600
       ? renderMobile(product.photos, selectedImage, handleSelectImage)
       : */(
-      <div className={fullScreen ? 'gallery-wrapper full-screen' : 'gallery-wrapper'}>
-        <Box
-             sx={{
-               height: '100%',
-               display: 'flex',
-               justifyContent: 'center',
-               alignItems: 'center',
-               position: 'relative'
-             }}
-        >
+      <div
+        className={
+          fullScreen ? 'gallery-wrapper full-screen' : 'gallery-wrapper'
+        }
+      >
 
+
+        <ImgScroll
+          photos={product.photos} selected={selectedImage}
+          onSelect={handleSelectImage}
+        />
+
+
+
+        <Container
+          style={{
+            position: 'relative',
+            height: '100%',
+            width: '100%',
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+            padding: '10px'
+          }}
+          onMouseMove={mouseIn ? handleMouseMove : null}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
           <IconButton
             onClick={toggleFullScreen}
-            style={{
-              position: 'absolute',
-              right: '-16px',
-              top: '-16px',
-              zIndex: 1,
-              color: 'white'
-
-            }}
+            className='icon-top-right'
           >
             <Fullscreen />
           </IconButton>
 
-          <ImgScroll
-            photos={product.photos} selected={selectedImage}
-            onSelect={handleSelectImage}
+          <img
+            src={product.photos[selectedImage].url}
+            ref={mainImgRef}
+            alt=""
+            className="gallery-main"
           />
-
-          <div
-            style={{
-              position: 'relative',
-              height: '100%',
-              display: 'flex',
-              justifyContent: 'center',
-              flexDirection: 'column',
-            }}
-            onMouseMove={mouseIn ? handleMouseMove : null}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-          >
-            <img
-              src={product.photos[selectedImage].url}
-              ref={mainImgRef}
-              alt=""
-              className="gallery-main"
-              style={{
-                // height: '500px',
-                maxHeight: '100%',
-                maxWidth: '100%',
-                borderRadius: '2%',
-              }}
-            />
-            {mouseIn &&
+          {mouseIn && (
             <div
               ref={glassImgRef}
               style={{
@@ -180,10 +168,24 @@ export default function ProductGallery({product, ...props}) {
                 ...mouse
               }}
             />
-            }
-          </div>
+          )}
 
-        </Box>
+        </Container>
+          {/*<Box*/}
+          {/*     sx={{*/}
+          {/*       height: '100%',*/}
+          {/*       position: 'relative',*/}
+          {/*       flexGrow: 1*/}
+          {/*       /*display: 'flex',*/}
+          {/*       justifyContent: 'center',*/}
+          {/*       alignItems: 'center',*/}
+          {/*     }}*/}
+          {/*>*/}
+
+          {/*  */}
+
+          {/*</Box>*/}
+
       </div>
     )
 
