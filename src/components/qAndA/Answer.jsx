@@ -1,8 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-
 import { Box, Typography } from '@mui/material';
-
 import Upvote from './Upvote';
 import Report from './Report';
 
