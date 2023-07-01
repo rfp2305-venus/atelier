@@ -57,9 +57,9 @@ export default function RatingsBreakdown({reviews}) {
     }
   }, [ product ]);
 
-  // console.log('RATINGS', ratings);
-  // console.log('RECOMMENDED', recommended);
-  // console.log('CHARACTERISTICS', characteristics);
+  console.log('RATINGS', ratings);
+  console.log('RECOMMENDED', recommended);
+  console.log('CHARACTERISTICS', characteristics);
 
 
 
@@ -99,7 +99,7 @@ export default function RatingsBreakdown({reviews}) {
   };
 
 
-  // console.log('TOTALREVIEWS', totalReviews);
+  console.log('TOTALREVIEWS', totalReviews);
 
 
 

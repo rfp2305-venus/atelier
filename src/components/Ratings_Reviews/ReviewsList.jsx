@@ -67,7 +67,7 @@ export default function ReviewsList({currentProductId, reviewSort, handleSortSel
     }
   }, [ product, page, sortby ]);
 
-  // console.log('REVIEWS', reviews);
+  console.log('REVIEWS', reviews);
 
   // useEffect(() => {
   //   if (product) {
