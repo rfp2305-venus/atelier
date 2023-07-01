@@ -24,8 +24,6 @@ export default function Upvote({ id, type, helpfulness }) {
           setVotes(votes + 1);
           console.log('Helpfulness updated (+1)!');
 
-          console.log(`type: ${ type }!`);
-
           // toggle disable thereafter
           setVoted(true);
         })

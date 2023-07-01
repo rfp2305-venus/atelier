@@ -67,7 +67,7 @@ export default function AnswersList({ questionID }) {
   */
 
   return (
-    <Box /* sx={{ width: '50vh', overflow: 'visible', backgroundColor: 'white' }} */>
+    <Box /* sx={{ width: '50vh', overflow: 'visible' }} */>
       { answers
         .slice(0, length)
         .map(({ answer_id, body, date, answerer_name, helpfulness, photos, reported }) => (
