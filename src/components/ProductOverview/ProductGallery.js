@@ -48,10 +48,6 @@ function renderMobile(photos, selectedImage, onSelectImage) {
   );
 }
 
-function renderDesktop(photos, selectedImage, onSelectImage) {
-  return
-}
-
 export default function ProductGallery({product, ...props}) {
   const [selectedImage, setSelectedImage] = useState(null);
   const windowWidth = useResize();
@@ -119,16 +115,9 @@ export default function ProductGallery({product, ...props}) {
     windowWidth <= 600
       ? renderMobile(product.photos, selectedImage, handleSelectImage)
       : */(
-      <div className={fullScreen ? 'gallery-wrapper full-screen' : 'gallery-wrapper'}
-           style={{
-             background: 'rgb(54 57 59)',
-             padding: '16px',
-             borderRadius: '10px',
-             height: '550px'
-           }}>
+      <div className={fullScreen ? 'gallery-wrapper full-screen' : 'gallery-wrapper'}>
         <Box
              sx={{
-               minHeight: '550px',
                height: '100%',
                display: 'flex',
                justifyContent: 'center',
@@ -141,36 +130,20 @@ export default function ProductGallery({product, ...props}) {
             onClick={toggleFullScreen}
             style={{
               position: 'absolute',
-              right: 0,
-              top: 0,
+              right: '-16px',
+              top: '-16px',
               zIndex: 1,
               color: 'white'
+
             }}
           >
             <Fullscreen />
           </IconButton>
 
-          <div className="img-scroll" style={{
-            position: 'absolute',
-            height: '525px',
-            maxHeight: '525px',
-            overflow: 'scroll',
-            background: '#0e0e0ea1',
-            padding: '8px',
-            borderRadius: '10px',
-            left: '-16px',
-            zIndex: 1,
-            overflowX: 'hidden',
-            overflowY: 'auto',
-            direction: 'rtl',
-            scrollbarColor: 'rgb(54, 57, 59)'
-            // boxShadow: 'rgb(0 37 255 / 72%) 0px 1px 5px 0px'
-          }}>
-            <ImgScroll
-              photos={product.photos} selected={selectedImage}
-              onSelect={handleSelectImage}
-            />
-          </div>
+          <ImgScroll
+            photos={product.photos} selected={selectedImage}
+            onSelect={handleSelectImage}
+          />
 
           <div
             style={{
@@ -212,7 +185,6 @@ export default function ProductGallery({product, ...props}) {
 
         </Box>
       </div>
-
     )
 
   );

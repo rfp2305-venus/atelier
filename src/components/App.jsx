@@ -10,7 +10,9 @@ import QuestionsList from './qAndA/QuestionsList';
 import Nav from "../lib/Nav";
 import {handleFetchProduct} from "../state/productDetail/actions";
 import ReviewsList from './Ratings_Reviews/ReviewsList';
-import {Box, Container} from "@mui/material";
+import {Box, Container, IconButton} from "@mui/material";
+import {boxSizing} from "@mui/system";
+import {Menu} from "@mui/icons-material";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -29,23 +31,24 @@ export default function App() {
   }, [dispatch]);
 
   return loading ? <Loading /> : (
-    <Box id="app">
-      {products.products &&
-        <Nav
-          products={products.products}
-          selectedProduct={productDetail.product ? productDetail.product.id : ''}
-          onSelectProduct={(id) => handleSelectProduct(id)}
-        />
-      }
+    <Box>
 
-      {productDetail.product && (
-        <Container spacing={0} sx={{padding: '0'}}>
-          <ProductOverview />
-          <RelatedComp />
-          <QuestionsList />
-          <ReviewsList />
-        </Container>
-      )}
+      <Nav
+        products={products}
+        selectedProduct={productDetail.product ? productDetail.product.id : ''}
+        onSelectProduct={(id) => handleSelectProduct(id)}
+      />
+
+      <Box id="app">
+        {productDetail.product && (
+          <Container spacing={0} sx={{padding: '0'}}>
+            <ProductOverview />
+            <RelatedComp />
+            <QuestionsList />
+            {/*<ReviewsList />*/}
+          </Container>
+        )}
+      </Box>
 
     </Box>
   );
