@@ -7,7 +7,7 @@ import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined';
 export default function OutfitCard() {
   return (
 
-    <Card className="card">
+    <Card className="card" sx={{width: 150, height: 200}}>
       <div className="card-first-row">
         <CardMedia
           className='related-products-thumbnail'
