@@ -160,6 +160,10 @@ export default function ProductGallery({product, ...props}) {
             borderRadius: '10px',
             left: '-16px',
             zIndex: 1,
+            overflowX: 'hidden',
+            overflowY: 'auto',
+            direction: 'rtl',
+            scrollbarColor: 'rgb(54, 57, 59)'
             // boxShadow: 'rgb(0 37 255 / 72%) 0px 1px 5px 0px'
           }}>
             <ImgScroll
