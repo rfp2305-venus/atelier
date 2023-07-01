@@ -1,16 +1,10 @@
 const { API_URL, API_KEY } = process.env;
-
 import React, { useState, useEffect } from 'react';
-import ReactDOM from 'react-dom';
 import { useSelector } from 'react-redux';
-
 import { Box } from '@mui/material';
-
 import getDate from './util/getDate';
 import Answer from './Answer';
 import SeeMore from './SeeMore';
-import SubmitPost from './SubmitPost';
-
 import axios from 'axios';
 
 export default function AnswersList({ questionID }) {
@@ -21,7 +15,7 @@ export default function AnswersList({ questionID }) {
   const [ length, setLength ] = useState(2);
   const [ isExpanded, setExpanded ] = useState(false);
 
-  const fetchAnswers = (page = 1, count = 50 /* placeholder values */) => {
+  const fetchAnswers = (page = 1, count = 50) => {
 
     axios
       .get(`${ API_URL }/qa/questions/${ questionID }/answers`, {
@@ -73,7 +67,7 @@ export default function AnswersList({ questionID }) {
   */
 
   return (
-    <Box sx={{ width: '50vh', overflow: 'auto' }}>
+    <Box /* sx={{ width: '50vh', overflow: 'visible' }} */>
       { answers
         .slice(0, length)
         .map(({ answer_id, body, date, answerer_name, helpfulness, photos, reported }) => (

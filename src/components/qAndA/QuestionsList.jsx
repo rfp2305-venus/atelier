@@ -1,34 +1,25 @@
 const { API_URL, API_KEY } = process.env;
-
 import React, { useState, useEffect } from 'react';
-import ReactDOM from 'react-dom';
 import { useSelector } from 'react-redux';
-
 import { Accordion, AccordionSummary, AccordionDetails, Typography, Box } from '@mui/material';
-
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-
 import getDate from './util/getDate';
-
 import Question from './Question';
 import Search from './Search';
 import SeeMore from './SeeMore';
 import SubmitPost from './SubmitPost';
-
 import axios from 'axios';
 
 export default function QuestionsList() {
+
+  const { product } = useSelector(({ productDetail }) => productDetail);
 
   const [ questions, setQuestions ] = useState([]);
   const [ length, setLength ] = useState(4);
 
   const [ search, setSearch ] = useState('');
 
-  // redux
-  const { product } = useSelector(({ productDetail }) => productDetail);
-  // console.log(`product: ${ JSON.stringify(product) }`);
-
-  const fetchQuestions = (page = 1, count = 50 /* placeholder values */) => {
+  const fetchQuestions = (page = 1, count = 50) => {
 
     axios
       .get(`${API_URL}/qa/questions`, {
@@ -50,7 +41,7 @@ export default function QuestionsList() {
         setQuestions(results);
       })
       .catch((err) => {
-        console.error(`Error fetching questions: ${err}`);
+        console.error(`Error fetching questions: ${ err }`);
       });
   };
 
@@ -67,30 +58,35 @@ export default function QuestionsList() {
   });
   */
 
+  // actual questions rendered / manipulated on page
+  let searchResults = questions;
+
+  if (search.length >= 3) {
+    searchResults = questions.filter((q) => {
+      return q.question_body
+        .toLowerCase().includes(search.toLowerCase());
+    });
+  }
+
   return (
     <Box width="800px" margin="auto">
-      <Typography variant="h3" sx={{ marginTop: '5px' }}>Q&A:</Typography>
-      <Search
-        questions={ questions }
-        setQuestions={ setQuestions }
-        search={ search }
-        setSearch={ setSearch }
-      />
+      <Typography variant="h3" sx={{ marginTop: '5px' }}>
+        Q&A:
+      </Typography>
 
-      { (questions.length > 0) ? (
-        questions
+      <Search search={ search } setSearch={ setSearch } />
+
+      { (searchResults.length > 0) ? (
+        searchResults
           .slice(0, length)
           .map(({ question_id, question_body, question_date, asker_name, question_helpfulness, reported }) => (
             // if question is not blank or reported
             (question_body.length > 0 && !reported) ? (
               <Accordion key={ question_id }>
                 <AccordionSummary expandIcon={ <ExpandMoreIcon /> }>
-                  <Typography variant="h5">{ question_body }</Typography>
-                  <SubmitPost
-                    id={ question_id }
-                    body={ question_body }
-                    type="answer"
-                  />
+                  <Typography variant="h5">
+                    { question_body }
+                  </Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                   <Question
@@ -107,8 +103,7 @@ export default function QuestionsList() {
           ))
       ) : (
         <Typography>No questions yet!</Typography>
-      )}
-      <br />
+      )}<br />
 
       {/* disappears when:
         > (2) questions or fewer
