@@ -9,10 +9,7 @@ export default function Upvote({ id, type, helpfulness }) {
   const [ hasVoted, setVoted ] = useState(false);
 
   return (
-    <Button disabled={ hasVoted } onClick={ (e) => {
-      e.preventDefault();
-
-      // send PUT req to update helpfulness
+    <Button disabled={ hasVoted } onClick={ () => {
       axios
         .put(`${ API_URL }/qa/${ type }s/${ id }/helpful`,
           // NOTE: increments helpfulness

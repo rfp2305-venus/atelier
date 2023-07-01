@@ -19,7 +19,7 @@ export default function QuestionsList() {
 
   const [ search, setSearch ] = useState('');
 
-  const fetchQuestions = (page = 1, count = 50 /* placeholder values */) => {
+  const fetchQuestions = (page = 1, count = 50) => {
 
     axios
       .get(`${API_URL}/qa/questions`, {
@@ -41,7 +41,7 @@ export default function QuestionsList() {
         setQuestions(results);
       })
       .catch((err) => {
-        console.error(`Error fetching questions: ${err}`);
+        console.error(`Error fetching questions: ${ err }`);
       });
   };
 
@@ -70,7 +70,9 @@ export default function QuestionsList() {
 
   return (
     <Box width="800px" margin="auto">
-      <Typography variant="h3" sx={{ marginTop: '5px' }}>Q&A:</Typography>
+      <Typography variant="h3" sx={{ marginTop: '5px' }}>
+        Q&A:
+      </Typography>
 
       <Search search={ search } setSearch={ setSearch } />
 

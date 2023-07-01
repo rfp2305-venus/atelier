@@ -16,7 +16,7 @@ export default function SubmitPost({ id, body, type }) {
   const [ open, setOpen ] = useState(false);
 
   const reset = () => {
-    // resets to initial states
+    // reset to initial states
     setUser('');
     setEmail('');
     setSubmission('');
@@ -60,7 +60,7 @@ export default function SubmitPost({ id, body, type }) {
           console.error(`Error posting submission: ${ err }`);
         });
 
-    } else { // otherwise alert user
+    } else {
       // also superfluous
       alert(`This error will occur if :
       1. Any mandatory fields are blank
@@ -118,7 +118,7 @@ export default function SubmitPost({ id, body, type }) {
               placeholder="spongebob69@jeemail.gov"
               value={ email }
               onChange={ (e) => setEmail(e.target.value) }
-              type="email" // enforces email format validation!
+              type="email" // enforces email format validation
               required
               inputProps={{ maxLength: 60 }}
             />
@@ -134,8 +134,8 @@ export default function SubmitPost({ id, body, type }) {
             <TextField
               placeholder={
                 (type === 'question')
-                  ? ('So what\'s the deal with airline food?')
-                  : ('So here\'s the deal with airline food...')
+                  ? ('What\'s the deal with airline food?')
+                  : ('Here\'s the deal with airline food...')
               }
               value={ submission }
               onChange={ (e) => setSubmission(e.target.value) }
