@@ -8,7 +8,6 @@ import { Box } from '@mui/material';
 import getDate from './util/getDate';
 import Answer from './Answer';
 import SeeMore from './SeeMore';
-import SubmitPost from './SubmitPost';
 
 import axios from 'axios';
 

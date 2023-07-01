@@ -1,32 +1,23 @@
 const { API_URL, API_KEY } = process.env;
-
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-
 import { Accordion, AccordionSummary, AccordionDetails, Typography, Box } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-
 import getDate from './util/getDate';
-
 import Question from './Question';
 import Search from './Search';
 import SeeMore from './SeeMore';
 import SubmitPost from './SubmitPost';
-
 import axios from 'axios';
 
 export default function QuestionsList() {
 
   const { product } = useSelector(({ productDetail }) => productDetail);
-  // console.log(`product: ${ JSON.stringify(product) }`);
 
   const [ questions, setQuestions ] = useState([]);
   const [ length, setLength ] = useState(4);
 
   const [ search, setSearch ] = useState('');
-
-  // controls state of modal
-  const [ open, setOpen ] = useState(false);
 
   const fetchQuestions = (page = 1, count = 50 /* placeholder values */) => {
 
@@ -94,13 +85,6 @@ export default function QuestionsList() {
                   <Typography variant="h5">
                     { question_body }
                   </Typography>
-                  <SubmitPost
-                    id={ question_id }
-                    body={ question_body }
-                    type="answer"
-                    open={ open }
-                    setOpen={ setOpen }
-                  />
                 </AccordionSummary>
                 <AccordionDetails>
                   <Question
@@ -125,7 +109,7 @@ export default function QuestionsList() {
       { (questions.length > 2) && (length < questions.length) &&
         <SeeMore type="question" length={ length } setLength={ setLength } /> }
 
-      { product && <SubmitPost type="question" open={ open } setOpen={ setOpen } /> }
+      { product && <SubmitPost type="question" /> }
     </Box>
   );
 }

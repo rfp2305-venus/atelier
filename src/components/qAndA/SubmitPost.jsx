@@ -1,24 +1,27 @@
 const { API_URL, API_KEY } = process.env;
-
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-
 import { Dialog, DialogTitle, DialogContent, DialogActions, Box, Button, Typography, TextField } from '@mui/material';
-// <TextField> analogous to <input>
-
 import axios from 'axios';
 
-export default function SubmitPost({ id, body, type, open, setOpen }) {
+export default function SubmitPost({ id, body, type }) {
 
   const { product } = useSelector(({ productDetail }) => productDetail);
 
-  // user inputs **
-  const [ submission, setSubmission ] = useState('');
+  // user inputs
   const [ user, setUser ] = useState('');
   const [ email, setEmail ] = useState('');
+  const [ submission, setSubmission ] = useState('');
 
-  // const [ open, setOpen ] = useState(false);
-  // NOTE: local state prevents alternate scrollbar color, but at cost of minor event bubbling
+  const [ open, setOpen ] = useState(false);
+
+  const reset = () => {
+    // resets to initial states
+    setUser('');
+    setEmail('');
+    setSubmission('');
+    setOpen(false);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -26,13 +29,14 @@ export default function SubmitPost({ id, body, type, open, setOpen }) {
     let endpoint;
 
     if (type === 'question') {
+      // url for submitting new questions
       endpoint = `${ API_URL }/qa/${ type }s`;
     } else {
+      // url for submitting new answers
       endpoint = `${ API_URL }/qa/questions/${ id }/${ type }s`;
     }
 
     // only exec if all input fields filled correctly
-    // regex to verify email (boo)
     if (user !== '' && email !== '' && submission !== '') {
       // ^ technically superfluous since 'required' prop used below
 
@@ -50,14 +54,11 @@ export default function SubmitPost({ id, body, type, open, setOpen }) {
       })
         .then(() => {
           console.log(`${ user } posted ${ type }: ${ submission }`);
-          setOpen(false);
+          reset();
         })
         .catch((err) => {
           console.error(`Error posting submission: ${ err }`);
         });
-
-      // close modal after submission **
-      setOpen(false);
 
     } else { // otherwise alert user
       // also superfluous
@@ -74,13 +75,7 @@ export default function SubmitPost({ id, body, type, open, setOpen }) {
         Add { type }
       </Button>
 
-      <Dialog
-        open={ open }
-        onClose={ () => setOpen(false) }
-        aria-labelledby="add-submission"
-        aria-describedby="post-submission-for-given-product"
-        onClick={ (e) => e.stopPropagation() } // NOTE: prevents event from bubbling up to Accordion
-      >
+      <Dialog open={ open } onClose={ () => setOpen(false) }>
         <DialogTitle>
           { (type === 'question')
             ? ('Ask Your Question')
@@ -152,7 +147,7 @@ export default function SubmitPost({ id, body, type, open, setOpen }) {
         </DialogContent>
 
         <DialogActions>
-          <Button onClick={ () => setOpen(false) }>
+          <Button onClick={ reset }>
             Cancel
           </Button>
 

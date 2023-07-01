@@ -1,8 +1,6 @@
 const { API_URL, API_KEY } = process.env;
-
 import React, { useState } from 'react';
 import { Button } from '@mui/material';
-
 import axios from 'axios';
 
 export default function Upvote({ id, type, helpfulness }) {
@@ -25,6 +23,8 @@ export default function Upvote({ id, type, helpfulness }) {
           // increment helpfulness on click
           setVotes(votes + 1);
           console.log('Helpfulness updated (+1)!');
+
+          console.log(`type: ${ type }!`);
 
           // toggle disable thereafter
           setVoted(true);
