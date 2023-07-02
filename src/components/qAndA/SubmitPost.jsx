@@ -134,12 +134,12 @@ export default function SubmitPost({ id, body, type }) {
           console.error(`Error posting: ${ err }`);
         });
 
-    } else { // otherwise alert user
+    } /* else { // otherwise alert user
       alert(`This error will occur if :
       1. Any mandatory fields are blank
       2. The email address provided is not in the correct format
       `);
-    }
+    } */
   };
 
   return (

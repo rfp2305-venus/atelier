@@ -110,8 +110,9 @@ export default function QuestionsList() {
       {/* disappears when:
         > (2) questions or fewer
         > all questions displayed */}
-      { (questions.length > 2) && (length < questions.length) &&
-        <SeeMore type="question" length={ length } setLength={ setLength } /> }
+      { (questions.length > 2) && (length < questions.length) && (
+        <SeeMore type="question" length={ length } setLength={ setLength } />
+      ) }
 
       { product && <SubmitPost type="question" /> }
     </Box>
