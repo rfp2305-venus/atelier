@@ -76,34 +76,36 @@ export default function QuestionsList() {
 
       <Search search={ search } setSearch={ setSearch } />
 
-      { (searchResults.length > 0) ? (
-        searchResults
-          .slice(0, length)
-          .map(({ question_id, question_body, question_date, asker_name, question_helpfulness, reported }) => (
-            // if question is not blank or reported
-            (question_body.length > 0 && !reported) ? (
-              <Accordion key={ question_id }>
-                <AccordionSummary expandIcon={ <ExpandMoreIcon /> }>
-                  <Typography variant="h5">
-                    { question_body }
-                  </Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <Question
-                    id={ question_id }
-                    body={ question_body }
-                    date={ getDate(question_date) }
-                    user={ asker_name }
-                    helpfulness={ question_helpfulness }
-                    reported={ reported }
-                  />
-                </AccordionDetails>
-              </Accordion>
-            ) : (null)
-          ))
-      ) : (
-        <Typography>No questions yet!</Typography>
-      )}<br />
+      <Box sx={{ maxHeight: '100vh', overflowY: 'auto' }}>
+        { (searchResults.length > 0) ? (
+          searchResults
+            .slice(0, length)
+            .map(({ question_id, question_body, question_date, asker_name, question_helpfulness, reported }) => (
+              // if question is not blank or reported
+              (question_body.length > 0 && !reported) ? (
+                <Accordion key={ question_id }>
+                  <AccordionSummary expandIcon={ <ExpandMoreIcon /> }>
+                    <Typography variant="h5">
+                      { question_body }
+                    </Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <Question
+                      id={ question_id }
+                      body={ question_body }
+                      date={ getDate(question_date) }
+                      user={ asker_name }
+                      helpfulness={ question_helpfulness }
+                      reported={ reported }
+                    />
+                  </AccordionDetails>
+                </Accordion>
+              ) : (null)
+            ))
+        ) : (
+          <Typography>No questions yet!</Typography>
+        )}
+      </Box>
 
       {/* disappears when:
         > (2) questions or fewer
