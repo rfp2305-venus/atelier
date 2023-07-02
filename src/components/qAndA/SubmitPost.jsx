@@ -8,13 +8,19 @@ export default function SubmitPost({ id, body, type }) {
 
   const { product } = useSelector(({ productDetail }) => productDetail);
 
-  // user inputs
-  const [ user, setUser ] = useState('');
-  const [ email, setEmail ] = useState('');
-  const [ post, setPost ] = useState('');
-  const [ photos, setPhotos ] = useState([]);
-
   const [ open, setOpen ] = useState(false);
+
+  // user inputs & validation
+  const [ user, setUser ] = useState('');
+  const [ userFilled, setUserFilled ] = useState(true);
+
+  const [ email, setEmail ] = useState('');
+  const [ emailFilled, setEmailFilled ] = useState(true);
+
+  const [ post, setPost ] = useState('');
+  const [ postFilled, setPostFilled ] = useState(true);
+
+  const [ photos, setPhotos ] = useState([]);
 
   const reset = () => {
     // reset to initial states
@@ -36,21 +42,44 @@ export default function SubmitPost({ id, body, type }) {
     setPhotos((prev) => [ ...prev, ...files ]);
   };
 
+  const validateInputs = () => {
+    if (user.trim() !== '') {
+      setUserFilled(true);
+    } else {
+      setUserFilled(false);
+    }
+
+    if (email.trim() !== '') {
+      setEmailFilled(true);
+    } else {
+      setEmailFilled(false);
+    }
+
+    if (post.trim() !== '') {
+      setPostFilled(true);
+    } else {
+      setPostFilled(false);
+    }
+
+    return userFilled && emailFilled && postFilled;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    let endpoint;
+    // form validation
+    const isValid = validateInputs();
 
-    if (type === 'question') {
-      // url for submitting new questions
-      endpoint = `${ API_URL }/qa/${ type }s`;
-    } else {
-      // url for submitting new answers
-      endpoint = `${ API_URL }/qa/questions/${ id }/${ type }s`;
-    }
+    if (isValid) {
+      let endpoint;
 
-    // only exec if all input fields filled correctly
-    if (user !== '' && email !== '' && post !== '') {
+      if (type === 'question') {
+        // url for submitting new questions
+        endpoint = `${ API_URL }/qa/${ type }s`;
+      } else {
+        // url for submitting new answers
+        endpoint = `${ API_URL }/qa/questions/${ id }/${ type }s`;
+      }
       /*
       // instantiate FormData obj
       const formData = new FormData();
@@ -138,7 +167,9 @@ export default function SubmitPost({ id, body, type }) {
               value={ user }
               onChange={ (e) => setUser(e.target.value) }
               // NOTE: useful props below!
-              required
+              error={ !userFilled }
+              helperText={ (!userFilled) ? ('Name, please.') : (null) }
+              // required
               inputProps={{ maxLength: 60 }}
             />
 
@@ -155,7 +186,9 @@ export default function SubmitPost({ id, body, type }) {
               value={ email }
               onChange={ (e) => setEmail(e.target.value) }
               type="email" // enforces email format validation
-              required
+              error={ !emailFilled }
+              helperText={ (!emailFilled) ? ('Promise not to spam you.') : (null) }
+              // required
               inputProps={{ maxLength: 60 }}
             />
 
@@ -175,8 +208,15 @@ export default function SubmitPost({ id, body, type }) {
               }
               value={ post }
               onChange={ (e) => setPost(e.target.value) }
+              multiline
               fullWidth
-              required
+              error={ !postFilled }
+              helperText={ (!postFilled)
+                ? (`Do you have ${ (type === 'question')
+                  ? ('a question')
+                  : ('an answer') }?`)
+                : (null) }
+              // required
               inputProps={{ maxLength: 1000 }}
             />
           </form>
