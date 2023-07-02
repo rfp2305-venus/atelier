@@ -27,13 +27,14 @@ export default function SubmitPost({ id, body, type }) {
 
   const uploadPhotos = (e) => {
     // convert files to array & limit to (5)
-    const files = Array.from(e.target.files).slice(0, 5);
+    const files = Array.from(e.target.files)
+      .slice(0, 5 - photos.length)
+      .map(({ name }) => { url: name });
+
+    // console.log(`photos: ${[ ...photos ]}`);
 
     // set photos for POST req
-    setPhotos([ ...photos, files ]);
-
-    // log success message
-    console.log(`${ user } uploaded ${ photos.length } photos!`);
+    setPhotos((prev) => [ ...prev, ...files ]);
   };
 
   const handleSubmit = (e) => {
@@ -53,6 +54,7 @@ export default function SubmitPost({ id, body, type }) {
     if (user !== '' && email !== '' && post !== '') {
       // ^ technically superfluous since 'required' prop used below
 
+      /*
       // instantiate FormData obj
       const formData = new FormData();
 
@@ -65,17 +67,30 @@ export default function SubmitPost({ id, body, type }) {
         formData.append('product_id', product.id);
 
       } else {
+        // formData.append('photos', photos);
         photos.forEach((photo, i) => {
           formData.append(`photos[${ i }]`, photo);
         });
+        console.log(`${ user } uploaded ${ photos.length } photos`);
       }
+
+      // console.log(`formData: ${ formData }`);
+      */
 
       // POST req w/ formData
       axios({
         method: 'post',
         url: endpoint,
-        headers: { Authorization: API_KEY },
-        data: formData
+        headers: {
+          'Authorization': API_KEY,
+          // 'Content-Type': 'multipart/form-data'
+        },
+        data: /* formData */ {
+          name: user,
+          email: email,
+          body: post,
+          // photos: photos
+        }
       })
         .then(() => {
           console.log(`${ user } posted ${ type }: ${ post }`);
@@ -84,6 +99,7 @@ export default function SubmitPost({ id, body, type }) {
         .catch((err) => {
           console.error(`Error posting post: ${ err }`);
         });
+      // */
 
     } else {
       // also superfluous
@@ -170,35 +186,33 @@ export default function SubmitPost({ id, body, type }) {
             />
           </form>
 
-          <Box sx={{ marginTop: '35px', marginBottom: '40px' }}>
-            <Typography variant="body1" sx={{ marginBottom: '15px' }}>
-              <strong>Your photos:</strong>
-            </Typography>
+          { (type === 'answer') && (
+            <Box sx={{ marginTop: '35px', marginBottom: '35px' }}>
+              <Typography variant="body1" sx={{ marginBottom: '15px' }}>
+                <strong>Your photos:</strong>
+              </Typography>
 
-            { (photos.length < 5) && (
-              <input
-                type="file"
-                multiple
-                onChange={ uploadPhotos }
-              />
-            ) }
+              { (type === 'answer') && (photos.length < 5) && (
+                <input
+                  type="file"
+                  multiple
+                  onChange={ uploadPhotos }
+                />
+              ) }
 
-            { photos.map((photo, i) => (
-              <img
-                key={ i }
-                src={
-                  URL.createObjectURL(
-                    new Blob(photo, { type: 'image/gif'})
-                  )
-                }
-                style={{
-                  maxHeight: '100px',
-                  maxWidth: 'auto',
-                  margin: '5px'
-                }}
-              />
-            )) }
-          </Box>
+              { photos.map((photo, i) => (
+                <img
+                  key={ i }
+                  src={ URL.createObjectURL(photo) }
+                  style={{
+                    maxHeight: '100px',
+                    maxWidth: 'auto',
+                    margin: '5px'
+                  }}
+                />
+              )) }
+            </Box>
+          ) }
         </DialogContent>
 
         <DialogActions>
