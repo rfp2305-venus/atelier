@@ -5,6 +5,8 @@ import { useSelector } from 'react-redux';
 import axios from 'axios';
 import * as React from 'react';
 import Characteristics from './Characteristics';
+import WriteReviewForm from './WriteReviewForm';
+
 import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
@@ -13,8 +15,12 @@ import LinearProgress from '@mui/material/LinearProgress';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 
+import { styled } from '@mui/material/styles';
+import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Grid';
 
-export default function RatingsBreakdown({reviews}) {
+
+export default function RatingsBreakdown({reviews, handleFilteredRatings, setReviews, productID}) {
 
   const { product } = useSelector(({ productDetail }) => productDetail);
   const [ratings, setRatings] = useState([]);
@@ -104,7 +110,8 @@ export default function RatingsBreakdown({reviews}) {
 
 
   return (
-    <>
+    <Grid container spacing={2}>
+
       <div id="ratingsReviews">
         <h3 className='reviews'>Ratings & Reviews</h3>
         <div id='reviewRating'>
@@ -120,29 +127,35 @@ export default function RatingsBreakdown({reviews}) {
         <div id='productRecommended'>
           {`${calculateRecommended(recommended)}% of reviews recommend this product`}
         </div>
+
         <div id='starsBreakdown'>
           {Object.entries(starPercentages).reverse().map(([key, value]) => (
-            <div key={key} >
-              <Box ml={3} sx={{ width: 300 }}>
-                <span><Link href="#" underline="always">{key + ' stars' }</Link></span>
-                <span><LinearProgress variant="determinate" value={value} sx={{
-                }}/></span>
-                <span>{Math.round(value * totalReviews / 100)}</span>
-              </Box>
+            <div key={key} onClick={() => { handleFilteredRatings(key); }}
+            >
+              <Grid item xs={2}>
+                <Link href="#" underline="always">{key + ' stars' } </Link>
+              </Grid>
+              <Grid item xs={9}>
+                <LinearProgress variant="determinate" value={value} sx={{
+                }}/>
+              </Grid>
+              <Grid item xs={1}>
+                {Math.round(value * totalReviews / 100)}
+              </Grid>
             </div>
           ))}
         </div>
         <div id='characteristics'>
           {Object.keys(characteristics).map((char) => (
-            <Characteristics characteristic={char} id={characteristics[char].id} charValue={characteristics[char].value}/>
+            <Characteristics characteristic={char} key={characteristics[char].id} id={characteristics[char].id} charValue={characteristics[char].value}/>
           ))}
         </div>
-        <button id='addReview'
-        >
-          Add a Review +
-        </button>
+
+        <Grid item xs={12}>
+          <WriteReviewForm prodCharacteristics={characteristics} productID={productID} setReviews={setReviews}/>
+        </Grid>
       </div>
-    </>
+    </Grid>
   );
 }
 
