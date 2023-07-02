@@ -5,9 +5,13 @@ import { useSelector } from 'react-redux';
 import axios from 'axios';
 import ReviewTile from './ReviewTile';
 import SortOptions from './SortOptions.jsx';
-import WriteReviewForm from './WriteReviewForm';
 import RatingsBreakdown from './RatingsBreakdown';
 import './RatingsReviews.css';
+import * as React from 'react';
+import { styled } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Grid';
 
 
 
@@ -16,153 +20,113 @@ export default function ReviewsList({currentProductId, reviewSort, handleSortSel
   const { product } = useSelector(({ productDetail }) => productDetail);
   const [reviews, setReviews] = useState([]);
   const [page, setPage] = useState(1);
-  const [count, setCount] = useState(2);
+  const [count, setCount] = useState(100);
   const [sortby, setSortby] = useState('relevant');
-
-  // const [cntProducts, setCntProducts] = useState(0);
-  // const [ratings, setRatings] = useState(null);
-  // const [recommended, setRecommended] = useState(null);
-
-  // const [filteredRatings, setFilteredRatings] = useState([]);
-  // const [showHideMore, setShowHideMore] = useState(true);
-
-  const showMore = () => {
-    setPage(page => page + 1);
-  };
-
-  // const setSortby = (sortby) => {
-  //   setReviews([]);
-  //   setPage(1);
-  //   setSort(sortby);
-  // }
+  const [results, setResults] = useState([]);
+  const [reviewsQuantity, setReviewsQuantity] = useState(2);
+  const [filteredReviewsList, setFilteredReviewsList] = useState([]);
 
   const fetchReviews = () => {
-    return axios.get(`${ API_URL }/reviews`, {
-      headers: { Authorization: API_KEY },
-      params: {
-        product_id: product.id,
-        page: page,
-        count: count,
-        sort: sortby
-      }
-    })
+    return axios
+      .get(`${API_URL}/reviews`, {
+        headers: { Authorization: API_KEY },
+        params: {
+          product_id: product.id,
+          page: page,
+          count: count,
+          sort: sortby,
+        },
+      })
       .then((res) => {
-
         const { results } = res.data;
-
-        setReviews(reviews.concat(results));
-
-        // setReviews((reviews) => [...reviews, results]);
+        setReviews((prevReviews) => prevReviews.concat(results));
       })
       .catch((err) => {
-        console.error(`Error fetching reviews: ${ err }`);
+        console.error(`Error fetching reviews: ${err}`);
       });
   };
 
   useEffect(() => {
-    //console.log('before', product && product.id);
     if (product) {
-      //console.log('after', product.id);
       fetchReviews();
     }
-  }, [ product, page, sortby ]);
+  }, [product, page, sortby, count]);
 
-  console.log('REVIEWS', reviews);
+  const handleMoreReviews = () => {
+    if (filteredReviewsList.length > 0) {
+      if (filteredReviewsList.length > reviewsQuantity) {
+        setReviewsQuantity((prevQuantity) => prevQuantity + 2);
+      }
+    } else {
+      if (reviews.length > reviewsQuantity) {
+        setReviewsQuantity((prevQuantity) => prevQuantity + 2);
+      }
+    }
+  };
 
-  // useEffect(() => {
-  //   if (product) {
-  //     fetchReviewMeta();
-  //     if (filteredRatings.length > 0) {
-  //       fetchAllReviews();
-  //     } else {
-  //       fetchReviews();
-  //     }
-  //   }
-  // }, [ product, page, sortby, filteredRatings ]);
+  const handleFilteredRatings = (star) => {
+    const filteredReviews = reviews.filter((review) => review.rating === Number(star));
+    setFilteredReviewsList(filteredReviews);
+    setReviewsQuantity(2);
+  };
 
-  // const fetchReviewMeta = () => {
-  //   axios.get(`${ API_URL }/reviews/meta`, {
-  //     headers: { Authorization: API_KEY },
-  //     params: {
-  //       product_id: product.id
-  //     }
-  //   }).then((res) => {
-  //     const { ratings } = res.data;
-  //     setRatings(ratings);
-  //     const { recommended } = res.data;
-  //     setRecommended(recommended);
+  const handleLessReviews = () => {
+    setReviewsQuantity(2);
+  };
 
-  //     console.log('ratings', ratings);
-  //     console.log('recommended', recommended);
+  let showMoreReviewsButton = (
+    <button className="reviewsButton" onClick={handleMoreReviews}>
+      More Reviews +
+    </button>
+  );
+  let showLessReviewsButton = (
+    <button className="reviewsButton" onClick={handleLessReviews}>
+      Less Reviews
+    </button>
+  );
 
-  //     var cntProducts = (isNaN(recommended['false']) ? 0 : Number(recommended['false'])) + (isNaN(recommended['true']) ? 0 : Number(recommended['true']));
-  //     setCntProducts(cntProducts);
+  if (filteredReviewsList.length > 0 && (filteredReviewsList.length < 2 || filteredReviewsList.length <= reviewsQuantity)) {
+    showMoreReviewsButton = null;
+  } else if (reviews.length < 2 || reviews.length <= reviewsQuantity) {
+    showMoreReviewsButton = null;
+  }
 
-  //     console.log('reviews/cnt', reviews.length + 2, cntProducts);
-  //     if (reviews.length + 2 < cntProducts) { setShowHideMore(true); } else { setShowHideMore(false); }
-  //   })
-  //     .catch((err) => {
-  //       console.error(`Error fetching meta: ${ err }`);
-  //     });
-  // };
-
-  // const fetchAllReviews = () => {
-  //   axios.get(`${ API_URL }/reviews`, {
-  //     headers: { Authorization: API_KEY },
-  //     params: {
-  //       product_id: product.id,
-  //       page: page,
-  //       count: cntProducts,
-  //       sort: sortby
-  //     }
-  //   })
-  //     .then((res) => {
-
-  //       const { results } = res.data;
-  //       console.log('res.data', res.data);
-  //       setReviews(results.filter(r => filteredRatings.indexOf(r.rating) >= 0));
-
-  //     });
-  // };
-
-  // const handleFilteredRatings = (rating) => {
-  //   const ratings = [...filteredRatings];
-
-  //   if (ratings.indexOf(rating) < 0) {
-  //     ratings.push(rating);
-  //   } else {
-  //     ratings.splice(ratings.indexOf(rating), 1);
-  //   }
-
-  //   setFilteredRatings(ratings);
-  //   setReviews([]);
-  //   setShowHideMore(false);
-  // };
-
+  let renderedReviewsList = [];
+  for (let i = 0; i < reviewsQuantity; i++) {
+    if (filteredReviewsList.length > 0) {
+      if (filteredReviewsList[i] !== undefined) {
+        renderedReviewsList.push(filteredReviewsList[i]);
+      }
+    } else {
+      if (reviews[i] !== undefined) {
+        renderedReviewsList.push(reviews[i]);
+      }
+    }
+  }
+  // console.log('renderedReviewsList', renderedReviewsList);
+  // console.log('REVIEWS', reviews);
 
   return (
 
-    <div>
-      <div>
-        <RatingsBreakdown reviews={reviews}/>
-      </div>
-      <SortOptions setReviews={setReviews} setSortby={setSortby}/>
-      <div>
-        {reviews.map((review) => (
-          <ReviewTile key={review.review_id} review={review} id={review.review_id}/>
-        ))}
-        <div><button className='showMoreButton' onClick={showMore}>More Reviews</button></div>
-        <WriteReviewForm/>
-      </div>
-    </div>
+    <Grid container spacing={1}>
+      <Grid item xs={3}>
+        <div>
+          <RatingsBreakdown reviews={reviews}
+            productID={product.id} setReviews={setReviews} handleFilteredRatings={handleFilteredRatings}
+          />
+        </div>
+      </Grid>
+      <Grid item xs={9}>
+        <div>
+          <SortOptions setReviews={setReviews} setSortby={setSortby}/>
+          {renderedReviewsList.map((review) => (
+            <ReviewTile key={review.review_id} review={review} id={review.review_id}/>
+          ))}
+          {/* <div><button className='showMoreButton' onClick={showMore}>More Reviews</button></div> */}
+        </div>
+        {showMoreReviewsButton}
+        {showLessReviewsButton}
+      </Grid>
+    </Grid>
   );
 }
-
-{/* <SortOptions setSortby={setSortby} />
-<div onClick={() => handleFilteredRatings(1)}>Rating 1</div>
-<div onClick={() => handleFilteredRatings(2)}>Rating 2</div>
-<div onClick={() => handleFilteredRatings(3)}>Rating 3</div>
-<div onClick={() => handleFilteredRatings(4)}>Rating 4</div>
-<div onClick={() => handleFilteredRatings(5)}>Rating 5</div>
-<div>{filteredRatings}</div>
- */}
