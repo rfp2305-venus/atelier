@@ -99,8 +99,7 @@ export default function SubmitPost({ id, body, type }) {
           console.error(`Error posting post: ${ err }`);
         });
 
-    } else {
-      // also superfluous
+    } else { // otherwise alert user
       alert(`This error will occur if :
       1. Any mandatory fields are blank
       2. The email address provided is not in the correct format
