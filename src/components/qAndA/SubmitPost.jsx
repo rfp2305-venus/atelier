@@ -219,7 +219,7 @@ export default function SubmitPost({ id, body, type }) {
             Cancel
           </Button>
 
-          {/* <Button onClick={ (e) => setPhotos(e.target.files) }>
+          {/* <Button onClick={ uploadPhotos }>
             Upload Photos
           </Button> */}
 
