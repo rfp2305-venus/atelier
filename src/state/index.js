@@ -14,7 +14,7 @@ const rootReducer = combineReducers({
   products: ProductsReducer,
   comparisonDetail: relatedReducer,
   reviews: ReviewsReducer,
-  outfit: outfitReducer
+  article: outfitReducer
 });
 
 export const store = createStore(

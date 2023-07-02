@@ -4,21 +4,21 @@ export default function relatedReducer(state, action) {
   // console.log('action', action);
 
   switch (action.type) {
-  case 'a specific type':
-    return {
-      ...state,
-      data: action.data
-    }
-    break;
-  case 'COMPARISON_PRODUCT':
-    return {
-      ...state,
-      comparisonDetail: action.comparisonDetail
-    }
-    break;
-  default:
-    return {
-      ...state
-    }
- }
+    case 'a specific type':
+      return {
+        ...state,
+        data: action.data
+      }
+      break;
+    case 'COMPARISON_PRODUCT':
+      return {
+        ...state,
+        comparisonDetail: action.comparisonDetail
+      }
+      break;
+    default:
+      return {
+        ...state
+      }
+  }
 }
