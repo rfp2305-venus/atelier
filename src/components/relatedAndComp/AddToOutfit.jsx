@@ -12,9 +12,7 @@ export default function AddToOutfit() {
   const dispatch = useDispatch();
 
   function handleID() {
-    // console.log('product.id', product.id);
-    wearArticle(product.id);
-    // console.log('state:', state);
+    dispatch(wearArticle(product.id));
   }
 
   return (
