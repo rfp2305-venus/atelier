@@ -13,7 +13,7 @@ import Upvote from '../Upvote';
 // mock axios —> custom behavior for API req
 jest.mock('axios');
 
-describe('Upvote component', () => {
+describe('Upvote', () => {
 
   test('increments helpfulness & disables appropriately on click', async() => {
 
