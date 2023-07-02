@@ -27,7 +27,13 @@ export default function SubmitPost({ id, body, type }) {
     setUser('');
     setEmail('');
     setPost('');
+
+    setUserFilled(true);
+    setEmailFilled(true);
+    setPostFilled(true);
+
     setPhotos([]);
+
     setOpen(false);
   };
 
