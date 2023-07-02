@@ -98,7 +98,6 @@ export default function SubmitPost({ id, body, type }) {
         .catch((err) => {
           console.error(`Error posting post: ${ err }`);
         });
-      // */
 
     } else {
       // also superfluous
