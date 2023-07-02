@@ -52,7 +52,17 @@ export default function ReviewsList({currentProductId, reviewSort, handleSortSel
     }
   }, [product, page, sortby, count]);
 
-  console.log('REVIEWS', reviews);
+  const handleMoreReviews = () => {
+    if (filteredReviewsList.length > 0) {
+      if (filteredReviewsList.length > reviewsQuantity) {
+        setReviewsQuantity((prevQuantity) => prevQuantity + 2);
+      }
+    } else {
+      if (reviews.length > reviewsQuantity) {
+        setReviewsQuantity((prevQuantity) => prevQuantity + 2);
+      }
+    }
+  };
 
   const handleFilteredRatings = (star) => {
     const filteredReviews = reviews.filter((review) => review.rating === Number(star));
