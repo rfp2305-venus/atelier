@@ -51,8 +51,6 @@ export default function SubmitPost({ id, body, type }) {
 
     // only exec if all input fields filled correctly
     if (user !== '' && email !== '' && post !== '') {
-      // ^ technically superfluous since 'required' prop used below
-
       /*
       // instantiate FormData obj
       const formData = new FormData();
