@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Box, Typography } from '@mui/material';
 import Upvote from './Upvote';
@@ -26,7 +26,7 @@ export default function Question({ id, body, date, user, helpfulness, reported }
       </Typography>
 
       <AnswersList questionID={ id } />
-      { product && <SubmitPost id={ id } body={ body } type="answer" /> }
+      <SubmitPost id={ id } body={ body } type="answer" />
     </Box>
   );
 }

@@ -59,12 +59,12 @@ export default function AnswersList({ questionID }) {
   }, [/* product, questionID */]);
   // does not seem to resolve multiple API calls —> backlog
 
-  /*
+  // /*
   // check if answers fetched correctly
   answers.forEach((a, i) => {
     console.log(`answer ${ i }: ${ JSON.stringify(a) }`);
   });
-  */
+  // */
 
   return (
     <Box /* sx={{ width: '50vh', overflow: 'visible' }} */>

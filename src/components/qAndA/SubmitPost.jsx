@@ -11,7 +11,8 @@ export default function SubmitPost({ id, body, type }) {
   // user inputs
   const [ user, setUser ] = useState('');
   const [ email, setEmail ] = useState('');
-  const [ submission, setSubmission ] = useState('');
+  const [ post, setPost ] = useState('');
+  const [ photos, setPhotos ] = useState([]);
 
   const [ open, setOpen ] = useState(false);
 
@@ -19,8 +20,20 @@ export default function SubmitPost({ id, body, type }) {
     // reset to initial states
     setUser('');
     setEmail('');
-    setSubmission('');
+    setPost('');
+    setPhotos([]);
     setOpen(false);
+  };
+
+  const uploadPhotos = (e) => {
+    // convert files to array & limit to (5)
+    const files = Array.from(e.target.files).slice(0, 5);
+
+    // set photos for POST req
+    setPhotos([ ...photos, files ]);
+
+    // log success message
+    console.log(`${ user } uploaded ${ photos.length } photos!`);
   };
 
   const handleSubmit = (e) => {
@@ -37,27 +50,39 @@ export default function SubmitPost({ id, body, type }) {
     }
 
     // only exec if all input fields filled correctly
-    if (user !== '' && email !== '' && submission !== '') {
+    if (user !== '' && email !== '' && post !== '') {
       // ^ technically superfluous since 'required' prop used below
 
-      // POST req w/ relevant data
+      // instantiate FormData obj
+      const formData = new FormData();
+
+      // append all pertinent data
+      formData.append('name', user);
+      formData.append('email', email);
+      formData.append('body', post);
+
+      if (type === 'question') {
+        formData.append('product_id', product.id);
+
+      } else {
+        photos.forEach((photo, i) => {
+          formData.append(`photos[${ i }]`, photo);
+        });
+      }
+
+      // POST req w/ formData
       axios({
         method: 'post',
         url: endpoint,
         headers: { Authorization: API_KEY },
-        data: {
-          product_id: product.id,
-          name: user,
-          email: email,
-          body: submission
-        }
+        data: formData
       })
         .then(() => {
-          console.log(`${ user } posted ${ type }: ${ submission }`);
+          console.log(`${ user } posted ${ type }: ${ post }`);
           reset();
         })
         .catch((err) => {
-          console.error(`Error posting submission: ${ err }`);
+          console.error(`Error posting post: ${ err }`);
         });
 
     } else {
@@ -137,19 +162,53 @@ export default function SubmitPost({ id, body, type }) {
                   ? ('What\'s the deal with airline food?')
                   : ('Here\'s the deal with airline food...')
               }
-              value={ submission }
-              onChange={ (e) => setSubmission(e.target.value) }
+              value={ post }
+              onChange={ (e) => setPost(e.target.value) }
               fullWidth
               required
               inputProps={{ maxLength: 1000 }}
             />
           </form>
+
+          <Box sx={{ marginTop: '35px', marginBottom: '40px' }}>
+            <Typography variant="body1" sx={{ marginBottom: '15px' }}>
+              <strong>Your photos:</strong>
+            </Typography>
+
+            { (photos.length < 5) && (
+              <input
+                type="file"
+                multiple
+                onChange={ uploadPhotos }
+              />
+            ) }
+
+            { photos.map((photo, i) => (
+              <img
+                key={ i }
+                src={
+                  URL.createObjectURL(
+                    new Blob(photo, { type: 'image/gif'})
+                  )
+                }
+                style={{
+                  maxHeight: '100px',
+                  maxWidth: 'auto',
+                  margin: '5px'
+                }}
+              />
+            )) }
+          </Box>
         </DialogContent>
 
         <DialogActions>
           <Button onClick={ reset }>
             Cancel
           </Button>
+
+          {/* <Button onClick={ (e) => setPhotos(e.target.files) }>
+            Upload Photos
+          </Button> */}
 
           <Button type="submit" onClick={ handleSubmit }>
             Submit { type }
