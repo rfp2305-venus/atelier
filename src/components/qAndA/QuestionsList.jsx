@@ -19,7 +19,7 @@ export default function QuestionsList() {
 
   const [ search, setSearch ] = useState('');
 
-  const fetchQuestions = (page = 1, count = 50) => {
+  const fetchQuestions = (page = 1, count = 20) => {
 
     axios
       .get(`${API_URL}/qa/questions`, {

@@ -15,7 +15,7 @@ export default function AnswersList({ questionID }) {
   const [ length, setLength ] = useState(2);
   const [ isExpanded, setExpanded ] = useState(false);
 
-  const fetchAnswers = (page = 1, count = 50) => {
+  const fetchAnswers = (page = 1, count = 20) => {
 
     axios
       .get(`${ API_URL }/qa/questions/${ questionID }/answers`, {
@@ -59,15 +59,15 @@ export default function AnswersList({ questionID }) {
   }, [/* product, questionID */]);
   // does not seem to resolve multiple API calls —> backlog
 
-  // /*
+  /*
   // check if answers fetched correctly
   answers.forEach((a, i) => {
     console.log(`answer ${ i }: ${ JSON.stringify(a) }`);
   });
-  // */
+  */
 
   return (
-    <Box /* sx={{ width: '50vh', overflow: 'visible' }} */>
+    <Box sx={{ maxHeight: '50vh', overflowY: 'auto' }}>
       { answers
         .slice(0, length)
         .map(({ answer_id, body, date, answerer_name, helpfulness, photos, reported }) => (

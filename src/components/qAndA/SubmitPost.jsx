@@ -28,8 +28,7 @@ export default function SubmitPost({ id, body, type }) {
   const uploadPhotos = (e) => {
     // convert files to array & limit to (5)
     const files = Array.from(e.target.files)
-      .slice(0, 5 - photos.length)
-      .map(({ name }) => { url: name });
+      .slice(0, 5 - photos.length);
 
     // console.log(`photos: ${[ ...photos ]}`);
 
