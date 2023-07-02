@@ -1,6 +1,5 @@
 const { API_URL, API_KEY } = process.env;
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import { Box } from '@mui/material';
 import getDate from './util/getDate';
 import Answer from './Answer';
@@ -8,8 +7,6 @@ import SeeMore from './SeeMore';
 import axios from 'axios';
 
 export default function AnswersList({ questionID }) {
-
-  const { product } = useSelector(({ productDetail }) => productDetail);
 
   const [ answers, setAnswers ] = useState([]);
   const [ length, setLength ] = useState(2);

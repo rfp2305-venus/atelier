@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
 import { Box, Typography } from '@mui/material';
 import Upvote from './Upvote';
 import Report from './Report';
@@ -7,8 +6,6 @@ import AnswersList from './AnswersList';
 import SubmitPost from './SubmitPost';
 
 export default function Question({ id, body, date, user, helpfulness, reported }) {
-
-  const { product } = useSelector(({ productDetail }) => productDetail);
 
   return (
     <Box>

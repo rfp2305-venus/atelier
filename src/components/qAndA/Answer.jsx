@@ -1,10 +1,18 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState } from 'react';
 import { Box, Typography } from '@mui/material';
 import Upvote from './Upvote';
 import Report from './Report';
+import ImageModal from './ImageModal';
 
 export default function Answer({ id, body, date, user, isSeller, helpfulness, photos, reported }) {
+
+  const [ imageOpen, setImageOpen ] = useState(false);
+  const [ imageURL, setImageURL ] = useState('');
+
+  const handleClick = (url) => {
+    setImageURL(url);
+    setImageOpen(true);
+  };
 
   return (
     <Box sx={{ marginTop: '20px' }}>
@@ -20,8 +28,10 @@ export default function Answer({ id, body, date, user, isSeller, helpfulness, ph
             style={{
               maxHeight: '100px',
               maxWidth: 'auto',
-              margin: '5px'
+              margin: '5px',
+              cursor: 'pointer' // indicates clickable
             }}
+            onClick={ () => handleClick(url) }
           />)
         )) }
 
@@ -33,6 +43,13 @@ export default function Answer({ id, body, date, user, isSeller, helpfulness, ph
         Helpful? <Upvote id={ id } type="answer" helpfulness={ helpfulness } />
         <Report id={ id } type="answer" reported={ reported } />
       </Typography>
+
+      {/* render ImageModal */}
+      <ImageModal
+        open={ imageOpen }
+        handleClose={ () => setImageOpen(false) }
+        imageURL={ imageURL }
+      />
     </Box>
   );
 }

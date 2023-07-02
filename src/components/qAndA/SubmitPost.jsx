@@ -193,10 +193,11 @@ export default function SubmitPost({ id, body, type }) {
               placeholder="spongebob69@jeemail.gov"
               value={ email }
               onChange={ (e) => setEmail(e.target.value) }
-              type="email" // enforces email format validation
               error={ !emailFilled }
               helperText={ (!emailFilled) ? ('Promise not to spam you.') : (null) }
+              type="email" // enforces email format validation
               // required
+              fullWidth
               inputProps={{ maxLength: 60 }}
             />
 
