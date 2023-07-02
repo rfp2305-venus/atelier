@@ -53,12 +53,10 @@ body {
 
 #reviewForm {
   box-sizing: border-box;
-  position: absolute;
   background-color: white;
   border: '2px solid #000';
   margin-bottom: 1em;
   text-align: center;
   border: 5px solid #666;
   color: #666;
-  white-space: nowrap;
 }
