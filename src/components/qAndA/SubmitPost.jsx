@@ -86,6 +86,7 @@ export default function SubmitPost({ id, body, type }) {
         // url for submitting new answers
         endpoint = `${ API_URL }/qa/questions/${ id }/${ type }s`;
       }
+
       /*
       // instantiate FormData obj
       const formData = new FormData();
@@ -118,6 +119,7 @@ export default function SubmitPost({ id, body, type }) {
           // 'Content-Type': 'multipart/form-data'
         },
         data: /* formData */ {
+          product_id: product.id,
           name: user,
           email: email,
           body: post,
