@@ -70,11 +70,11 @@ export default function ProductOverview() {
 
   return (
     <Grid container spacing={1} sx={{padding: 0, maxWidth: '1200px'}}>
-      <Grid item xs={12} md={9} style={{maxWidth: '100%', minHeight: '50vh'}}>
+      <Grid item xs={12} md={8} style={{maxWidth: '100%', minHeight: '50vh'}}>
         { selectedStyle && <ProductGallery product={selectedStyle} />}
       </Grid>
 
-      <Grid item xs={12} md={3}>
+      <Grid item xs={12} md={4}>
         {productDetail.product && selectedStyle && (
           <div className="product-form">
             <StarRating />
@@ -93,13 +93,13 @@ export default function ProductOverview() {
               }
             </Typography>
 
-            <ProductStyles
-              styles={productDetail.product.styles}
-              onSelectStyle={handleSelectStyle}
-              selectedStyle={selectedStyle}
-            />
+            <Stack className="form-inputs" spacing={2}>
+              <ProductStyles
+                styles={productDetail.product.styles}
+                onSelectStyle={handleSelectStyle}
+                selectedStyle={selectedStyle}
+              />
 
-            <div>
               <SizeSelector
                 skus={selectedStyle.skus}
                 selectedSize={size}
@@ -115,17 +115,16 @@ export default function ProductOverview() {
                 selected={quantity}
                 onSelect={setQuantity}
               />
-            </div>
+            </Stack>
 
-            <FormControl sx={{m: 1}}>
+            <Stack className="actions" direction={'row'}>
               <Button
                 variant="outlined"
+                sx={{flexGrow: 1}}
               >
                 Add To Cart
               </Button>
-            </FormControl>
 
-            <FormControl sx={{m: 1}}>
               <IconButton
                 aria-label="favorite"
                 size="large"
@@ -137,7 +136,7 @@ export default function ProductOverview() {
                     : <FavoriteBorder fontSize="inherit" />
                 }
               </IconButton>
-            </FormControl>
+            </Stack>
 
           </div>
         )}

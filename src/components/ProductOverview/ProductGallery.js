@@ -121,7 +121,6 @@ export default function ProductGallery({product, ...props}) {
         }
       >
 
-
         <ImgScroll
           photos={product.photos} selected={selectedImage}
           onSelect={handleSelectImage}
@@ -138,7 +137,8 @@ export default function ProductGallery({product, ...props}) {
             flexDirection: 'row',
             justifyContent: 'center',
             alignItems: 'center',
-            padding: '10px'
+            padding: '10px',
+            maxWidth: '100vw'
           }}
           onMouseMove={mouseIn ? handleMouseMove : null}
           onMouseEnter={handleMouseEnter}

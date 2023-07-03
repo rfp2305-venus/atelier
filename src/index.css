@@ -180,9 +180,11 @@ body {
 }
 
 .style_thumbnail {
-  flex: 1 0 50%;
-  widows: 10vw;
-  height: 10vw;
+  /*flex: 1 0 50%;*/
+  flex-grow: 1;
+  max-width: 25%;
+  width: 100px;
+  height: 125px;
   background-position: center center;
   background-size: cover;
   border-radius: 10px;
@@ -191,8 +193,8 @@ body {
 @media screen and (max-width: 899px) {
   .style_thumbnail {
     flex: 1 0 25%!important;
-    height: 175px!important;
-    flex-grow: 0!important;
+    max-width: 25%!important;
+    height: 100px;
   }
 }
 
