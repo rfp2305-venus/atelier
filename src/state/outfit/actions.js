@@ -9,7 +9,7 @@ export function wearArticle(productID) {
   return (dispatch) => {
     fetchProduct(productID)
       .then((product) => {
-        dispatch(handleAddArticle(product));
+        dispatch(handleAddArticle(product, productID));
 
       })
       .catch((err) => {
@@ -25,9 +25,10 @@ export function removeArticle(article) {
   };
 }
 
-export default function handleAddArticle(article) {
+export default function handleAddArticle(article, productID) {
   return {
     type: ADD_ARTICLE,
-    article
+    article,
+    productID
   };
 }

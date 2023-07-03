@@ -1,5 +1,6 @@
 import RelatedCard from './RelatedCard.jsx';
 import { Box, Typography } from '@mui/material';
+import Carousel from 'react-material-ui-carousel';
 
 export default function RelatedProducts({ relatedProducts }) {
 
@@ -8,10 +9,9 @@ export default function RelatedProducts({ relatedProducts }) {
   return (
     <>
       <Typography component='p' className="title">RELATED PRODUCTS</Typography>
-      <Box className="carousel" id="related-products" width='800px'>
+      <Carousel id="related-products" width='800px'>
         {cardList}
-      </Box>
+      </Carousel>
     </>
-
   );
 }

@@ -9,15 +9,16 @@ import OutfitCard from './OutfitCard';
 import AddToOutfit from './AddToOutfit';
 import { Box, Typography } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
+import Carousel from 'react-material-ui-carousel';
 
 export default function YourOutfit() {
 
-  // const state = useSelector((state) => state);
-  // const dispatch = useDispatch();
+  const state = useSelector((state) => state);
+  const dispatch = useDispatch();
 
-  // useEffect(()=>{
-  //   console.log('state:', state);
-  // }, []);
+  useEffect(()=>{
+    console.log('state:', state);
+  }, []);
 
   const outfit = useSelector((state) => state.article);
 
@@ -26,15 +27,15 @@ export default function YourOutfit() {
   return outfitList ? (
     <>
       <Typography component='p' className="title">YOUR OUTFIT</Typography>
-      <Box className="carousel" id="your-outfit" width='800px'>
+      <Carousel id="your-outfit" width='800px'>
         <AddToOutfit />
         {outfitList}
-      </Box>
+      </Carousel>
     </>) :
     (<>
       <Typography component='p' className="title">YOUR OUTFIT</Typography>
       <Box className="carousel" id="your-outfit" width='800px'>
         <AddToOutfit />
-        </Box>
-      </>);
+      </Box>
+    </>);
 }

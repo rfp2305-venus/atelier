@@ -1,5 +1,5 @@
 
-let lastID = 0;
+// let lastID = 0;
 
 export default function outfitReducer(state = [], action) {
 
@@ -8,8 +8,8 @@ export default function outfitReducer(state = [], action) {
     return [
       ...state,
       {
-        id: ++lastID,
-        article: action.article
+        article: action.article,
+        productID: action.productID,
       }
     ];
     break;

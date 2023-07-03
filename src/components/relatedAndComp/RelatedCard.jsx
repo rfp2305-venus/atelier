@@ -12,7 +12,7 @@ import ComparisonModal from './ComparisonModal';
 //redux
 import { useSelector, useDispatch } from 'react-redux';
 // import aSimpleAction from '../../state/related/actions.js';
-import {handleFetchProduct} from "../../state/productDetail/actions";
+import {handleFetchProduct} from '../../state/productDetail/actions';
 
 export default function RelatedCard({ productID }) {
 
@@ -67,30 +67,28 @@ export default function RelatedCard({ productID }) {
 
   return (
 
-        <Card className="card" sx={{width: 150, height: 200}} onClick={(event) => handleSelectProduct(productID)}>
-          <div className="card-first-row">
-            <CardMedia
-              className='related-products-thumbnail'
-              component='img'
-              alt={product.name}
-              image={productPhoto}
-            />
-            <span>
-              <IconButton id={product.id} onClick={event => handleIcon(event)}>
-                <StarBorderOutlinedIcon id={product.id} />
-              </IconButton>
-              <ComparisonModal open={open} onClose={handleClose} productID={productID}/>
-            </span>
-          </div>
-          <CardContent>
-            <Typography component='p'>{product.category}</Typography>
-            <Typography component='p'>{product.name}</Typography>
-            <Typography component='p'>{product.default_price}</Typography>
-            <RelStarRating productID={productID}/>
-          </CardContent>
-        </Card>
+    <Card className="card" sx={{width: 150, height: 200}} onClick={(event) => handleSelectProduct(productID)}>
+      <div className="card-first-row">
+        <CardMedia
+          className='related-products-thumbnail'
+          component='img'
+          alt={product.name}
+          image={productPhoto}
+        />
+        <span>
+          <IconButton id={product.id} onClick={event => handleIcon(event)}>
+            <StarBorderOutlinedIcon id={product.id} />
+          </IconButton>
+          <ComparisonModal open={open} onClose={handleClose} productID={productID}/>
+        </span>
+      </div>
+      <CardContent>
+        <Typography component='p'>{product.category}</Typography>
+        <Typography component='p'>{product.name}</Typography>
+        <Typography component='p'>{product.default_price}</Typography>
+        <RelStarRating productID={productID}/>
+      </CardContent>
+    </Card>
 
   );
 }
-
-// onClick={handleSelectProduct(productID)}
