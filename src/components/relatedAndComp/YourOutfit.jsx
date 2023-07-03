@@ -21,20 +21,33 @@ export default function YourOutfit() {
   }, []);
 
   const outfit = useSelector((state) => state.article);
+  // let outfitList = outfit.map((article) => <OutfitCard article={article} key={article.id}/>);
 
-  let outfitList = outfit.map((article) => <OutfitCard article={article} key={article.id}/>);
+  const sliderItems = outfit.length > 4 ? 4 : outfit.length;
+  const items = [];
+  for (let i = 0; i < outfit.length; i += sliderItems) {
+    if ( i % sliderItems === 0) {
+      items.push(
+        outfit.slice(i, i + sliderItems).map((article, index) => {
+          return <OutfitCard article={article} key={article.id}/>;
+        })
+      );
+    }
+  }
 
-  return outfitList ? (
+  return outfit[0] ? (
     <>
       <Typography component='p' className="title">YOUR OUTFIT</Typography>
-      <Carousel id="your-outfit" width='800px'>
-        <AddToOutfit />
-        {outfitList}
-      </Carousel>
+        <Carousel component='span' id="your-outfit" width='800px' autoplay={false} interval={null}>
+          <span className='carousel'>
+            <AddToOutfit />
+            {items}
+          </span>
+        </Carousel>
     </>) :
     (<>
       <Typography component='p' className="title">YOUR OUTFIT</Typography>
-      <Box className="carousel" id="your-outfit" width='800px'>
+      <Box sx={{width: 800}}>
         <AddToOutfit />
       </Box>
     </>);

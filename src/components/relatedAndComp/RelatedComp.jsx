@@ -32,7 +32,7 @@ export default function RelatedComp() {
         console.log(error);
       });
     }
-  }, []);
+  }, [product]);
 
   return (
     <>
