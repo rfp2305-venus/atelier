@@ -68,7 +68,7 @@ export default function AnswersList({ questionID }) {
       { answers
         .slice(0, length)
         .map(({ answer_id, body, date, answerer_name, helpfulness, photos, reported }) => (
-          // if answer isn't blank
+          // if answer isn't blank or reported
           (body.length > 0 && !reported) ?
             (<Answer key={ answer_id }
               id={ answer_id }

@@ -20,13 +20,7 @@ describe('Upvote', () => {
     axios.put.mockResolvedValue(res);
 
     // render Upvote component w/ necessary props
-    const { getByText } = render(
-      <Upvote
-        id={ 1 }
-        type="question"
-        helpfulness={ 0 }
-      />
-    );
+    render(<Upvote id={ 1 } type="question" helpfulness={ 0 }/>);
 
     // query DOM elem by given text
     const upvoteButton = screen.getByText('Yes (0)');

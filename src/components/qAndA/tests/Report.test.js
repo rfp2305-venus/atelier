@@ -19,13 +19,7 @@ describe('Report', () => {
     axios.put.mockResolvedValue(res);
 
     // render Report component w/ necessary props
-    const { getByText } = render(
-      <Report
-        id={ 1 }
-        type="question"
-        reported={ false }
-      />
-    );
+    render(<Report id={ 1 } type="question" reported={ false }/>);
 
     // query DOM elem by given text
     const reportButton = screen.getByText('Report');

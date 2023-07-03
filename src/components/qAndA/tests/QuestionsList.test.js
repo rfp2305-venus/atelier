@@ -15,24 +15,23 @@ jest.mock('react-redux');
 jest.mock('axios');
 
 describe('QuestionsList', () => {
-  // simulate product selection prior to testing
+
+  // simulate product selection & render list prior to testing
   beforeEach(() => {
     useSelector.mockReturnValue({
       productDetail: {
         product: { id: 69 }
       }
     });
+    render(<QuestionsList />);
   });
 
-  test('renders component correctly', () => {
-    render(<QuestionsList />);
 
+  test('renders component correctly', () => {
     expect(screen.getByText('Q&A:')).toBeInTheDocument();
   });
 
   test('displays message when no questions', () => {
-    render(<QuestionsList />);
-
     expect(screen.getByText('No questions yet!')).toBeInTheDocument();
   });
 
