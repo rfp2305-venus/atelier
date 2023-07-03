@@ -111,6 +111,14 @@ export default function ProductGallery({product, ...props}) {
       setSelectedImage(0);
   }, [product]);
 
+  // ADDED
+  let aspectRatio;
+
+  if (selectedImage) {
+    // calculate aspect ratio of selected image
+    aspectRatio = selectedImage.height / selectedImage.width;
+  }
+
   return selectedImage !== null && (/*
     windowWidth <= 600
       ? renderMobile(product.photos, selectedImage, handleSelectImage)
@@ -119,6 +127,11 @@ export default function ProductGallery({product, ...props}) {
         className={
           fullScreen ? 'gallery-wrapper full-screen' : 'gallery-wrapper'
         }
+        // ADDED
+        style={{
+          paddingBottom: `${ aspectRatio * 100 }%`, // i.e. ensures consistency of container dimensions (even if screen size changes)
+          position: 'relative'
+        }}
       >
 
         <ImgScroll
@@ -126,11 +139,13 @@ export default function ProductGallery({product, ...props}) {
           onSelect={handleSelectImage}
         />
 
-
-
         <Container
           style={{
-            position: 'relative',
+            // ADDED
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            // position: 'relative',
             height: '100%',
             width: '100%',
             display: 'flex',
@@ -151,11 +166,18 @@ export default function ProductGallery({product, ...props}) {
             <Fullscreen />
           </IconButton>
 
+          {/* use aspect ratio for selected image */}
           <img
             src={product.photos[selectedImage].url}
             ref={mainImgRef}
             alt=""
             className="gallery-main"
+
+            // ADDED
+            style={{ objectFit: 'contain', width: '100%', height: '100%' }}
+            // ensures image fits inside container while preserving aspect ratio
+
+            // style={{ objectFit: 'cover', width: '100%', height: '100%' }}
           />
           {mouseIn && (
             <div
