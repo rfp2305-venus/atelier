@@ -1,4 +1,4 @@
-const { API_URL, API_KEY } = process.env;
+const { API_URL, API_KEY, UNSPLASH_URL, UNSPLASH_KEY } = process.env;
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Box, Button, Typography, TextField } from '@mui/material';
@@ -27,25 +27,11 @@ export default function SubmitPost({ id, body, type }) {
     setUser('');
     setEmail('');
     setPost('');
-
     setUserFilled(true);
     setEmailFilled(true);
     setPostFilled(true);
-
     setPhotos([]);
-
     setOpen(false);
-  };
-
-  const uploadPhotos = (e) => {
-    // convert files to array & limit to (5)
-    const files = Array.from(e.target.files)
-      .slice(0, 5 - photos.length);
-
-    // console.log(`photos: ${[ ...photos ]}`);
-
-    // set photos for POST req
-    setPhotos((prev) => [ ...prev, ...files ]);
   };
 
   const validateInputs = () => {
@@ -70,6 +56,39 @@ export default function SubmitPost({ id, body, type }) {
     return userFilled && emailFilled && postFilled;
   };
 
+  const inputPhotos = (e) => {
+    // convert files to array & limit to (5)
+    const files = Array.from(e.target.files)
+      .slice(0, 5 - photos.length);
+
+    // (bonus): add to existing photo set
+    setPhotos((prev) => [ ...prev, ...files ]);
+  };
+
+  /*
+  // uploads each photo to Unsplash API
+  const unsplashUpload = (photo) => {
+    return axios({
+      method: 'post',
+      url: UNSPLASH_URL,
+      headers: { Authorization: `Client-ID ${ UNSPLASH_KEY }` },
+      data: { photo: photo }
+    })
+      .then((res) => {
+        // extract url for photo
+        const photoURL = res.data.urls.regular;
+        console.log(`Uploaded photo to Unsplash: ${ photoURL }`);
+
+        return photoURL;
+      })
+      .catch((err) => {
+        console.error(`Error uploading to Unsplash: ${ err }`);
+
+        return null;
+      });
+  };
+  */
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -77,6 +96,54 @@ export default function SubmitPost({ id, body, type }) {
     const isValid = validateInputs();
 
     if (isValid) {
+      /*
+      // upload all photos to Unsplash
+      Promise.all(
+        photos.map((photo) => unsplashUpload(photo))
+      )
+        .then((photoURLs) => {
+          // attach generated URLs to req data
+          const postData = {
+            product_id: product.id,
+            name: user,
+            email: email,
+            body: post,
+            photos: photoURLs
+          };
+
+          // define endpoint according to post type
+          let endpoint;
+
+          if (type === 'question') {
+            // url for submitting new questions
+            endpoint = `${ API_URL }/qa/${ type }s`;
+          } else {
+            // url for submitting new answers
+            endpoint = `${ API_URL }/qa/questions/${ id }/${ type }s`;
+          }
+
+          // send POST req to Atelier API
+          axios({
+            method: 'post',
+            url: endpoint,
+            headers: { Authorization: API_KEY },
+            data: postData
+          })
+            .then(() => {
+              console.log(`${ user } posted ${ type }: ${ post }`);
+
+              // reset input fields
+              reset();
+            })
+            .catch((err) => {
+              console.error(`Error posting to Atelier: ${ err }`);
+            });
+        })
+        .catch((err) => {
+          console.error(`Error posting to Unsplash: ${ err }`);
+        });
+      */
+
       let endpoint;
 
       if (type === 'question') {
@@ -87,29 +154,6 @@ export default function SubmitPost({ id, body, type }) {
         endpoint = `${ API_URL }/qa/questions/${ id }/${ type }s`;
       }
 
-      /*
-      // instantiate FormData obj
-      const formData = new FormData();
-
-      // append all pertinent data
-      formData.append('name', user);
-      formData.append('email', email);
-      formData.append('body', post);
-
-      if (type === 'question') {
-        formData.append('product_id', product.id);
-
-      } else {
-        // formData.append('photos', photos);
-        photos.forEach((photo, i) => {
-          formData.append(`photos[${ i }]`, photo);
-        });
-        console.log(`${ user } uploaded ${ photos.length } photos`);
-      }
-
-      // console.log(`formData: ${ formData }`);
-      */
-
       // POST req w/ formData
       axios({
         method: 'post',
@@ -118,7 +162,7 @@ export default function SubmitPost({ id, body, type }) {
           'Authorization': API_KEY,
           // 'Content-Type': 'multipart/form-data'
         },
-        data: /* formData */ {
+        data: /* postData */ {
           product_id: product.id,
           name: user,
           email: email,
@@ -134,12 +178,12 @@ export default function SubmitPost({ id, body, type }) {
           console.error(`Error posting: ${ err }`);
         });
 
-    } /* else { // otherwise alert user
+    } else { // otherwise alert user
       alert(`This error will occur if :
       1. Any mandatory fields are blank
       2. The email address provided is not in the correct format
       `);
-    } */
+    }
   };
 
   return (
@@ -240,7 +284,7 @@ export default function SubmitPost({ id, body, type }) {
                 <input
                   type="file"
                   multiple
-                  onChange={ uploadPhotos }
+                  onChange={ inputPhotos }
                 />
               ) }
 
