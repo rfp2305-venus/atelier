@@ -19,7 +19,7 @@ jest.mock('react-redux');
 jest.mock('axios');
 
 describe('QuestionsList', () => {
-  // mock product selection prior to testing
+  // simulate product selection prior to testing
   beforeEach(() => {
     useSelector.mockReturnValue({
       productDetail: {
