@@ -17,7 +17,7 @@ export default function WriteReviewForm({prodCharacteristics, productID, setRevi
   const { product } = useSelector(({ productDetail }) => productDetail);
 
   const [characteristics, setCharacteristics] = useState({});
-  const [rating, setRating] = useState();
+  const [rating, setRating] = useState(5);
   const [recommend, setRecommend] = useState('');
   const [summary, setSummary] = useState('');
   const [body, setBody] = useState('');
@@ -60,9 +60,11 @@ export default function WriteReviewForm({prodCharacteristics, productID, setRevi
   };
 
   const handleSubmitReview = (e) => {
-    axios.post(`${ API_URL }/reviews`, {
+    axios({
+      method: 'post',
+      url: `${ API_URL }/reviews`,
       headers: { Authorization: API_KEY },
-      params: {
+      data: {
         product_id: product.id,
         rating: rating,
         summary: summary,

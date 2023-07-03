@@ -25,6 +25,7 @@ export default function ReviewsList({currentProductId, reviewSort, handleSortSel
   const [results, setResults] = useState([]);
   const [reviewsQuantity, setReviewsQuantity] = useState(2);
   const [filteredReviewsList, setFilteredReviewsList] = useState([]);
+  const [filteredBy, setFilteredBy] = useState(null);
 
   const fetchReviews = () => {
     return axios
@@ -39,7 +40,14 @@ export default function ReviewsList({currentProductId, reviewSort, handleSortSel
       })
       .then((res) => {
         const { results } = res.data;
-        setReviews((prevReviews) => prevReviews.concat(results));
+        setReviews(results);
+
+        if (filteredBy !== null)
+        {
+          const filteredReviews = results.filter((review) => review.rating === Number(filteredBy));
+          setFilteredReviewsList(filteredReviews);
+          setReviewsQuantity(2);
+        }
       })
       .catch((err) => {
         console.error(`Error fetching reviews: ${err}`);
@@ -50,7 +58,7 @@ export default function ReviewsList({currentProductId, reviewSort, handleSortSel
     if (product) {
       fetchReviews();
     }
-  }, [product, page, sortby, count]);
+  }, [product, page, sortby, count, filteredBy]);
 
   const handleMoreReviews = () => {
     if (filteredReviewsList.length > 0) {
@@ -65,9 +73,7 @@ export default function ReviewsList({currentProductId, reviewSort, handleSortSel
   };
 
   const handleFilteredRatings = (star) => {
-    const filteredReviews = reviews.filter((review) => review.rating === Number(star));
-    setFilteredReviewsList(filteredReviews);
-    setReviewsQuantity(2);
+    setFilteredBy(star);
   };
 
   const handleLessReviews = () => {
@@ -103,8 +109,8 @@ export default function ReviewsList({currentProductId, reviewSort, handleSortSel
       }
     }
   }
-  // console.log('renderedReviewsList', renderedReviewsList);
-  // console.log('REVIEWS', reviews);
+  console.log('renderedReviewsList', renderedReviewsList);
+  console.log('REVIEWS', reviews);
 
   return (
 
