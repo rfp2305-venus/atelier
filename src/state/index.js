@@ -5,6 +5,7 @@ import ProductDetailReducer from './productDetail/reducer.js';
 import relatedReducer from './related/reducer.js';
 import ProductsReducer from './Products/reducer.js';
 import ReviewsReducer from './RatingsReviews/reducer.js';
+import outfitReducer from './outfit/reducer.js';
 
 
 const rootReducer = combineReducers({
@@ -12,8 +13,8 @@ const rootReducer = combineReducers({
   productDetail: ProductDetailReducer,
   products: ProductsReducer,
   comparisonDetail: relatedReducer,
-  reviews: ReviewsReducer
-
+  reviews: ReviewsReducer,
+  article: outfitReducer
 });
 
 export const store = createStore(

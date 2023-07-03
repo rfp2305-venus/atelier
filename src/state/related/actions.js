@@ -31,10 +31,3 @@ export default function handleSetComparisonProduct(comparisonDetail) {
     comparisonDetail
   };
 }
-
-// export function closeModal() {
-//   return {
-//     type: COMPARISON,
-//     modalStatus: false
-//   };
-// }

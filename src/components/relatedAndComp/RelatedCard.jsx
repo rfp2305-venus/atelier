@@ -14,7 +14,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import handleModal from '../../state/related/actions.js';
 import aSimpleAction from '../../state/related/actions.js';
 
-
 export default function RelatedCard({ productID }) {
 
   const state = useSelector((state) => state);
@@ -24,11 +23,12 @@ export default function RelatedCard({ productID }) {
   const [ productStyles, setProductStyles ] = useState({});
   const [ productPhoto, setProductPhoto ] = useState('');
   const [ open, setOpen ] = useState(false);
-  const [comparisonExists, setComparisonExists] = useState(false);
 
-  // useEffect(()=>{
-  //   console.log('state:', state);
-  // }, [open]);
+
+
+  useEffect(()=>{
+    console.log('state:', state);
+  }, []);
 
   useEffect(()=>{
     axios({
@@ -69,7 +69,7 @@ export default function RelatedCard({ productID }) {
 
   return (
     <>
-      <Card className="card">
+      <Card className="card" sx={{width: 150, height: 200}}>
         <div className="card-first-row">
           <CardMedia
             className='related-products-thumbnail'
@@ -81,7 +81,7 @@ export default function RelatedCard({ productID }) {
             <IconButton id={product.id} onClick={event => handleIcon(event)}>
               <StarBorderOutlinedIcon id={product.id} />
             </IconButton>
-            <ComparisonModal open={open} onClose={handleClose} productID={productID} comparison={comparisonExists} setComparison={setComparisonExists}/>
+            <ComparisonModal open={open} onClose={handleClose} productID={productID}/>
           </span>
         </div>
         <CardContent>

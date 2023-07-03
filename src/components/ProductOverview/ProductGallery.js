@@ -99,7 +99,7 @@ export default function ProductGallery({product, ...props}) {
         "-" + ((x * zoom) - w + 3) + "px " +
         "-" + ((y * zoom) - h + 3) + "px"
     });
-    console.log(w, h);
+    // console.log(w, h);
   }
 
   function toggleFullScreen() {

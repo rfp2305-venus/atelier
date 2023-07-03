@@ -9,7 +9,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import { useSelector, useDispatch } from 'react-redux';
 import {handleFetchComparisonProduct} from '../../state/related/actions';
 
-export default function ComparisonModal({open, onClose, productID, comparisonExists, setComparisonExists}) {
+export default function ComparisonModal({open, onClose, productID}) {
 
   const dispatch = useDispatch();
 

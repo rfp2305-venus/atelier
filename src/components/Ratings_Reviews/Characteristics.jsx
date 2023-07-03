@@ -32,14 +32,15 @@ export default function Characteristics({characteristic, id, charValue}) {
   };
 
   return (
-    <Box ml={3} sx={{ width: 300}}>
+    <Box sx={{ width: 300 /*, border: '1px dashed grey' */}}>
       <Typography variant="h8" gutterBottom>{characteristic}</Typography>
       <Slider
         max={5}
+        min={0}
         aria-label="Custom marks"
-        defaultValue={charValue}
+        value={charValue}
         getAriaValueText={valuetext}
-        // step={10}
+        step={3}
         valueLabelDisplay="auto"
         marks={marks}
         disabled
