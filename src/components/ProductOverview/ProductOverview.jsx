@@ -7,19 +7,18 @@ import StarRating from "../../lib/StarRating";
 import ProductStyles from "./ProductStyles";
 import SizeSelector from "../../lib/SizeSelector";
 import {
-  Button,
-  Container,
+  Button, Container, Divider,
   FormControl,
   Grid,
   IconButton,
-  InputLabel,
-  MenuItem,
-  Paper,
-  Select,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
   Typography
 } from "@mui/material";
 import QuantitySelector from "../../lib/QuantitySelector";
-import {Favorite, FavoriteBorder} from "@mui/icons-material";
+import {Check, Favorite, FavoriteBorder} from "@mui/icons-material";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 
@@ -67,10 +66,11 @@ export default function ProductOverview() {
     }
   }, [size])
 
+  console.log(productDetail);
 
   return (
     <Grid container spacing={1} sx={{padding: 0, maxWidth: '1200px'}}>
-      <Grid item xs={12} md={8} style={{maxWidth: '100%'}}>
+      <Grid item xs={12} md={8} style={{maxWidth: '100%', minHeight: '50vh'}}>
         { selectedStyle && <ProductGallery product={selectedStyle} />}
       </Grid>
 
@@ -85,17 +85,21 @@ export default function ProductOverview() {
             <Typography>
               {productDetail.product.name}
             </Typography>
-            <Typography>
-              {productDetail.product.default_price}
+            <Typography sx={{color: selectedStyle.sale_price ? 'green' : 'initial'}}>
+              {
+                selectedStyle.sale_price
+                  ? selectedStyle.sale_price
+                  : productDetail.product.default_price
+              }
             </Typography>
 
-            <ProductStyles
-              styles={productDetail.product.styles}
-              onSelectStyle={handleSelectStyle}
-              selectedStyle={selectedStyle}
-            />
+            <Stack className="form-inputs" spacing={2}>
+              <ProductStyles
+                styles={productDetail.product.styles}
+                onSelectStyle={handleSelectStyle}
+                selectedStyle={selectedStyle}
+              />
 
-            <div>
               <SizeSelector
                 skus={selectedStyle.skus}
                 selectedSize={size}
@@ -111,17 +115,16 @@ export default function ProductOverview() {
                 selected={quantity}
                 onSelect={setQuantity}
               />
-            </div>
+            </Stack>
 
-            <FormControl sx={{m: 1}}>
+            <Stack className="actions" direction={'row'}>
               <Button
                 variant="outlined"
+                sx={{flexGrow: 1}}
               >
                 Add To Cart
               </Button>
-            </FormControl>
 
-            <FormControl sx={{m: 1}}>
               <IconButton
                 aria-label="favorite"
                 size="large"
@@ -133,29 +136,45 @@ export default function ProductOverview() {
                     : <FavoriteBorder fontSize="inherit" />
                 }
               </IconButton>
-            </FormControl>
+            </Stack>
 
           </div>
         )}
       </Grid>
 
       <Grid item xs={12}>
-        <Stack direction='row' spacing={2}>
-          <Box>
-            <Typography>
-              {productDetail.product.slogan}
-            </Typography>
+        <Container
+          sx={{
+            maxWidth: '800px',
+            margin: '50px auto'
+          }}
+        >
 
-            <Typography>
-              {productDetail.product.description}
-            </Typography>
-          </Box>
-          <Stack spacing={2}>
-            {productDetail.product.features.map((feat) => (
-              <Typography>{feat.value}</Typography>
-            ))}
+          <Stack direction='row' spacing={2}>
+            <Box>
+              <Typography>
+                {productDetail.product.slogan}
+              </Typography>
+
+              <Typography>
+                {productDetail.product.description}
+              </Typography>
+            </Box>
+            <Divider orientation="vertical" variant="middle" flexItem />
+            <List>
+              {productDetail.product.features.map((feat) => (
+                <ListItem key={'productFeature' + feat.feature}>
+                  <ListItemIcon>
+                    <Check />
+                  </ListItemIcon>
+                  <ListItemText>
+                    {feat.value}
+                  </ListItemText>
+                </ListItem>
+              ))}
+            </List>
           </Stack>
-        </Stack>
+        </Container>
       </Grid>
     </Grid>
   )

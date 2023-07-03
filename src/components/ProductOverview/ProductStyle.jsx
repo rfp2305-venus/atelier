@@ -3,12 +3,7 @@ import React, {useEffect} from "react";
 export default function ProductStyle({style, selectedStyle, onSelectStyle}) {
   function createThumbnail() {
     return {
-      height: '50px',
-      width: '50px',
       backgroundImage: `url(${style.photos[0].thumbnail_url})`,
-      backgroundPosition: 'center center',
-      backgroundSize: 'cover',
-      borderRadius: '10px'
     };
   }
   return (
