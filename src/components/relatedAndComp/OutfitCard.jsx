@@ -5,6 +5,7 @@ import { IconButton, Card, CardMedia, CardContent, Typography } from '@mui/mater
 import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeArticle } from '../../state/outfit/actions';
+import RelStarRating from './RelStarRating';
 
 
 export default function OutfitCard(props) {
@@ -35,6 +36,7 @@ export default function OutfitCard(props) {
         <Typography component='p'>{item.article.article.category}</Typography>
         <Typography component='p'>{item.article.article.name}</Typography>
         <Typography component='p'>{item.article.article.default_price}</Typography>
+        <RelStarRating productID={item.article.article.id}/>
       </CardContent>
     </Card>
   );
