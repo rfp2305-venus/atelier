@@ -2,15 +2,15 @@
 import { fetchProduct } from '../../util/api.js';
 
 export const ADD_ARTICLE = 'ADD_ARTICLE';
+export const REMOVE_ARTICLE = 'REMOVE_ARTICLE';
 
 export function wearArticle(productID) {
-  // console.log('wearArticle called with', productID);
-  // createArticle(productID)
+
   return (dispatch) => {
     fetchProduct(productID)
       .then((product) => {
-        dispatch(handleAddArticle(product));
-        // console.log('product/article', product);
+        dispatch(handleAddArticle(product, productID));
+
       })
       .catch((err) => {
         console.error(err);
@@ -18,10 +18,17 @@ export function wearArticle(productID) {
   };
 }
 
-export default function handleAddArticle(article) {
-  // console.log('handleAddItem called');
+export function removeArticle(article) {
+  return {
+    type: REMOVE_ARTICLE,
+    article
+  };
+}
+
+export default function handleAddArticle(article, productID) {
   return {
     type: ADD_ARTICLE,
-    article
+    article,
+    productID
   };
 }
