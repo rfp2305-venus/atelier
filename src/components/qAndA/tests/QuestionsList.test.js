@@ -1,7 +1,3 @@
-/**
- * @jest-environment jsdom
- */
-
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { render, screen, waitFor } from '@testing-library/react';

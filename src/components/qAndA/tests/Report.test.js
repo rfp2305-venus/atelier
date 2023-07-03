@@ -4,14 +4,13 @@ import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import axios from 'axios';
 
-import Upvote from '../Upvote';
+import Report from '../Report';
 
-// mock axios —> custom behavior for API req
 jest.mock('axios');
 
-describe('Upvote', () => {
+describe('Report', () => {
 
-  test('increments helpfulness & disables appropriately on click', async() => {
+  test('toggles reported status & disables appropriately on click', async() => {
 
     // simulate successful res from axios.put
     const res = { status: 200 };
@@ -19,20 +18,20 @@ describe('Upvote', () => {
     // instruct mock func to return res (as resolved promise) when called
     axios.put.mockResolvedValue(res);
 
-    // render Upvote component w/ necessary props
+    // render Report component w/ necessary props
     const { getByText } = render(
-      <Upvote
+      <Report
         id={ 1 }
         type="question"
-        helpfulness={ 0 }
+        reported={ false }
       />
     );
 
     // query DOM elem by given text
-    const upvoteButton = screen.getByText('Yes (0)');
+    const reportButton = screen.getByText('Report');
 
     // trigger click event
-    fireEvent.click(upvoteButton);
+    fireEvent.click(reportButton);
 
     // wait for axios req before assertions
     await waitFor(() => {
@@ -41,12 +40,12 @@ describe('Upvote', () => {
       expect(axios.put).toHaveBeenCalledTimes(1);
 
       expect(axios.put).toHaveBeenCalledWith(
-        `${ API_URL }/qa/questions/1/helpful`,
-        { helpfulness: 1 },
+        `${ API_URL }/qa/${ 'question' }s/${ 1 }/report`,
+        { reported: true },
         { headers: { Authorization: API_KEY } }
       );
 
-      expect(screen.getByText('Yes (1)')).toBeInTheDocument();
+      expect(screen.getByText('Reported')).toBeInTheDocument();
     });
   });
 });
