@@ -8,11 +8,16 @@ import { useSelector, useDispatch } from 'react-redux';
 
 export default function AddToOutfit() {
   const { product } = useSelector(({ productDetail }) => productDetail);
-  const state = useSelector((state) => state);
+  const outfit = useSelector((state) => state.article);
   const dispatch = useDispatch();
 
   function handleID() {
-    dispatch(wearArticle(product.id));
+    const found = outfit.some((article) => article.productID === product.id);
+    if (!found) {
+      dispatch(wearArticle(product.id));
+    } else {
+      alert('you already have this item in your outfit!');
+    }
   }
 
   return (

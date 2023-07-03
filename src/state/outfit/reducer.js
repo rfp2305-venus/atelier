@@ -1,5 +1,5 @@
 
-let lastID = 0;
+// let lastID = 0;
 
 export default function outfitReducer(state = [], action) {
 
@@ -8,14 +8,14 @@ export default function outfitReducer(state = [], action) {
     return [
       ...state,
       {
-        id: ++lastID,
-        article: action.article
+        article: action.article,
+        productID: action.productID,
       }
     ];
     break;
   case 'REMOVE_ARTICLE':
     return state.filter((article) => {
-      article.id !== action.id;
+      article.article.id !== action.article.article.id;
     });
     break;
   default:
