@@ -15,7 +15,7 @@ export default function outfitReducer(state = [], action) {
     break;
   case 'REMOVE_ARTICLE':
     return state.filter((article) => {
-      article.id !== action.id;
+      article.article.id !== action.article.article.id;
     });
     break;
   default:

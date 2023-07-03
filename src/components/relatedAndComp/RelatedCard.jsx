@@ -24,11 +24,9 @@ export default function RelatedCard({ productID }) {
   const [ productPhoto, setProductPhoto ] = useState('');
   const [ open, setOpen ] = useState(false);
 
-
-
-  useEffect(()=>{
-    console.log('state:', state);
-  }, []);
+  // useEffect(()=>{
+  //   console.log('state:', state);
+  // }, []);
 
   useEffect(()=>{
     axios({
