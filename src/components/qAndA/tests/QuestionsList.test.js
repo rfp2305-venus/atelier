@@ -1,7 +1,8 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { useSelector } from 'react-redux';
+import { render, screen, waitFor } from '@testing-library/react';
 import QuestionsList from '../QuestionsList';
+import axios from 'axios';
 
 /*
 (mock funcs):
@@ -10,20 +11,46 @@ import QuestionsList from '../QuestionsList';
     (prevents real API calls during testing)
 */
 
+jest.mock('react-redux');
+jest.mock('axios');
+
 describe('QuestionsList', () => {
-  it('renders component correctly', () => {
+  // set mock product_id before testing
+  beforeEach(() => {
+    useSelector.mockReturnValue({
+      product: { id: 69 }
+    });
+  });
+
+  test('renders component correctly', () => {
     render(<QuestionsList />);
 
     expect(screen.getByText('Q&A:')).toBeInTheDocument();
   });
 
-  it('displays message when no questions', () => {
+  test('displays message when no questions', () => {
     render(<QuestionsList />);
 
     expect(screen.getByText('No questions yet!')).toBeInTheDocument();
   });
 
-  // it('fetches questions when component mounted', () => {
-  //   render(<QuestionsList />);
-  // });
+  test('displays list of questions', async() => {
+    // simulate retrieval of questions
+    const mockQuestions = [
+      { question_id: 1, question_body: 'Question 1', question_helpfulness: 15, reported: false },
+      { question_id: 2, question_body: 'Question 2', question_helpfulness: 25, reported: false },
+    ];
+
+    axios.get.mockResolvedValue({
+      data: { results: mockQuestions }
+    });
+
+    render(<QuestionsList />);
+
+    await waitFor(() => {
+      // check if questions present as expected
+      expect(screen.getByText('Question 1').toBeInTheDocument);
+      expect(screen.getByText('Question 2').toBeInTheDocument);
+    });
+  });
 });
