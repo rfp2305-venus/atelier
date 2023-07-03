@@ -17,7 +17,7 @@ export default function Loading({status}){
     ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
 
     ctx.beginPath();
-    ctx.strokeStyle = '#969696';
+    ctx.strokeStyle = '#ff0052';
     ctx.lineCap = 'round';
     ctx.moveTo(line.x, lineWidth / 2);
     ctx.lineWidth = 20;
@@ -67,7 +67,7 @@ export default function Loading({status}){
     <canvas
       data-testid='loading'
       ref={canvasRef}
-      style={{position: 'absolute', top: 0, left: 0}}
+      style={{position: 'absolute', top: '64px', left: 0}}
       role="loading"
     ></canvas>
   );
