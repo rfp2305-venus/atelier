@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box } from '@mui/material';
+import { Box, Divider } from '@mui/material';
 import getDate from './util/getDate';
 import Answer from './Answer';
 import SeeMore from './SeeMore';
@@ -26,13 +26,14 @@ export default function AnswersList({ answers, length, setLength, isExpanded, se
             />) : (null)
         )) }
 
-      ———{ (answers.length > 2) ?
+      <Divider sx={{ borderWidth: '1px', margin: '10px 0', zIndex: 0 }} />
+
+      { (answers.length > 2) ?
         (<SeeMore
           type="answer" aLength={ answers.length }
           length={ length } setLength={ setLength }
           isExpanded={ isExpanded } setExpanded={ setExpanded }
-        />) : (null) }———
-      <br /><br />
+        />) : (null) }
     </Box>
   );
 }

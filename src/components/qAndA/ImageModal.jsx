@@ -3,6 +3,7 @@ import { Dialog, DialogTitle, DialogContent, IconButton, Typography } from '@mui
 import CloseIcon from '@mui/icons-material/Close';
 
 export default function ImageModal({ open, handleClose, imageURL }) {
+
   return (
     <Dialog open={ open } onClose={ handleClose }>
       <DialogTitle>

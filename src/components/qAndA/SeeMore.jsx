@@ -20,7 +20,17 @@ export default function SeeMore({ type, aLength, length, setLength, isExpanded, 
   };
 
   return (
-    <Button onClick={ handleClick }>
+    <Button onClick={ handleClick } sx={
+      // conditionally render according to type
+      (type === 'answer') ? ({
+        position: 'relative',
+        left: '50%',
+        top: '-5px',
+        transform: 'translateX(-50%)',
+        zIndex: 1,
+        backgroundColor: 'white'
+      }) : ({ marginTop: '20px' })
+    }>
       {
         (type === 'question')
           ? ('More Answered Questions')

@@ -1,7 +1,7 @@
 const { API_URL, API_KEY } = process.env;
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { Typography, Box } from '@mui/material';
+import { Typography, Box, useTheme } from '@mui/material';
 import Search from './Search';
 import QuestionsList from './QuestionsList';
 import SeeMore from './SeeMore';
@@ -67,9 +67,15 @@ export default function WrapQA() {
   }
 
   return (
-    <Box width="800px" margin="auto">
-      <Typography variant="h3" sx={{ marginTop: '5px' }}>
-        Q&A:
+    <Box sx={{
+      width: '800px',
+      marginTop: '150px',
+      marginBottom: '150px',
+      marginLeft: 'auto',
+      marginRight: 'auto'
+    }}>
+      <Typography variant="h3" sx={{ fontFamily: 'Roboto', fontWeight: 'bold' }}>
+        FAQ: { product.name }
       </Typography>
 
       <Search search={ search } setSearch={ setSearch } />

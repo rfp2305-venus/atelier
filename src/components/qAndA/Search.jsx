@@ -6,7 +6,7 @@ export default function Search({ search, setSearch }) {
   return (
     <form>
       <TextField
-        sx={{ width: 350 }}
+        sx={{ width: 350, marginBottom: '15px' }}
         placeholder="Have a question? Search for answers..."
         value={ search }
         onChange={ (e) => setSearch(e.target.value) }
