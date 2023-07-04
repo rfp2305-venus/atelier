@@ -14,7 +14,7 @@ export default function QuestionsList({ questions, length }) {
           .map(({ question_id, question_body, question_date, asker_name, question_helpfulness, reported }) => (
             // if question is not blank or reported
             (question_body.length > 0 && !reported) ? (
-              <Accordion key={ question_id } sx={{ border: '0.75px solid', marginBottom: '5px' }}>
+              <Accordion key={ question_id } sx={{ border: '0.5px solid', marginBottom: '5px' }}>
                 <AccordionSummary expandIcon={ <ExpandMoreIcon /> }>
                   <Typography variant="h5">
                     { question_body }
@@ -34,7 +34,7 @@ export default function QuestionsList({ questions, length }) {
             ) : (null)
           ))
       ) : (
-        <Typography>No questions yet!</Typography>
+        <Typography sx={{ color: 'red' }}>No questions yet!</Typography>
       )}
     </Box>
   );
