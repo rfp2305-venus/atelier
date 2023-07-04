@@ -147,14 +147,14 @@ export default function SubmitPost({ id, body, type }) {
       let endpoint;
 
       if (type === 'question') {
-        // url for submitting new questions
+        // new questions
         endpoint = `${ API_URL }/qa/${ type }s`;
       } else {
-        // url for submitting new answers
+        // new answers
         endpoint = `${ API_URL }/qa/questions/${ id }/${ type }s`;
       }
 
-      // POST req w/ formData
+      // POST req w/ form data
       axios({
         method: 'post',
         url: endpoint,

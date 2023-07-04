@@ -1,5 +1,5 @@
 const { API_URL, API_KEY } = process.env;
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Button } from '@mui/material';
 import axios from 'axios';
 
