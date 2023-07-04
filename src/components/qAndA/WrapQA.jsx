@@ -85,7 +85,7 @@ export default function WrapQA() {
       {/* disappears when:
         > (2) questions or fewer
         > all questions displayed */}
-      { (questions.length > 2) && (length < questions.length) && (
+      { (searchResults.length > 2) && (length < searchResults.length) && (
         <SeeMore type="question" length={ length } setLength={ setLength } />
       ) }
 
