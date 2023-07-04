@@ -1,4 +1,4 @@
-const { API_URL, API_KEY, UNSPLASH_URL, UNSPLASH_KEY } = process.env;
+const { API_URL, API_KEY, /* UNSPLASH_URL, UNSPLASH_KEY */} = process.env;
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Box, Button, Typography, TextField } from '@mui/material';
@@ -159,7 +159,7 @@ export default function SubmitPost({ id, body, type }) {
         method: 'post',
         url: endpoint,
         headers: {
-          'Authorization': API_KEY,
+          Authorization: API_KEY,
           // 'Content-Type': 'multipart/form-data'
         },
         data: /* postData */ {

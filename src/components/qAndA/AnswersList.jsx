@@ -75,7 +75,7 @@ export default function AnswersList({ questionID }) {
               body={ body }
               date={ getDate(date) }
               user={ answerer_name }
-              // add extra "seller check" for boldening
+              // "seller check" for boldening
               isSeller={ answerer_name === 'Seller' }
               helpfulness={ helpfulness }
               photos={ photos }

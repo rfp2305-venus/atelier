@@ -23,15 +23,15 @@ describe('QuestionsList', () => {
         product: { id: 69 }
       }
     });
-    render(<QuestionsList />);
   });
 
-
   test('renders component correctly', () => {
+    render(<QuestionsList />);
     expect(screen.getByText('Q&A:')).toBeInTheDocument();
   });
 
   test('displays message when no questions', () => {
+    render(<QuestionsList />);
     expect(screen.getByText('No questions yet!')).toBeInTheDocument();
   });
 
