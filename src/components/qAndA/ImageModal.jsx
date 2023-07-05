@@ -3,13 +3,16 @@ import { Dialog, DialogTitle, DialogContent, IconButton, Typography } from '@mui
 import CloseIcon from '@mui/icons-material/Close';
 
 export default function ImageModal({ open, handleClose, imageURL }) {
+
   return (
     <Dialog open={ open } onClose={ handleClose }>
       <DialogTitle>
         <IconButton
           edge="end"
           onClick={ handleClose }
-          sx={{ position: 'absolute', top: 8, right: 8 }}
+          sx={{ position: 'absolute', top: 1, right: 8 }}
+          aria-label="Close" // added for easy ref in test suite
+          role="button"
         >
           <CloseIcon />
         </IconButton>
