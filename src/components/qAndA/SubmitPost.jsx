@@ -194,9 +194,9 @@ export default function SubmitPost({ id, body, type }) {
 
       <Dialog open={ open } onClose={ () => setOpen(false) }>
         <DialogTitle>
-          { (type === 'question')
+          <strong>{ (type === 'question')
             ? ('Ask Your Question')
-            : ('Submit Your Answer') }
+            : ('Submit Your Answer') }</strong>
         </DialogTitle>
 
         <DialogContent>

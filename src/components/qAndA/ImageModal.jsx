@@ -10,9 +10,8 @@ export default function ImageModal({ open, handleClose, imageURL }) {
         <IconButton
           edge="end"
           onClick={ handleClose }
-          sx={{ position: 'absolute', top: 8, right: 8 }}
-          // added for easy ref in test suite
-          aria-label="Close"
+          sx={{ position: 'absolute', top: 1, right: 8 }}
+          aria-label="Close" // added for easy ref in test suite
           role="button"
         >
           <CloseIcon />
