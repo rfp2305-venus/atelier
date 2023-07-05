@@ -19,7 +19,7 @@ describe('Question', () => {
   };
   const store = mockStore(initialState);
 
-  test('renders question details', () => {
+  beforeEach(() => {
 
     const mockQuestion = {
       id: 1,
@@ -35,6 +35,9 @@ describe('Question', () => {
         <Question { ...mockQuestion } />
       </Provider>
     );
+  });
+
+  test('renders question details', () => {
 
     const body = screen.queryByText('test question', { exact: false });
     const handle = screen.queryByText('By test_user — June 09, 1969', { exact: false });
@@ -43,4 +46,58 @@ describe('Question', () => {
     expect(handle).toBeInTheDocument();
     expect(screen.getByText('Helpful?')).toBeInTheDocument();
   });
+
+  /*
+  test('"Seller" answers sorted first', () => {
+
+    const mockAnswers = [
+      {
+        answer_id: 1,
+        body: 'test answer 1',
+        date: 'November 11, 1995',
+        answerer_name: 'test_user01',
+        helpfulness: 5,
+        photos: [],
+        reported: false
+      },
+      {
+        answer_id: 2,
+        body: 'test answer 2',
+        date: 'September 02, 1994',
+        answerer_name: 'test_user02',
+        helpfulness: 7,
+        photos: [{ id: 1, url: 'https://test-image.com/mock' }],
+        reported: false
+      },
+      {
+        answer_id: 3,
+        body: 'test answer 3',
+        date: 'December 24, 1967',
+        answerer_name: 'test_user03',
+        helpfulness: 10,
+        photos: [],
+        reported: false
+      },
+      {
+        answer_id: 4,
+        body: 'LOVE SELLING SO MUCH',
+        date: 'June 09, 1969',
+        answerer_name: 'Seller',
+        helpfulness: 15,
+        photos: [],
+        reported: false
+      }
+    ];
+
+    axios.get.mockReturnValue(mockAnswers);
+
+    render(
+      <Provider store={ store }>
+        <Question { ...mockQuestion } />
+      </Provider>
+    );
+
+    // rest of implementation ...
+  });
+  */
 });
