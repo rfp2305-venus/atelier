@@ -1,11 +1,7 @@
-/**
- * @jest-environment jsdom
- */
-
 const { API_URL, API_KEY } = process.env;
 
 import React from 'react';
-import { render, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import axios from 'axios';
 
 import Upvote from '../Upvote';
@@ -24,16 +20,11 @@ describe('Upvote', () => {
     axios.put.mockResolvedValue(res);
 
     // render Upvote component w/ necessary props
-    const { getByText } = render(
-      <Upvote
-        id={ 1 }
-        type="question"
-        helpfulness={ 0 }
-      />
-    );
+    render(<Upvote id={ 1 } type="question" helpfulness={ 0 }/>);
 
     // query DOM elem by given text
-    const upvoteButton = getByText('Yes (0)');
+    const upvoteButton = screen.getByText('Yes (0)');
+    expect(upvoteButton).toBeInTheDocument();
 
     // trigger click event
     fireEvent.click(upvoteButton);
@@ -49,6 +40,8 @@ describe('Upvote', () => {
         { helpfulness: 1 },
         { headers: { Authorization: API_KEY } }
       );
+
+      expect(screen.getByText('Yes (1)')).toBeInTheDocument();
     });
   });
 });

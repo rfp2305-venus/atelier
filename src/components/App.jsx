@@ -6,7 +6,7 @@ import RelatedComp from './relatedAndComp/RelatedComp.jsx';
 import {handleFetchProducts} from "../state/Products/actions";
 import Loading from '../lib/Loading';
 
-import QuestionsList from './qAndA/QuestionsList';
+import WrapQA from './qAndA/WrapQA';
 import Nav from "../lib/Nav";
 import {handleFetchProduct} from "../state/productDetail/actions";
 import ReviewsList from './Ratings_Reviews/ReviewsList';
@@ -45,7 +45,7 @@ export default function App() {
           <Container spacing={0} sx={{padding: '0'}}>
             <ProductOverview />
             <RelatedComp />
-            <QuestionsList />
+            <WrapQA />
             <ReviewsList />
           </Container>
         )}

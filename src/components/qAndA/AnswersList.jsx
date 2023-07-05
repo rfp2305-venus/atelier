@@ -1,94 +1,42 @@
-const { API_URL, API_KEY } = process.env;
-import React, { useState, useEffect } from 'react';
-import { Box } from '@mui/material';
+import React from 'react';
+import { Box, Divider } from '@mui/material';
 import getDate from './util/getDate';
 import Answer from './Answer';
 import SeeMore from './SeeMore';
-import axios from 'axios';
 
-export default function AnswersList({ questionID }) {
-
-  const [ answers, setAnswers ] = useState([]);
-  const [ length, setLength ] = useState(2);
-  const [ isExpanded, setExpanded ] = useState(false);
-
-  const fetchAnswers = (page = 1, count = 20) => {
-
-    axios
-      .get(`${ API_URL }/qa/questions/${ questionID }/answers`, {
-        headers: { Authorization: API_KEY },
-        params: {
-          page: page,
-          count: count
-        }
-      })
-      .then((res) => {
-        const { results } = res.data;
-
-        results
-          // sort answers by helpfulness
-          .sort((a, b) => {
-            // ensure Seller's name always at top
-            if (a.answerer_name === 'Seller' && b.answerer_name !== 'Seller') {
-              return -1;
-
-            } else if (a.answerer_name !== 'Seller' && b.answerer_name === 'Seller') {
-              return 1;
-
-            } else {
-              return b.helpfulness - a.helpfulness;
-            }
-          })
-          // (bonus): for incoming answers w/ no 'reported' prop
-          .forEach((answer) => {
-            answer.reported ||= false;
-          });
-
-        setAnswers(results);
-      })
-      .catch((err) => {
-        console.error(`Error fetching answers: ${ err }`);
-      });
-  };
-
-  useEffect(() => {
-    fetchAnswers();
-  }, [/* product, questionID */]);
-  // does not seem to resolve multiple API calls —> backlog
-
-  /*
-  // check if answers fetched correctly
-  answers.forEach((a, i) => {
-    console.log(`answer ${ i }: ${ JSON.stringify(a) }`);
-  });
-  */
+export default function AnswersList({ answers, length, setLength, isExpanded, setExpanded }) {
 
   return (
+    // max height === 50% of viewport
     <Box sx={{ maxHeight: '50vh', overflowY: 'auto' }}>
       { answers
         .slice(0, length)
         .map(({ answer_id, body, date, answerer_name, helpfulness, photos, reported }) => (
-          // if answer isn't blank
+          // if answer isn't blank or reported
           (body.length > 0 && !reported) ?
             (<Answer key={ answer_id }
               id={ answer_id }
               body={ body }
               date={ getDate(date) }
               user={ answerer_name }
-              // add extra "seller check" for boldening
+              // "seller check" for boldening
               isSeller={ answerer_name === 'Seller' }
               helpfulness={ helpfulness }
               photos={ photos }
             />) : (null)
         )) }
 
-      ———{ (answers.length > 2) ?
+      <Divider sx={{ borderWidth: '1px', margin: '10px 0', zIndex: 0 }} />
+
+      { (answers.length > 2) ?
         (<SeeMore
-          type="answer" aLength={ answers.length }
-          length={ length } setLength={ setLength }
-          isExpanded={ isExpanded } setExpanded={ setExpanded }
-        />) : (null) }———
-      <br /><br />
+          type="answer"
+          aLength={ answers.length }
+          length={ length }
+          setLength={ setLength }
+          isExpanded={ isExpanded }
+          setExpanded={ setExpanded }
+        />) : (null) }
     </Box>
   );
 }
