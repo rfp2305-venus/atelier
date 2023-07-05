@@ -57,12 +57,12 @@ export default function Question({ id, body, date, user, helpfulness, reported }
   }, [/* product, id */]);
   // does not seem to resolve multiple API calls —> backlog
 
-  /*
+  // /*
   // check if answers fetched correctly
   answers.forEach((a, i) => {
     console.log(`answer ${ i }: ${ JSON.stringify(a) }`);
   });
-  */
+  // */
 
   return (
     <Box>

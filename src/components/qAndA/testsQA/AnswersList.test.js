@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 
 import AnswersList from '../AnswersList';
 
@@ -28,16 +28,13 @@ describe('AnswersList', () => {
       }
     ];
 
-    const setLength = jest.fn();
-    const setExpanded = jest.fn();
-
     render(
       <AnswersList
         answers={ mockAnswers }
         length={ 2 }
-        setLength={ setLength }
+        setLength={ jest.fn() }
         isExpanded={ false }
-        setExpanded={ setExpanded }
+        setExpanded={ jest.fn() }
       />
     );
   });
