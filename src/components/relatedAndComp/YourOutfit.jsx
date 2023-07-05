@@ -13,13 +13,6 @@ import Carousel from 'react-material-ui-carousel';
 
 export default function YourOutfit() {
 
-  const state = useSelector((state) => state);
-  const dispatch = useDispatch();
-
-  useEffect(()=>{
-    console.log('state:', state);
-  }, []);
-
   const outfit = useSelector((state) => state.article);
   // let outfitList = outfit.map((article) => <OutfitCard article={article} key={article.id}/>);
 
@@ -38,12 +31,12 @@ export default function YourOutfit() {
   return outfit[0] ? (
     <>
       <Typography component='p' className="title">YOUR OUTFIT</Typography>
-        <Carousel component='span' id="your-outfit" width='800px' autoplay={false} interval={null}>
-          <span className='carousel'>
-            <AddToOutfit />
-            {items}
-          </span>
-        </Carousel>
+      <Carousel component='span' id="your-outfit" width='800px' autoplay={false} interval={null}>
+        <span className='carousel'>
+          <AddToOutfit />
+          {items}
+        </span>
+      </Carousel>
     </>) :
     (<>
       <Typography component='p' className="title">YOUR OUTFIT</Typography>

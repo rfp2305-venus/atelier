@@ -19,6 +19,10 @@ export default function RelatedCard({ productID }) {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
 
+  useEffect(()=>{
+    console.log('state:', state);
+  }, []);
+
   const [ product, setProduct ] = useState({});
   const [ productStyles, setProductStyles ] = useState({});
   const [ productPhoto, setProductPhoto ] = useState('');
@@ -67,7 +71,7 @@ export default function RelatedCard({ productID }) {
 
   return (
 
-    <Card className="card" sx={{width: 150, height: 200}} onClick={(event) => handleSelectProduct(productID)}>
+    <Card className="card" sx={{width: 150, height: 200}} onClick={(event) => handleSelectProduct(productID)} data-testid={`related-card-container-${productID}`}>
       <div className="card-first-row">
         <CardMedia
           className='related-products-thumbnail'

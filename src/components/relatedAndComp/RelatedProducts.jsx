@@ -4,10 +4,11 @@ import Carousel from 'react-material-ui-carousel';
 
 export default function RelatedProducts({ relatedProducts }) {
 
+
   let cardList = relatedProducts.map((productID)=> <RelatedCard productID={productID} key={productID}/>);
 
   const sliderItems = relatedProducts.length > 3 ? 3 : relatedProducts.length;
-  console.log('sliderItems', sliderItems);
+  // console.log('sliderItems', sliderItems);
   const items = [];
 
   for (let i = 0; i < relatedProducts.length; i += sliderItems) {
