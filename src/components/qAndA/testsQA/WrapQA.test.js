@@ -8,6 +8,7 @@ import WrapQA from '../WrapQA';
 describe('WrapQA', () => {
 
   beforeAll(() => {
+
     const mockStore = configureMockStore([]);
 
     const initialState = {
@@ -18,7 +19,6 @@ describe('WrapQA', () => {
         }
       }
     };
-
     const store = mockStore(initialState);
 
     render(

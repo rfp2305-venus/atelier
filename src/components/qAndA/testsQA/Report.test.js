@@ -23,6 +23,7 @@ describe('Report', () => {
 
     // query DOM elem by given text
     const reportButton = screen.getByText('Report');
+    expect(reportButton).toBeInTheDocument();
 
     // trigger click event
     fireEvent.click(reportButton);

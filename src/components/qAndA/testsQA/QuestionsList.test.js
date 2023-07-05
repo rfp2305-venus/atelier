@@ -17,7 +17,6 @@ describe('QuestionsList', () => {
       }
     }
   };
-
   const store = mockStore(initialState);
 
   test('displays appropriate message if no questions', () => {
@@ -32,7 +31,6 @@ describe('QuestionsList', () => {
         />
       </Provider>
     );
-
     expect(screen.getByText('No questions yet!')).toBeInTheDocument();
   });
 
@@ -60,7 +58,7 @@ describe('QuestionsList', () => {
       </Provider>
     );
 
-    const elemsQ1 = screen.queryAllByText('Question 1', { exact: false }); // preferred over regex
+    const elemsQ1 = screen.queryAllByText('Question 1', { exact: false }); // prefer over regex
 
     expect(elemsQ1.length).toBeGreaterThan(0); // multiple elems
     expect(screen.queryByText('Question 2')).toBeNull();

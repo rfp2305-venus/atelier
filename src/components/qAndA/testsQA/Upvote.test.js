@@ -24,6 +24,7 @@ describe('Upvote', () => {
 
     // query DOM elem by given text
     const upvoteButton = screen.getByText('Yes (0)');
+    expect(upvoteButton).toBeInTheDocument();
 
     // trigger click event
     fireEvent.click(upvoteButton);
