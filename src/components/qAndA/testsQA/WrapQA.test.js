@@ -1,30 +1,35 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { render, screen } from '@testing-library/react';
-import axios from 'axios';
+import { Provider } from 'react-redux';
+import configureMockStore from 'redux-mock-store';
 
 import WrapQA from '../WrapQA';
 
-jest.mock('react-redux');
-jest.mock('axios');
-
 describe('WrapQA', () => {
 
-  // simulate product selection & render list prior to testing
-  beforeEach(() => {
-    useSelector.mockReturnValue({
+  beforeAll(() => {
+    const mockStore = configureMockStore([]);
+
+    const initialState = {
       productDetail: {
-        product: { id: 69 }
+        product: {
+          id: 123,
+          name: 'Test Product'
+        }
       }
-    });
-    render(<WrapQA />);
+    };
+
+    const store = mockStore(initialState);
+
+    render(
+      <Provider store={ store }>
+        <WrapQA />
+      </Provider>
+    );
   });
 
-  test('renders component correctly', () => {
-    expect(screen.getByText('Q&A:')).toBeInTheDocument();
-  });
+  test('renders component w/ product name in FAQ header', () => {
 
-  test('displays message when no questions', () => {
-    expect(screen.getByText('No questions yet!')).toBeInTheDocument();
+    expect(screen.getByText('FAQ: Test Product')).toBeInTheDocument();
   });
 });

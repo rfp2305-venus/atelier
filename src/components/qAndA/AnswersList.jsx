@@ -30,9 +30,12 @@ export default function AnswersList({ answers, length, setLength, isExpanded, se
 
       { (answers.length > 2) ?
         (<SeeMore
-          type="answer" aLength={ answers.length }
-          length={ length } setLength={ setLength }
-          isExpanded={ isExpanded } setExpanded={ setExpanded }
+          type="answer"
+          aLength={ answers.length }
+          length={ length }
+          setLength={ setLength }
+          isExpanded={ isExpanded }
+          setExpanded={ setExpanded }
         />) : (null) }
     </Box>
   );

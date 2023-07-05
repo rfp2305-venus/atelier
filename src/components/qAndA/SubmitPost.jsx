@@ -215,7 +215,7 @@ export default function SubmitPost({ id, body, type }) {
               <strong>Your nickname: **</strong>
             </Typography>
             <TextField
-              placeholder="jackson69!"
+              placeholder="jackson00!"
               value={ user }
               onChange={ (e) => setUser(e.target.value) }
               // NOTE: useful props below!
@@ -234,7 +234,7 @@ export default function SubmitPost({ id, body, type }) {
               <strong>Your email: **</strong>
             </Typography>
             <TextField
-              placeholder="spongebob69@jeemail.gov"
+              placeholder="spongebob69@snailmail.io"
               value={ email }
               onChange={ (e) => setEmail(e.target.value) }
               error={ !emailFilled }

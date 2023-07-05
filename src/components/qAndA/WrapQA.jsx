@@ -56,7 +56,6 @@ export default function WrapQA() {
   });
   */
 
-  // actual questions rendered / manipulated on page
   let searchResults = questions;
 
   if (search.length >= 3) {
@@ -74,7 +73,10 @@ export default function WrapQA() {
       marginLeft: 'auto',
       marginRight: 'auto'
     }}>
-      <Typography variant="h3" sx={{ fontFamily: 'Roboto', fontWeight: 'bold' }}>
+      <Typography
+        variant="h3"
+        sx={{ fontFamily: 'Roboto', fontWeight: 'bold' }}
+      >
         FAQ: { product.name }
       </Typography>
 
