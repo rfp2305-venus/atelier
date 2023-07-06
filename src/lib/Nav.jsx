@@ -14,7 +14,6 @@ export default function Nav({products, selectedProduct, onSelectProduct} ) {
     setAnchorEl(null);
   };
 
-
   return (
     <AppBar position="static" sx={{
       backgroundColor: '#36393b'
@@ -31,6 +30,7 @@ export default function Nav({products, selectedProduct, onSelectProduct} ) {
           <MenuIcon />
         </IconButton>
         <Menu
+          data-testid="product-select"
           id="menu-appbar"
           anchorEl={anchorEl}
           anchorOrigin={{
@@ -47,6 +47,7 @@ export default function Nav({products, selectedProduct, onSelectProduct} ) {
         >
           {products.products && products.products.map((product) => (
             <MenuItem
+              data-testid="product-select-option"
               key={`productMenuItem${product.id}`}
               onClick={() => {
                 handleClose();
@@ -59,30 +60,5 @@ export default function Nav({products, selectedProduct, onSelectProduct} ) {
         </Typography>
       </Toolbar>
     </AppBar>
-  )
-
-
-  return (
-    <FormControl sx={{m: 1, minWidth: '150px'}}>
-      <InputLabel id="product-select">
-        Select Product
-      </InputLabel>
-      <Select
-        data-testid="product-select"
-        label="product-select"
-        name="product-select"
-        onChange={(x) => {onSelectProduct(x.target.value)}}
-        value={selectedProduct}
-      >
-        {products.products && products.products.map((product, i) => (
-          <MenuItem
-            data-testid="product-select-option"
-            key={product.id + '_' + i}
-            value={product.id}>
-            {product.name}
-          </MenuItem>
-        ))}
-      </Select>
-    </FormControl>
   )
 }

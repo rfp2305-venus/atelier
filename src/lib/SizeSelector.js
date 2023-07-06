@@ -1,5 +1,5 @@
 import React from "react";
-import {FormControl, InputLabel, MenuItem, Select} from "@mui/material";
+import {Button, FormControl, InputLabel, MenuItem, Select, Stack} from "@mui/material";
 
 export default function SizeSelector({skus, selectedSize, onSelect}) {
 

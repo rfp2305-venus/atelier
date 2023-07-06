@@ -66,15 +66,13 @@ export default function ProductOverview() {
     }
   }, [size])
 
-  console.log(productDetail);
-
   return (
     <Grid container spacing={1} sx={{padding: 0, maxWidth: '1200px'}}>
-      <Grid item xs={12} md={8} style={{maxWidth: '100%', minHeight: '50vh'}}>
+      <Grid item xs={12} md={9} style={{maxWidth: '100%', minHeight: '50vh'}}>
         { selectedStyle && <ProductGallery product={selectedStyle} />}
       </Grid>
 
-      <Grid item xs={12} md={4}>
+      <Grid item xs={12} md={3}>
         {productDetail.product && selectedStyle && (
           <div className="product-form">
             <StarRating />
@@ -100,21 +98,23 @@ export default function ProductOverview() {
                 selectedStyle={selectedStyle}
               />
 
-              <SizeSelector
-                skus={selectedStyle.skus}
-                selectedSize={size}
-                onSelect={handleSetSize}
-              />
+              <div className="form-row">
+                <SizeSelector
+                  skus={selectedStyle.skus}
+                  selectedSize={size}
+                  onSelect={handleSetSize}
+                />
 
-              <QuantitySelector
-                quantity={
-                  selectedStyle && size
-                    ? selectedStyle.skus[size].quantity
-                    : 1
-                }
-                selected={quantity}
-                onSelect={setQuantity}
-              />
+                <QuantitySelector
+                  quantity={
+                    selectedStyle && size
+                      ? selectedStyle.skus[size].quantity
+                      : 1
+                  }
+                  selected={quantity}
+                  onSelect={setQuantity}
+                />
+              </div>
             </Stack>
 
             <Stack className="actions" direction={'row'}>

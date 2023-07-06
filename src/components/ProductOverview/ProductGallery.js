@@ -7,48 +7,6 @@ import {Expand, Fullscreen} from "@mui/icons-material";
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 
-function renderMobile(photos, selectedImage, onSelectImage) {
-  const styles = {
-    height: '35vh',
-    width: '100%',
-    backgroundImage: `url(${photos[selectedImage].url})`,
-    backgroundPosition: 'center center',
-    backgroundSize: 'cover',
-    borderRadius: '2%'
-  };
-  return (
-    <Grid container spacing={0} >
-      <Grid item xs={12}>
-        <div className="img-row" style={styles}></div>
-      </Grid>
-      <Grid item xs={12} style={{display: 'flex'}}>
-        {photos.map((x, i) => (
-          <div
-            className={
-              i === selectedImage
-                ? 'img-item selected-img'
-                : 'img-item'
-            }
-            onClick={() => onSelectImage(i)}
-            style={{
-              height: '50px',
-              width: '50px',
-              backgroundImage: `url(${x.thumbnail_url})`,
-              backgroundPosition: 'center center',
-              backgroundSize: 'cover',
-              borderRadius: '2%'
-            }}
-          ></div>
-        ))}
-      </Grid>
-    </Grid>
-    /*<div className="img-row" style={{height: '35vh', maxWidth: '100%', display: 'flex', overflow: 'scroll'}}>
-      {photos.map((photo, i) => (
-        <img key={i + photo.url} src={photo.url} alt="" style={{maxHeight: '50vh'}}/>
-      ))}
-    </div>*/
-  );
-}
 
 export default function ProductGallery({product, ...props}) {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -61,11 +19,14 @@ export default function ProductGallery({product, ...props}) {
   const [mouse, setMouse] = useState({x: 0, y: 0, backgroundPosition: null});
   const [fullScreen, setFullScreen] = useState(false);
 
+
   function handleSelectImage(index) {
     setSelectedImage(index);
   }
 
-  function handleMouseEnter() {
+  function handleMouseEnter(x) {
+    x.preventDefault();
+    console.log(x);
     setMouseIn(true);
   }
 
@@ -100,7 +61,6 @@ export default function ProductGallery({product, ...props}) {
       y = h / zoom;
     }
 
-
     setMouse({
       top: y - h,
       left: x - w,
@@ -125,7 +85,9 @@ export default function ProductGallery({product, ...props}) {
   return selectedImage !== null && (
     <div
       className={
-        fullScreen ? 'gallery-wrapper full-screen' : 'gallery-wrapper'
+        fullScreen
+          ? 'gallery-wrapper full-screen'
+          : 'gallery-wrapper'
       }
     >
 
@@ -136,18 +98,7 @@ export default function ProductGallery({product, ...props}) {
 
       <Container
         ref={containerRef}
-        style={{
-          position: 'relative',
-          height: '100%',
-          width: '100%',
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'center',
-          alignItems: 'center',
-          padding: '10px',
-          maxWidth: '100vw'
-        }}
-
+        className="gallery-main-container"
         onMouseMove={mouseIn ? handleMouseMove : null}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
@@ -160,25 +111,23 @@ export default function ProductGallery({product, ...props}) {
         </IconButton>
 
         <IconButton
-          style={{
-            position: 'absolute',
-            zIndex: 10,
-            left: 0
-          }}
+          className="gallery-navigator-btn"
+          style={{left: 0}}
           onMouseEnter={() => setNavigationButtons(true)}
           onMouseLeave={() => setNavigationButtons(false)}
+          disabled={selectedImage === 0}
+          onClick={() => handleSelectImage(selectedImage - 1)}
         >
           <KeyboardArrowLeftIcon />
         </IconButton>
 
         <IconButton
-          style={{
-            position: 'absolute',
-            zIndex: 10,
-            right: 0
-          }}
+          className="gallery-navigator-btn"
+          style={{right: 0}}
           onMouseEnter={() => setNavigationButtons(true)}
           onMouseLeave={() => setNavigationButtons(false)}
+          disabled={selectedImage + 1 >= product.photos.length}
+          onClick={() => handleSelectImage(selectedImage + 1)}
         >
           <KeyboardArrowRightIcon />
         </IconButton>
@@ -188,6 +137,7 @@ export default function ProductGallery({product, ...props}) {
           ref={mainImgRef}
           alt=""
           className="gallery-main"
+          data-testid={`gallery-main-${selectedImage}`}
         />
 
         {mouseIn && (
@@ -203,43 +153,8 @@ export default function ProductGallery({product, ...props}) {
             }}
           />
         )}
+
       </Container>
     </div>
   );
 }
-
-
-
-
-
-
-{/*<div
-              ref={mainImgRef}
-              className="gallery-main"
-              onMouseMove={mouseIn ? handleMouseMove : null}
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
-              style={{
-                height: '50vw',
-                backgroundImage: `url(${product.photos[selectedImage].url})`,
-                backgroundPosition: 'center top',
-                backgroundSize: 'cover',
-                borderRadius: '2%',
-                position: 'relative'
-              }}>
-              <div className="img-scroll" >
-                <ImgScroll photos={product.photos} selected={selectedImage} onSelect={handleSelectImage}/>
-              </div>
-              {mouseIn &&
-              <div
-                ref={glassImgRef}
-                style={{
-                  position: 'absolute',
-                  height: '300px',
-                  width: '300px',
-                  borderRadius: '50%',
-                  ...mouse
-                }}
-              />
-              }
-            </div>*/}

@@ -20,24 +20,23 @@ export default function ProductStyles({styles, ...props}) {
         {props.selectedStyle.name}
       </Typography>
       <Stack
-        direction={'column'}
+        direction={'row'}
         sx={{
           flexWrap: 'wrap',
-          justifyContent: 'flex-start'
+          justifyContent: 'flex-start',
+          maxWidth: '250px'
         }}
       >
         {
           stylesArray.map((styleArray, i) =>
-            <Box>
-              {styleArray.map((style) => (
-                <ProductStyle
-                  selected={props.selectedStyle.style_id === style.style_id}
-                  key={style.style_id}
-                  style={style}
-                  {...props}
-                />
-              ))}
-            </Box>
+            styleArray.map((style) => (
+              <ProductStyle
+                selected={props.selectedStyle.style_id === style.style_id}
+                key={style.style_id}
+                style={style}
+                {...props}
+              />
+            ))
           )
         }
       </Stack>
