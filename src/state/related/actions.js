@@ -17,7 +17,6 @@ export function handleFetchComparisonProduct(productId) {
     fetchProduct(productId)
       .then((product) => {
         dispatch(handleSetComparisonProduct(product));
-        // console.log(product);
       })
       .catch((err) => {
         console.error(err);

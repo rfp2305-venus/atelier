@@ -49,12 +49,3 @@ export default function RelatedComp() {
     </>
   );
 }
-/*
-redux tutorial:
-  const state = useSelector((state) => state);
-  const dispatch = useDispatch();
-  console.log('state', state);
-  useEffect(()=>{
-    dispatch(aSimpleAction());
-  }, []);
-*/

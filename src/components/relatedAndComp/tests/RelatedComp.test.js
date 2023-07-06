@@ -25,13 +25,13 @@ describe('RelatedComp', () => {
     expect(RelatedComp).not.toBe(null);
   });
 
-  // it('renders the RelatedComp Component', () => {
-  //   renderWithContext(<RelatedComp />, {
-  //     productDetail: {
-  //       product: MOCKPRODUCT
-  //     }
-  //   });
-  //   expect(screen.queryByTestId('related-comp-test')).ToBeTruthy;
-  // });
+  it('renders the RelatedComp Component', () => {
+    renderWithContext(<RelatedComp />, {
+      productDetail: {
+        product: MOCKPRODUCT
+      }
+    });
+    expect(screen.queryByTestId('related-comp-test')).ToBeTruthy;
+  });
 
 });

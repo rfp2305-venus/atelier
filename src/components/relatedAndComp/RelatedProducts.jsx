@@ -4,7 +4,6 @@ import Carousel from 'react-material-ui-carousel';
 
 export default function RelatedProducts({ relatedProducts }) {
 
-
   let cardList = relatedProducts.map((productID)=> <RelatedCard productID={productID} key={productID}/>);
 
   const sliderItems = relatedProducts.length > 3 ? 3 : relatedProducts.length;
@@ -26,11 +25,11 @@ export default function RelatedProducts({ relatedProducts }) {
   }
 
   return (
-    <>
+    <div data-testid='related-products'>
       <Typography component='p' className="title">RELATED PRODUCTS</Typography>
       <Carousel component='span' id="related-products" width='800px' autoplay={false} interval={null}>
         <span className='carousel'>{cardList}</span>
       </Carousel>
-    </>
+    </div>
   );
 }
