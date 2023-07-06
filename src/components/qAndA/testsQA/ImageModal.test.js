@@ -8,7 +8,6 @@ describe('ImageModal', () => {
   const handleClose = jest.fn();
 
   beforeEach(() => {
-
     render(
       <ImageModal
         open={ true }

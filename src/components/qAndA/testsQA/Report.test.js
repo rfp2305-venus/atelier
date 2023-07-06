@@ -1,5 +1,4 @@
 const { API_URL, API_KEY } = process.env;
-
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import axios from 'axios';
