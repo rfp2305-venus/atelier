@@ -92,7 +92,6 @@ export default function SubmitPost({ id, body, type }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // form validation
     const isValid = validateInputs();
 
     if (isValid) {
@@ -215,6 +214,7 @@ export default function SubmitPost({ id, body, type }) {
               <strong>Your nickname: **</strong>
             </Typography>
             <TextField
+              aria-label="name-input"
               placeholder="jackson00!"
               value={ user }
               onChange={ (e) => setUser(e.target.value) }
@@ -234,6 +234,7 @@ export default function SubmitPost({ id, body, type }) {
               <strong>Your email: **</strong>
             </Typography>
             <TextField
+              aria-label="email-input"
               placeholder="spongebob69@snailmail.io"
               value={ email }
               onChange={ (e) => setEmail(e.target.value) }
@@ -254,6 +255,7 @@ export default function SubmitPost({ id, body, type }) {
               <strong>Your { type }: **</strong>
             </Typography>
             <TextField
+              aria-label="post-input"
               placeholder={
                 (type === 'question')
                   ? ('What\'s the deal with airline food?')
