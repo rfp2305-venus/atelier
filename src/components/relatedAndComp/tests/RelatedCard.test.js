@@ -25,6 +25,4 @@ describe('RelatedCard', () => {
   it('should fetch the related product\'s styles', () => {
     axios.get.mockImplementation(() => Promise.resolve(MOCKPRODUCT.styles));
   });
-
-  it('renders')
 });

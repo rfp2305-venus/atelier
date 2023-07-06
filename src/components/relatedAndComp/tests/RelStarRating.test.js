@@ -4,10 +4,20 @@ import { calculateRelAvg } from '../RelStarRating';
 import { render, screen, fireEvent, waitFor, act, cleanup } from '@testing-library/react';
 import { MOCKPRODUCT, MOCKCOMPARISON, renderWithContext } from "../../../util/test-related.js";
 import axios from 'axios';
+import { useEffect } from 'react';
 
 jest.mock('axios');
 
 describe('RelStarRating', () => {
+
+  beforeEach(() => {
+    jest.spyOn(React, 'useEffect').mockImplementation(f => f());
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
   it('renders something that isn\'t null', () => {
     expect(RelStarRating).not.toBe(null);
   });
@@ -34,5 +44,12 @@ describe('RelStarRating', () => {
     expect(result).toEqual(3.716374269005848);
   });
 
+  it('should call useEffect', () => {
+    // Render your component
+    render(<RelStarRating />);
+
+    // Assert that useEffect has been called
+    expect(React.useEffect).toHaveBeenCalled();
+  });
 
 });
