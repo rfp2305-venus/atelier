@@ -42,7 +42,7 @@ export default function App() {
 
       <Box id="app">
         {productDetail.product && (
-          <Container spacing={0} sx={{padding: '0'}}>
+          <Container spacing={0} sx={{padding: '0!important'}}>
             <ProductOverview />
             <RelatedComp />
             <WrapQA />
