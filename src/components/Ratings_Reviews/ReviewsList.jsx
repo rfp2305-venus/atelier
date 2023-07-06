@@ -109,8 +109,8 @@ export default function ReviewsList({currentProductId, reviewSort, handleSortSel
       }
     }
   }
-  console.log('renderedReviewsList', renderedReviewsList);
-  console.log('REVIEWS', reviews);
+  // console.log('renderedReviewsList', renderedReviewsList);
+  // console.log('REVIEWS', reviews);
 
   return (
 
