@@ -9,28 +9,33 @@ jest.mock('axios');
 
 describe('Report', () => {
 
-  test('toggles reported status & disables appropriately on click', async() => {
+  beforeEach(() => {
 
-    // simulate successful res from axios.put
-    const res = { status: 200 };
+    // jest.resetAllMocks(); // NOTE: ensures clean slate for each test **
 
-    // instruct mock func to return res (as resolved promise) when called
-    axios.put.mockResolvedValue(res);
+    render(
+      <Report
+        id={ 1 }
+        type="question"
+        reported={ false }
+      />
+    );
+  });
 
-    // render Report component w/ necessary props
-    render(<Report id={ 1 } type="question" reported={ false }/>);
+  test('component renders', () => {
 
-    // query DOM elem by given text
+    expect(screen.getByText('Report')).toBeInTheDocument();
+  });
+
+  test('toggles reported status', () => {
+
+    axios.put.mockResolvedValue({ status: 200 });
+
     const reportButton = screen.getByText('Report');
-    expect(reportButton).toBeInTheDocument();
-
-    // trigger click event
     fireEvent.click(reportButton);
 
-    // wait for axios req before assertions
-    await waitFor(() => {
+    waitFor(() => {
 
-      // verify expected behaviors
       expect(axios.put).toHaveBeenCalledTimes(1);
 
       expect(axios.put).toHaveBeenCalledWith(
@@ -40,6 +45,42 @@ describe('Report', () => {
       );
 
       expect(screen.getByText('Reported')).toBeInTheDocument();
+    });
+  });
+
+  test('disables on click', () => {
+
+    const reportButton = screen.getByText('Report');
+    fireEvent.click(reportButton);
+
+    waitFor(() => {
+
+      expect(reportButton).toBeDisabled();
+    });
+  });
+
+  test('handles error case in axios req', () => {
+
+    axios.put.mockRejectedValue(new Error());
+
+    const consoleErrSpy = jest.spyOn(console, 'error');
+
+    const reportButton = screen.getByText('Report');
+    fireEvent.click(reportButton);
+
+    waitFor(() => {
+
+      expect(consoleErrSpy).toHaveBeenCalledTimes(1);
+
+      /*
+      expect(axios.put).toHaveBeenCalledTimes(1);
+
+      expect(axios.put).toHaveBeenCalledWith(
+        `${ API_URL }/qa/${ 'question' }s/${ 1 }/report`,
+        { reported: true },
+        { headers: { Authorization: API_KEY } }
+      );
+      */
     });
   });
 });

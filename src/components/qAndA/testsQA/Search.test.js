@@ -5,11 +5,16 @@ import Search from '../Search';
 
 describe('Search', () => {
 
-  const setSearch = jest.fn();
+  const mockSetSearch = jest.fn();
 
   test('renders component w/ input', () => {
 
-    render(<Search search={ 'test' } setSearch={ setSearch } />);
+    render(
+      <Search
+        search={ 'test' }
+        setSearch={ mockSetSearch }
+      />
+    );
 
     const input = screen.getByPlaceholderText('Have a question? Search for answers...');
 
@@ -18,13 +23,18 @@ describe('Search', () => {
 
   test('calls setSearch when input value changes', () => {
 
-    render(<Search search={ '' } setSearch={ setSearch } />);
+    render(
+      <Search
+        search={ '' }
+        setSearch={ mockSetSearch }
+      />
+    );
 
     const input = screen.getByPlaceholderText('Have a question? Search for answers...');
 
     fireEvent.change(input, { target: { value: 'new value' } });
 
-    expect(setSearch).toHaveBeenCalledTimes(1);
-    expect(setSearch).toHaveBeenCalledWith('new value');
+    expect(mockSetSearch).toHaveBeenCalledTimes(1);
+    expect(mockSetSearch).toHaveBeenCalledWith('new value');
   });
 });

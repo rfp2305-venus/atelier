@@ -8,6 +8,7 @@ import WrapQA from '../WrapQA';
 describe('WrapQA', () => {
 
   beforeAll(() => {
+
     const mockStore = configureMockStore([]);
 
     const initialState = {
@@ -27,7 +28,7 @@ describe('WrapQA', () => {
     );
   });
 
-  test('renders component w/ product name in FAQ header', () => {
+  test('component renders w/ product name in FAQ header', () => {
 
     expect(screen.getByText('FAQ: Test Product')).toBeInTheDocument();
   });
