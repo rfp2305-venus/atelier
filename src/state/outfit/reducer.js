@@ -1,6 +1,3 @@
-
-// let lastID = 0;
-
 export default function outfitReducer(state = [], action) {
 
   switch (action.type) {
