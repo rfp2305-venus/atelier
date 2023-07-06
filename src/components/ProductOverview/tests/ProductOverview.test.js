@@ -1,8 +1,26 @@
 import React from 'react'
 import {expect, jest, test} from '@jest/globals';
-import {render, screen, fireEvent, waitFor, act, cleanup} from '@testing-library/react';
+import {render, screen, fireEvent, waitFor, act, cleanup, within} from '@testing-library/react';
 import {PRODUCTS, renderWithContext} from "../../../util/test-util";
 import ProductOverview from "../ProductOverview";
+
+async function clickToOpenSizeSelect() {
+  fireEvent.mouseDown(
+    screen.getByTestId('size-select')
+      .querySelector('#skus-select')
+  );
+}
+
+async function clickToSelectSizeOption(id) {
+  fireEvent.click(screen.getByTestId(`size-option-${id}`));
+}
+
+async function clickToOpenQuantitySelect() {
+  fireEvent.mouseDown(
+    screen.queryByTestId('quantity-select')
+      .querySelector('#quantity-select')
+  );
+}
 
 describe('Product Overview', () => {
 
@@ -32,7 +50,9 @@ describe('Product Overview', () => {
       return style['default?'];
     });
 
-    const selectedThumbnail = screen.getByTestId(`style-thumbnail-${defaultStyle[0].style_id}`)
+    const selectedThumbnail = screen.getByTestId(
+      `style-thumbnail-${defaultStyle[0].style_id}`
+    )
     expect(selectedThumbnail).toHaveClass('selected-style');
   });
 
@@ -45,30 +65,50 @@ describe('Product Overview', () => {
       }
     });
 
-    const defaultStyle = product.styles.filter((style) => {
-      return style['default?'];
-    })[0];
+    const defaultStyle = product
+      .styles
+      .filter((style) => style['default?'])[0];
     const skuKeys = Object.keys(defaultStyle.skus);
     const defaultSku = {id: skuKeys[0], ...defaultStyle.skus[skuKeys[0]]};
 
-    fireEvent.mouseDown(
-      screen.getByTestId('size-select')
-        .querySelector('#skus-select')
-    );
+    await clickToOpenSizeSelect();
 
-    await waitFor(() => {
-      expect(screen.getAllByRole('option')).toHaveLength(skuKeys.length);
-    });
+    expect(screen.getAllByRole('option')).toHaveLength(skuKeys.length);
 
-    fireEvent.click(screen.getByTestId(`size-option-${defaultSku.id}`));
+
+    await clickToSelectSizeOption(defaultSku.id)
+
     expect(screen.queryByTestId('quantity-select')).toBeTruthy();
 
-    fireEvent.mouseDown(
-      screen.queryByTestId('quantity-select')
-        .querySelector('#quantity-select')
-    );
+    await clickToOpenQuantitySelect();
 
     expect(screen.queryAllByTestId('quantity-option')).toHaveLength(defaultSku.quantity);
-    fireEvent.click(screen.queryAllByTestId('quantity-option')[0]);
+  });
+
+  it('should update the selected style', () => {
+    renderWithContext(<ProductOverview />, {
+      products: {products: PRODUCTS},
+      productDetail: {
+        product: PRODUCTS[0]
+      }
+    });
+    const defaultStyle = PRODUCTS[0].styles.filter((style) => style['default?']);
+    const selectedThumbnail = screen.getByTestId(
+      `style-thumbnail-${defaultStyle[0].style_id}`
+    )
+
+    const thumbnails = screen.getAllByRole('style-thumbnail');
+
+    expect(thumbnails).toHaveLength(PRODUCTS[0].styles.length);
+    expect(thumbnails[0].classList.contains('selected-style')).toBe(true);
+    expect(thumbnails[1].classList.contains('selected-style')).toBe(false);
+
+    expect(screen.queryByText(PRODUCTS[0].styles[0].name)).toBeTruthy();
+
+    fireEvent.click(thumbnails[1]);
+
+    expect(thumbnails[0].classList.contains('selected-style')).toBe(false);
+    expect(thumbnails[1].classList.contains('selected-style')).toBe(true);
+    expect(screen.queryByText(PRODUCTS[0].styles[1].name)).toBeTruthy();
   });
 })
