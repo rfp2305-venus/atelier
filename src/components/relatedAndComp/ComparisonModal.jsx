@@ -27,6 +27,7 @@ export default function ComparisonModal({open, onClose, productID}) {
   return (comparison ?
     (<>
       <Dialog
+        data-testid='comparison-modal'
         open={open}
         onClose={onClose}
         aria-labelledby='comparison-modal-title' aria-describedby='comparison-dialog-description'
@@ -77,7 +78,7 @@ export default function ComparisonModal({open, onClose, productID}) {
           </TableContainer>
         </DialogContent>
         <DialogActions>
-          <IconButton onClick={onClose}>
+          <IconButton onClick={onClose} data-testid='close-comparison-modal'>
             <HighlightOffOutlinedIcon />
           </IconButton>
         </DialogActions>

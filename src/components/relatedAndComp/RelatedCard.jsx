@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import RelStarRating from './RelStarRating';
 import axios from 'axios';
 import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
-import { Box, Button, Card, CardMedia, CardContent, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, IconButton, Typography } from '@mui/material';
+import { Box, Button, Card, CardMedia, CardContent, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, IconButton, Typography, Grid } from '@mui/material';
 import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined';
 import ComparisonModal from './ComparisonModal';
 //redux
@@ -18,6 +18,10 @@ export default function RelatedCard({ productID }) {
 
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
+
+  useEffect(()=>{
+    console.log('state:', state);
+  }, []);
 
   const [ product, setProduct ] = useState({});
   const [ productStyles, setProductStyles ] = useState({});
@@ -66,29 +70,30 @@ export default function RelatedCard({ productID }) {
   }
 
   return (
-
-    <Card className="card" sx={{width: 150, height: 200}} onClick={(event) => handleSelectProduct(productID)}>
-      <div className="card-first-row">
-        <CardMedia
-          className='related-products-thumbnail'
-          component='img'
-          alt={product.name}
-          image={productPhoto}
-        />
-        <span>
-          <IconButton id={product.id} onClick={event => handleIcon(event)}>
-            <StarBorderOutlinedIcon id={product.id} />
-          </IconButton>
-          <ComparisonModal open={open} onClose={handleClose} productID={productID}/>
-        </span>
-      </div>
-      <CardContent>
-        <Typography component='p'>{product.category}</Typography>
-        <Typography component='p'>{product.name}</Typography>
-        <Typography component='p'>{product.default_price}</Typography>
-        <RelStarRating productID={productID}/>
-      </CardContent>
-    </Card>
+    <div data-testid='related-card'>
+      <Card className="card" sx={{width: 150, height: 200}} onClick={(event) => handleSelectProduct(productID)} data-testid={`related-card-container-${productID}`}>
+        <div className="card-first-row">
+          <CardMedia
+            className='related-products-thumbnail'
+            component='img'
+            alt={product.name}
+            image={productPhoto}
+          />
+          <span>
+            <IconButton id={product.id} onClick={event => handleIcon(event)}>
+              <StarBorderOutlinedIcon id={product.id} />
+            </IconButton>
+            <ComparisonModal open={open} onClose={handleClose} productID={productID}/>
+          </span>
+        </div>
+        <CardContent>
+          <Typography component='p'>{product.category}</Typography>
+          <Typography component='p'>{product.name}</Typography>
+          <Typography component='p'>{product.default_price}</Typography>
+          <RelStarRating productID={productID}/>
+        </CardContent>
+      </Card>
+    </div>
 
   );
 }

@@ -1,24 +1,28 @@
-/**
- * @jest-environment jsdom
- */
-const {API_URL, API_KEY} = process.env;
-
 import React from 'react';
 import RelatedCard from '../RelatedCard';
-import renderer from 'react-test-renderer';
+import {render, screen, fireEvent, waitFor, act, cleanup} from '@testing-library/react';
+import {MOCKPRODUCT, MOCKCOMPARISON, renderWithContext} from "../../../util/test-related.js";
+import axios from 'axios';
 
-describe('RelatedCard Component', () => {
+jest.mock('axios');
 
-  test('renders something that isn\'t null', () => {
+describe('RelatedCard', () => {
+
+  it('renders something that isn\'t null', () => {
     expect(RelatedCard).not.toBe(null);
   });
 
-  // test('RelatedCard renders correctly', () => {
-  //   const tree = renderer
-  //     .create(<RelatedCard />)
-  //     .toJSON();
-  //   expect(tree).toMatchSnapshot();
-  // });
+  it('renders the cards if there is a related product', () => {
+    const mockProductID = 40345;
+    renderWithContext(<RelatedCard {...mockProductID} />);
+    expect(screen.queryByTestId('related-card')).toBeTruthy();
+  });
+
+  it('should fetch the related product', () => {
+    axios.get.mockImplementation(() => Promise.resolve(MOCKPRODUCT));
+  });
+
+  it('should fetch the related product\'s styles', () => {
+    axios.get.mockImplementation(() => Promise.resolve(MOCKPRODUCT.styles));
+  });
 });
-
-

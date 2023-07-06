@@ -64,7 +64,7 @@ export default function RelStarRating({productID}) {
 
   return (
     (stars ?
-      (<div className='rel-prod-stars' id={productID}>
+      (<div className='rel-prod-stars' id={productID} data-testid='rel-star-rating'>
         {stars && stars.map((star, indx) => renderStar(star, indx))}
       </div>) : null)
   );

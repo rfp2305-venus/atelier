@@ -17,27 +17,29 @@ export default function OutfitCard(props) {
   }
 
   return (
+    <div data-testid='OutfitCard'>
+      <Card className="card" sx={{width: 150, height: 200}}>
+        <div className="card-first-row">
+          <CardMedia
+            className='related-products-thumbnail'
+            component='img'
+            alt={`image of ${props.article.article.name}`}
+            image={props.article.article.styles[0].photos[0].thumbnail_url}
+          />
+          <span>
+            <IconButton onClick={handleRemove}>
+              <HighlightOffOutlinedIcon />
+            </IconButton>
+          </span>
+        </div>
+        <CardContent>
+          <Typography component='p'>{item.article.article.category}</Typography>
+          <Typography component='p'>{item.article.article.name}</Typography>
+          <Typography component='p'>{item.article.article.default_price}</Typography>
+          <RelStarRating productID={item.article.article.id}/>
+        </CardContent>
+      </Card>
+    </div>
 
-    <Card className="card" sx={{width: 150, height: 200}}>
-      <div className="card-first-row">
-        <CardMedia
-          className='related-products-thumbnail'
-          component='img'
-          alt={`image of ${item.article.article.name}`}
-          image={item.article.article.styles[0].photos[0].thumbnail_url}
-        />
-        <span>
-          <IconButton onClick={handleRemove}>
-            <HighlightOffOutlinedIcon />
-          </IconButton>
-        </span>
-      </div>
-      <CardContent>
-        <Typography component='p'>{item.article.article.category}</Typography>
-        <Typography component='p'>{item.article.article.name}</Typography>
-        <Typography component='p'>{item.article.article.default_price}</Typography>
-        <RelStarRating productID={item.article.article.id}/>
-      </CardContent>
-    </Card>
   );
 }

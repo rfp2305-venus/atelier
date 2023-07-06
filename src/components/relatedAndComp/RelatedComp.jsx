@@ -1,3 +1,4 @@
+/* eslint-disable func-style */
 const {API_URL, API_KEY} = process.env;
 
 import React from 'react';
@@ -9,6 +10,7 @@ import axios from 'axios';
 //REDUX
 import { useSelector, useDispatch } from 'react-redux';
 // import aSimpleAction from '../../state/related/actions.js';
+
 
 export default function RelatedComp() {
   const { product } = useSelector(({ productDetail }) => productDetail);
@@ -32,11 +34,11 @@ export default function RelatedComp() {
         console.log(error);
       });
     }
-  }, []);
+  }, [product]);
 
   return (
     <>
-      <div id="related-and-comp">
+      <div id="related-and-comp" data-testid='related-comp-test'>
         <div>
           <RelatedProducts relatedProducts={relatedProducts}/>
         </div>
@@ -47,12 +49,3 @@ export default function RelatedComp() {
     </>
   );
 }
-/*
-redux tutorial:
-  const state = useSelector((state) => state);
-  const dispatch = useDispatch();
-  console.log('state', state);
-  useEffect(()=>{
-    dispatch(aSimpleAction());
-  }, []);
-*/

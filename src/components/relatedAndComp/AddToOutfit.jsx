@@ -21,8 +21,10 @@ export default function AddToOutfit() {
   }
 
   return (
-    <Card className="card" id='add-to-outfit'>
-      <Button variant='contained' onClick={()=> handleID()}>Add to Outfit</Button>
-    </Card>
+    <div data-testid='add-to-outfit'>
+      <Card className="card" id='add-to-outfit' >
+        <Button variant='contained' onClick={()=> handleID()} data-testid='add-to-outfit-button'>Add to Outfit</Button>
+      </Card>
+    </div>
   );
 }
