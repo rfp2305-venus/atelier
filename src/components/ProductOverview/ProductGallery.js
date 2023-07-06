@@ -4,6 +4,8 @@ import useResize from "../../lib/useResize";
 import {Box, Container, Grid, IconButton, Paper} from "@mui/material";
 import ImgScroll from "../../lib/ImgScroll";
 import {Expand, Fullscreen} from "@mui/icons-material";
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 
 function renderMobile(photos, selectedImage, onSelectImage) {
   const styles = {
@@ -51,8 +53,10 @@ function renderMobile(photos, selectedImage, onSelectImage) {
 export default function ProductGallery({product, ...props}) {
   const [selectedImage, setSelectedImage] = useState(null);
   const windowWidth = useResize();
+  const containerRef = useRef(null);
   const mainImgRef = useRef(null);
   const glassImgRef = useRef(null);
+  const [navigationButtons, setNavigationButtons] = useState(false);
   const [mouseIn, setMouseIn] = useState(false);
   const [mouse, setMouse] = useState({x: 0, y: 0, backgroundPosition: null});
   const [fullScreen, setFullScreen] = useState(false);
@@ -83,10 +87,18 @@ export default function ProductGallery({product, ...props}) {
     x = (x - window.pageXOffset);
     y = (y - window.pageYOffset);
 
-    if (x > img.width - (w / zoom)) {x = img.width - (w / zoom);}
-    if (x < w / zoom) {x = w / zoom;}
-    if (y > img.height - (h / zoom)) {y = img.height - (h / zoom);}
-    if (y < h / zoom) {y = h / zoom;}
+    if (x > img.width - (w / zoom)) {
+      x = img.width - (w / zoom);
+    }
+    if (x < w / zoom) {
+      x = w / zoom;
+    }
+    if (y > img.height - (h / zoom)) {
+      y = img.height - (h / zoom);
+    }
+    if (y < h / zoom) {
+      y = h / zoom;
+    }
 
 
     setMouse({
@@ -99,7 +111,6 @@ export default function ProductGallery({product, ...props}) {
         "-" + ((x * zoom) - w + 3) + "px " +
         "-" + ((y * zoom) - h + 3) + "px"
     });
-    // console.log(w, h);
   }
 
   function toggleFullScreen() {
@@ -111,84 +122,89 @@ export default function ProductGallery({product, ...props}) {
       setSelectedImage(0);
   }, [product]);
 
-  return selectedImage !== null && (/*
-    windowWidth <= 600
-      ? renderMobile(product.photos, selectedImage, handleSelectImage)
-      : */(
-      <div
-        className={
-          fullScreen ? 'gallery-wrapper full-screen' : 'gallery-wrapper'
-        }
-      >
+  return selectedImage !== null && (
+    <div
+      className={
+        fullScreen ? 'gallery-wrapper full-screen' : 'gallery-wrapper'
+      }
+    >
 
-        <ImgScroll
-          photos={product.photos} selected={selectedImage}
-          onSelect={handleSelectImage}
+      <ImgScroll
+        photos={product.photos} selected={selectedImage}
+        onSelect={handleSelectImage}
+      />
+
+      <Container
+        ref={containerRef}
+        style={{
+          position: 'relative',
+          height: '100%',
+          width: '100%',
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
+          padding: '10px',
+          maxWidth: '100vw'
+        }}
+
+        onMouseMove={mouseIn ? handleMouseMove : null}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
+        <IconButton
+          onClick={toggleFullScreen}
+          className='icon-top-right'
+        >
+          <Fullscreen />
+        </IconButton>
+
+        <IconButton
+          style={{
+            position: 'absolute',
+            zIndex: 10,
+            left: 0
+          }}
+          onMouseEnter={() => setNavigationButtons(true)}
+          onMouseLeave={() => setNavigationButtons(false)}
+        >
+          <KeyboardArrowLeftIcon />
+        </IconButton>
+
+        <IconButton
+          style={{
+            position: 'absolute',
+            zIndex: 10,
+            right: 0
+          }}
+          onMouseEnter={() => setNavigationButtons(true)}
+          onMouseLeave={() => setNavigationButtons(false)}
+        >
+          <KeyboardArrowRightIcon />
+        </IconButton>
+
+        <img
+          src={product.photos[selectedImage].url}
+          ref={mainImgRef}
+          alt=""
+          className="gallery-main"
         />
 
-
-
-        <Container
-          style={{
-            position: 'relative',
-            height: '100%',
-            width: '100%',
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-            padding: '10px',
-            maxWidth: '100vw'
-          }}
-          onMouseMove={mouseIn ? handleMouseMove : null}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-        >
-          <IconButton
-            onClick={toggleFullScreen}
-            className='icon-top-right'
-          >
-            <Fullscreen />
-          </IconButton>
-
-          <img
-            src={product.photos[selectedImage].url}
-            ref={mainImgRef}
-            alt=""
-            className="gallery-main"
+        {mouseIn && (
+          <div
+            ref={glassImgRef}
+            style={{
+              position: 'absolute',
+              height: '300px',
+              width: '300px',
+              borderRadius: '50%',
+              visibility: navigationButtons ? 'hidden' : 'visible',
+              ...mouse
+            }}
           />
-          {mouseIn && (
-            <div
-              ref={glassImgRef}
-              style={{
-                position: 'absolute',
-                height: '300px',
-                width: '300px',
-                borderRadius: '50%',
-                ...mouse
-              }}
-            />
-          )}
-
-        </Container>
-          {/*<Box*/}
-          {/*     sx={{*/}
-          {/*       height: '100%',*/}
-          {/*       position: 'relative',*/}
-          {/*       flexGrow: 1*/}
-          {/*       /*display: 'flex',*/}
-          {/*       justifyContent: 'center',*/}
-          {/*       alignItems: 'center',*/}
-          {/*     }}*/}
-          {/*>*/}
-
-          {/*  */}
-
-          {/*</Box>*/}
-
-      </div>
-    )
-
+        )}
+      </Container>
+    </div>
   );
 }
 
