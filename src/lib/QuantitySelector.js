@@ -31,7 +31,7 @@ export default function QuantitySelector({quantity, selected, onSelect}) {
 
 
   return (
-    <FormControl sx={{m: 1}}>
+    <FormControl sx={{m: 1}} >
       <InputLabel id="quantity">
         Quantity
       </InputLabel>

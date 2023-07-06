@@ -1,22 +1,34 @@
 import React, {useEffect} from "react";
+import CheckIcon from "@mui/icons-material/Check";
 
-export default function ProductStyle({style, selectedStyle, onSelectStyle}) {
-  function createThumbnail() {
-    return {
-      backgroundImage: `url(${style.photos[0].thumbnail_url})`,
-    };
-  }
+export default function ProductStyle({style, selected, onSelectStyle}) {
   return (
-    <>
-      <div
-        className={`
+    <div
+      className={`
           style_thumbnail
-          ${selectedStyle.style_id === style.style_id ? ' selected-style' : ''}
+          ${selected && ' selected-style'}
         `}
-        style={createThumbnail()}
-        onClick={() => onSelectStyle(style.style_id)}
-        data-testid={`style-thumbnail-${style.style_id}`}
-      />
-    </>
+      style={{
+        backgroundImage: `url(${style.photos[0].thumbnail_url})`,
+        position: 'relative'
+      }}
+      role="style-thumbnail"
+      onClick={() => onSelectStyle(style.style_id)}
+      data-testid={`style-thumbnail-${style.style_id}`}
+    >
+      {selected && (
+        <CheckIcon
+          style={{
+            position: 'absolute',
+            right: '0',
+            top: '0',
+            color: '#00ff84',
+            fontSize: '18px',
+            border: '1px solid rgb(0 255 132)',
+            borderRadius: '50%',
+          }}
+        ></CheckIcon>
+      )}
+    </div>
   )
 }
