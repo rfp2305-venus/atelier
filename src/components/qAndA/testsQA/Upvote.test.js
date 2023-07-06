@@ -1,5 +1,4 @@
 const { API_URL, API_KEY } = process.env;
-
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import axios from 'axios';
@@ -11,28 +10,32 @@ jest.mock('axios');
 
 describe('Upvote', () => {
 
-  test('increments helpfulness & disables appropriately on click', async() => {
+  beforeEach(() => {
 
-    // simulate successful res from axios.put
-    const res = { status: 200 };
+    render(
+      <Upvote
+        id={ 1 }
+        type="question"
+        helpfulness={ 0 }
+      />
+    );
+  });
 
-    // instruct mock func to return res (as resolved promise) when called
-    axios.put.mockResolvedValue(res);
+  test('component renders', () => {
 
-    // render Upvote component w/ necessary props
-    render(<Upvote id={ 1 } type="question" helpfulness={ 0 }/>);
+    expect(screen.getByText('Yes (0)')).toBeInTheDocument();
+  });
 
-    // query DOM elem by given text
+  test('increments helpfulness', () => {
+
+    axios.put.mockResolvedValue({ status: 200 });
+    // axios.put.mockImplementation(() => Promise.resolve());
+
     const upvoteButton = screen.getByText('Yes (0)');
-    expect(upvoteButton).toBeInTheDocument();
-
-    // trigger click event
     fireEvent.click(upvoteButton);
 
-    // wait for axios req before assertions
-    await waitFor(() => {
+    waitFor(() => {
 
-      // verify expected behaviors
       expect(axios.put).toHaveBeenCalledTimes(1);
 
       expect(axios.put).toHaveBeenCalledWith(
@@ -42,6 +45,32 @@ describe('Upvote', () => {
       );
 
       expect(screen.getByText('Yes (1)')).toBeInTheDocument();
+    });
+  });
+
+  test('disables on click', () => {
+
+    const upvoteButton = screen.getByText('Yes (0)');
+    fireEvent.click(upvoteButton);
+
+    waitFor(() => {
+
+      expect(reportButton).toBeDisabled();
+    });
+  });
+
+  test('handles error case in axios req', () => {
+
+    axios.put.mockRejectedValue(new Error());
+
+    const consoleErrSpy = jest.spyOn(console, 'error');
+
+    const upvoteButton = screen.getByText('Yes (0)');
+    fireEvent.click(upvoteButton);
+
+    waitFor(() => {
+
+      expect(consoleErrSpy).toHaveBeenCalledTimes(1);
     });
   });
 });
