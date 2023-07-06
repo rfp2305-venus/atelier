@@ -71,16 +71,6 @@ describe('Upvote', () => {
     waitFor(() => {
 
       expect(consoleErrSpy).toHaveBeenCalledTimes(1);
-
-      /*
-      expect(axios.put).toHaveBeenCalledTimes(1);
-
-      expect(axios.put).toHaveBeenCalledWith(
-        `${ API_URL }/qa/${ 'question' }s/${ 1 }/report`,
-        { reported: true },
-        { headers: { Authorization: API_KEY } }
-      );
-      */
     });
   });
 });

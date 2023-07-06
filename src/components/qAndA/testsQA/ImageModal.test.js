@@ -8,10 +8,11 @@ describe('ImageModal', () => {
   const handleClose = jest.fn();
 
   beforeEach(() => {
+
     render(
       <ImageModal
         open={ true }
-        onClose={ handleClose }
+        handleClose={ handleClose }
         imageURL={ 'test-image.jpg' }
       />
     );
@@ -21,6 +22,14 @@ describe('ImageModal', () => {
 
     const img = screen.getByRole('img', { src: 'test-image.jpg' });
     expect(img).toBeInTheDocument();
+  });
+
+  test('calls handleClose when close button clicked', () => {
+
+    const closeButton = screen.getByLabelText('Close');
+    fireEvent.click(closeButton);
+
+    expect(handleClose).toHaveBeenCalledTimes(1);
   });
 
   /*

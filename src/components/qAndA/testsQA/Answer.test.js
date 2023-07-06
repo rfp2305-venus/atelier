@@ -6,6 +6,7 @@ import Answer from '../Answer';
 describe('Answer', () => {
 
   beforeEach(() => {
+
     const mockAnswer = {
       id: 1,
       body: 'love selling',
