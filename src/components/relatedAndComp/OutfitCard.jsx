@@ -8,6 +8,7 @@ import { removeArticle } from '../../state/outfit/actions';
 import RelStarRating from './RelStarRating';
 
 
+
 export default function OutfitCard(props) {
   let item = props;
   const dispatch = useDispatch();

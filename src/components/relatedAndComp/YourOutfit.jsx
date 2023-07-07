@@ -9,11 +9,13 @@ import AddToOutfit from './AddToOutfit';
 import { Box, Typography } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
 import Carousel from 'react-material-ui-carousel';
+// import Carousel from 'react-multi-carousel';
+// import 'react-multi-carousel/lib/styles.css';
 
 export default function YourOutfit() {
 
   const outfit = useSelector((state) => state.article);
-  // let outfitList = outfit.map((article) => <OutfitCard article={article} key={article.id}/>);
+  let outfitList = outfit.map((article) => <OutfitCard article={article} key={article.id}/>);
 
   const sliderItems = outfit.length > 4 ? 4 : outfit.length;
   const items = [];
@@ -26,6 +28,8 @@ export default function YourOutfit() {
       );
     }
   }
+
+
 
   return outfit[0] ? (
     <>
