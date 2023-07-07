@@ -46,7 +46,7 @@ export async function fetchProduct(productId) {
 }
 
 export async function fetchProducts() {
-  const endpoint = '/products?count=10';
+  const endpoint = '/products?count=25';
   try {
     return executeRequest(endpoint, 'get')
 
