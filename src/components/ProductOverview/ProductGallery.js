@@ -89,6 +89,7 @@ export default function ProductGallery({product, ...props}) {
           ? 'gallery-wrapper full-screen'
           : 'gallery-wrapper'
       }
+      role="gallery-wrapper"
     >
 
       <ImgScroll
@@ -106,12 +107,14 @@ export default function ProductGallery({product, ...props}) {
         <IconButton
           onClick={toggleFullScreen}
           className='icon-top-right'
+          role="enter-fullscreen-btn"
         >
           <Fullscreen />
         </IconButton>
 
         <IconButton
           className="gallery-navigator-btn"
+          role="select-last-btn"
           style={{left: 0}}
           onMouseEnter={() => setNavigationButtons(true)}
           onMouseLeave={() => setNavigationButtons(false)}
@@ -123,6 +126,7 @@ export default function ProductGallery({product, ...props}) {
 
         <IconButton
           className="gallery-navigator-btn"
+          role="select-next-btn"
           style={{right: 0}}
           onMouseEnter={() => setNavigationButtons(true)}
           onMouseLeave={() => setNavigationButtons(false)}
