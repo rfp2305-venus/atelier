@@ -29,7 +29,7 @@ export default function SeeMore({ type, aLength, length, setLength, isExpanded, 
         transform: 'translateX(-50%)',
         zIndex: 1,
         backgroundColor: 'white'
-      }) : ({ marginTop: '20px' })
+      }) : ({ marginTop: '15px' })
     }>
       {
         (type === 'question')

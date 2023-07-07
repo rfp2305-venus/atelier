@@ -31,14 +31,4 @@ describe('ImageModal', () => {
 
     expect(handleClose).toHaveBeenCalledTimes(1);
   });
-
-  /*
-  test('calls handleClose when close button clicked', () => {
-
-    const closeButton = screen.getByRole('button');
-    fireEvent.click(closeButton);
-
-    expect(handleClose).toHaveBeenCalled();
-  });
-  */
 });

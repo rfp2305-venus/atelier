@@ -1,7 +1,8 @@
 const { API_URL, API_KEY } = process.env;
+import axios from 'axios';
+
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import axios from 'axios';
 
 import Report from '../Report';
 
@@ -71,16 +72,6 @@ describe('Report', () => {
     waitFor(() => {
 
       expect(consoleErrSpy).toHaveBeenCalledTimes(1);
-
-      /*
-      expect(axios.put).toHaveBeenCalledTimes(1);
-
-      expect(axios.put).toHaveBeenCalledWith(
-        `${ API_URL }/qa/${ 'question' }s/${ 1 }/report`,
-        { reported: true },
-        { headers: { Authorization: API_KEY } }
-      );
-      */
     });
   });
 });

@@ -58,9 +58,9 @@ describe('QuestionsList', () => {
       </Provider>
     );
 
-    const elemsQ1 = screen.queryAllByText('Question 1', { exact: false }); // prefer over regex
+    const q1 = screen.getAllByText('Question 1');
+    expect(q1.length).toBe(2);
 
-    expect(elemsQ1.length).toBeGreaterThan(0); // multiple elems
     expect(screen.queryByText('Question 2')).toBeNull();
   });
 });
