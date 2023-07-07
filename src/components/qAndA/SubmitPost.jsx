@@ -21,6 +21,8 @@ export default function SubmitPost({ id, body, type }) {
   const [ emailFilled, setEmailFilled ] = useState(true);
   const [ postFilled, setPostFilled ] = useState(true);
 
+  const [ photos, setPhotos ] = useState([]);
+
   const reset = () => {
     setUser('');
     setEmail('');
@@ -53,8 +55,6 @@ export default function SubmitPost({ id, body, type }) {
 
     return userFilled && emailFilled && postFilled;
   };
-
-  const [ photos, setPhotos ] = useState([]);
 
   const inputPhotos = (e) => {
     // convert files to array & limit to (5)
