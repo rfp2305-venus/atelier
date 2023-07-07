@@ -15,7 +15,11 @@ export default function QuantitySelector({quantity, selected, onSelect}) {
 
   function createQuantityItems() {
     const items = [];
-    for(let x = 1; x <= quantity; x++) {
+    const max = quantity > 15
+      ? 15
+      : quantity;
+
+    for(let x = 1; x <= max; x++) {
       items.push(
         <MenuItem
           key={x}

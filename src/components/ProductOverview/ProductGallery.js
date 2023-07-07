@@ -1,9 +1,10 @@
-
 import React, {useEffect, useRef, useState} from "react";
 import useResize from "../../lib/useResize";
-import {Box, Container, Grid, IconButton, Paper} from "@mui/material";
+
 import ImgScroll from "../../lib/ImgScroll";
-import {Expand, Fullscreen} from "@mui/icons-material";
+import Container from '@mui/material/Container';
+import IconButton from '@mui/material/IconButton';
+import Fullscreen from '@mui/icons-material/Fullscreen'
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 

@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 import CheckIcon from "@mui/icons-material/Check";
 
 export default function ProductStyle({style, selected, onSelectStyle}) {

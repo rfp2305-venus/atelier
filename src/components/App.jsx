@@ -10,9 +10,8 @@ import WrapQA from './qAndA/WrapQA';
 import Nav from "../lib/Nav";
 import {handleFetchProduct} from "../state/productDetail/actions";
 import ReviewsList from './Ratings_Reviews/ReviewsList';
-import {Box, Container, IconButton} from "@mui/material";
-import {boxSizing} from "@mui/system";
-import {Menu} from "@mui/icons-material";
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
 
 export default function App() {
   const dispatch = useDispatch();

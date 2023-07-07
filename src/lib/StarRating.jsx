@@ -23,7 +23,6 @@ export default function StarRating() {
   const [stars, setStars] = useState(null);
   const {rating} = useSelector(({productDetail}) => productDetail.product);
 
-
   useEffect(() => {
     if (!rating) {
       return;
@@ -50,8 +49,14 @@ export default function StarRating() {
       <div style={{height: '15px'}}>
         {stars && stars.map((star, indx) => renderStar(star, indx))}
       </div>
-      <Button variant='text' sx={{color: 'black'}}>
-        Read All Ratings
+      <Button variant='text' sx={{color: 'black'}} onClick={() => document.getElementById('ratingsReviews').scrollIntoView()}>
+        Read {
+          Number(rating.ratings[1]) +
+          Number(rating.ratings[2]) +
+          Number(rating.ratings[3]) +
+          Number(rating.ratings[4]) +
+          Number(rating.ratings[5])
+        } Ratings
       </Button>
     </Stack>
   );

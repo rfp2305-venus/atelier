@@ -6,30 +6,45 @@ import useResize from "../../lib/useResize";
 import StarRating from "../../lib/StarRating";
 import ProductStyles from "./ProductStyles";
 import SizeSelector from "../../lib/SizeSelector";
-import {
-  Button, Container, Divider,
-  FormControl,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Typography
-} from "@mui/material";
+
+import Button from '@mui/material/Button';
+import Container from '@mui/material/Container';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import Grid from '@mui/material/Grid';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Typography from '@mui/material/Typography';
 import QuantitySelector from "../../lib/QuantitySelector";
-import {Check, Favorite, FavoriteBorder} from "@mui/icons-material";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
+import Check from '@mui/icons-material/Check';
+import Favorite from '@mui/icons-material/Favorite';
+import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
+import {handleAddProductToCart} from "../../state/Cart/actions";
 
 
 export default function ProductOverview() {
+  const dispatch = useDispatch();
   const productDetail = useSelector((state) => state.productDetail);
   const [selectedStyle, setSelectedStyle] = useState(null);
   const [favorite, setFavorite] = useState(false);
   const [size, setSize] = useState('');
   const [quantity, setQuantity] = useState(1);
   const windowWidth = useResize();
+
+  function handleAddToCart() {
+    const product = {
+      product_id: productDetail.product.id,
+      name: productDetail.product.name,
+      style_id: selectedStyle,
+      size: size,
+      quantity: quantity
+    };
+    dispatch(handleAddProductToCart(product));
+  }
 
   function handleSelectStyle(styleId) {
     for(let i = 0; i < productDetail.product.styles.length; i++) {
@@ -52,6 +67,7 @@ export default function ProductOverview() {
       for(let i = 0; i < productDetail.product.styles.length; i++) {
         if(productDetail.product.styles[i]['default?']) {
           setSelectedStyle(productDetail.product.styles[i]);
+          setSize('');
           return;
         }
       }
@@ -80,7 +96,7 @@ export default function ProductOverview() {
             <Typography>
               {productDetail.product.category}
             </Typography>
-            <Typography>
+            <Typography variant='h4'>
               {productDetail.product.name}
             </Typography>
             <Typography sx={{color: selectedStyle.sale_price ? 'green' : 'initial'}}>
@@ -121,6 +137,7 @@ export default function ProductOverview() {
               <Button
                 variant="outlined"
                 sx={{flexGrow: 1}}
+                onClick={handleAddToCart}
               >
                 Add To Cart
               </Button>
@@ -152,7 +169,7 @@ export default function ProductOverview() {
 
           <Stack direction='row' spacing={2}>
             <Box>
-              <Typography>
+              <Typography variant='h6'>
                 {productDetail.product.slogan}
               </Typography>
 
@@ -162,7 +179,9 @@ export default function ProductOverview() {
             </Box>
             <Divider orientation="vertical" variant="middle" flexItem />
             <List>
-              {productDetail.product.features.map((feat) => (
+              {productDetail.product.features.filter((feat) => (
+                !!feat.value
+              )).map((feat) => (
                 <ListItem key={'productFeature' + feat.feature}>
                   <ListItemIcon>
                     <Check />
