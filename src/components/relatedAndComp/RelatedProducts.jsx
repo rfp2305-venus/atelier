@@ -1,6 +1,7 @@
 import RelatedCard from './RelatedCard.jsx';
 import { Typography, Card, Grid } from '@mui/material';
-import Carousel from 'react-material-ui-carousel';
+
+import Carousel
 
 export default function RelatedProducts({ relatedProducts }) {
 
