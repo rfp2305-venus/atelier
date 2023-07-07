@@ -12,11 +12,11 @@ export default function QuestionsList({ questions, length }) {
       maxHeight: '100vh',
       // overflowY: 'auto',
       overflow: 'hidden', // hides overflow beyond fixed height
-      '&:hover': { overflow: 'auto' }, // NOTE: scrollable on hover! **
+      '&:hover': { overflow: 'auto' } // NOTE: scrollable on hover! **
     }}>
       { (questions.length > 0) ? (
         // fixed border —> bottommost limit
-        <Box sx={{ borderBottom: '0.5 px solid' }}>
+        <Box sx={{ border: '0.5 px solid' }}>
           { questions
             .slice(0, length)
             .map(({ question_id, question_body, question_date, asker_name, question_helpfulness, reported }) => (
