@@ -1,8 +1,9 @@
 const { API_URL, API_KEY, /* UNSPLASH_URL, UNSPLASH_KEY */} = process.env;
+import axios from 'axios';
+
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Box, Button, Typography, TextField } from '@mui/material';
-import axios from 'axios';
 
 export default function SubmitPost({ id, body, type }) {
 
@@ -10,20 +11,17 @@ export default function SubmitPost({ id, body, type }) {
 
   const [ open, setOpen ] = useState(false);
 
-  // user inputs & validation
+  // user inputs
   const [ user, setUser ] = useState('');
-  const [ userFilled, setUserFilled ] = useState(true);
-
   const [ email, setEmail ] = useState('');
-  const [ emailFilled, setEmailFilled ] = useState(true);
-
   const [ post, setPost ] = useState('');
+
+  // validation
+  const [ userFilled, setUserFilled ] = useState(true);
+  const [ emailFilled, setEmailFilled ] = useState(true);
   const [ postFilled, setPostFilled ] = useState(true);
 
-  const [ photos, setPhotos ] = useState([]);
-
   const reset = () => {
-    // reset to initial states
     setUser('');
     setEmail('');
     setPost('');
@@ -55,6 +53,8 @@ export default function SubmitPost({ id, body, type }) {
 
     return userFilled && emailFilled && postFilled;
   };
+
+  const [ photos, setPhotos ] = useState([]);
 
   const inputPhotos = (e) => {
     // convert files to array & limit to (5)
@@ -146,11 +146,9 @@ export default function SubmitPost({ id, body, type }) {
       let endpoint;
 
       if (type === 'question') {
-        // new questions
-        endpoint = `${ API_URL }/qa/${ type }s`;
+        endpoint = `${ API_URL }/qa/${ type }s`; // new questions
       } else {
-        // new answers
-        endpoint = `${ API_URL }/qa/questions/${ id }/${ type }s`;
+        endpoint = `${ API_URL }/qa/questions/${ id }/${ type }s`; // new answers
       }
 
       // POST req w/ form data

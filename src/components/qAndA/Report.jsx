@@ -1,7 +1,8 @@
 const { API_URL, API_KEY } = process.env;
+import axios from 'axios';
+
 import React, { useState } from 'react';
 import { Button } from '@mui/material';
-import axios from 'axios';
 
 export default function Report({ id, type, reported }) {
 

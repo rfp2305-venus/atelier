@@ -1,9 +1,10 @@
 const { API_URL, API_KEY } = process.env;
+import axios from 'axios';
+
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
-import axios from 'axios';
 
 import SubmitPost from '../SubmitPost';
 
