@@ -35,7 +35,7 @@ describe('related Reducer', () => {
 
   it('should fetch comparison product', async () => {
     const store = mockStore ({comparisonDetail: {}});
-    const action = await handleFetchComparisonProduct(40344);
+    const action = await handleFetchComparisonProduct(1);
     expect(action).toHaveLength(1);
   });
 });

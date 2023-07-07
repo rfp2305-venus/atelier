@@ -211,7 +211,7 @@ export default function SubmitPost({ id, body, type }) {
 
           <form onSubmit={ handleSubmit }>
             <Typography variant="body1">
-              <strong>Your nickname: **</strong>
+              <strong data-testid='your-nickname'>Your nickname: **</strong>
             </Typography>
             <TextField
               aria-label="name-input"
@@ -231,7 +231,7 @@ export default function SubmitPost({ id, body, type }) {
             </Typography>
 
             <Typography variant="body1">
-              <strong>Your email: **</strong>
+              <strong data-testid='your-email'>Your email: **</strong>
             </Typography>
             <TextField
               aria-label="email-input"
@@ -252,7 +252,7 @@ export default function SubmitPost({ id, body, type }) {
             </Typography>
 
             <Typography variant="body1">
-              <strong>Your { type }: **</strong>
+              <strong data-testid='your-question'>Your { type }: **</strong>
             </Typography>
             <TextField
               aria-label="post-input"

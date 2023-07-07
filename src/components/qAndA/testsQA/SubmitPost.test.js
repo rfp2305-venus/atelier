@@ -68,6 +68,14 @@ describe('SubmitPost', () => {
     // const email = screen.getByLabelText('Your email:');
     // const post = screen.getByLabelText('Your question:');
 
+  //vicky's experimentation
+    // const user = screen.queryByTestId('your-nickname');
+    // expect(screen.queryByTestId('your-nickname')).toBeTruthy();
+    // const email = screen.queryByTestId('your-email');
+    // expect(screen.queryByTestId('your-email')).toBeTruthy();
+    // const post = screen.queryByTestId('your-question');
+    // expect(screen.queryByTestId('your-question')).toBeTruthy();
+
     // const user = screen.getByRole('textbox', { name: /inputUser/ });
     // const email = screen.getByRole('textbox', { name: /Your email/ });
     // const post = screen.getByRole('textbox', { name: /Your question/ });

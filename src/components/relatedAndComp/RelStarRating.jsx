@@ -23,7 +23,6 @@ export function calculateRelAvg(ratings) {
 }
 
 export default function RelStarRating({productID}) {
-  // console.log('productID in relStarRating', productID);
   const [stars, setStars] = useState(null);
   const [ ratings, setRatings ] = useState(null);
 
@@ -58,7 +57,6 @@ export default function RelStarRating({productID}) {
         tmpStars.push(0);
       }
     }
-
     setStars(tmpStars);
   }, [ratings]);
 
