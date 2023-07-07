@@ -50,6 +50,7 @@ export default function ImgScroll({photos, selected, onSelect}) {
             style={{
               backgroundImage: `url(${x.thumbnail_url})`,
             }}
+            data-testid={`img-scroll-img`}
           />
         ))}
       </Box>
