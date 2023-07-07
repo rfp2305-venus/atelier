@@ -73,11 +73,11 @@ function renderStar(fillPercent, id) {
         <linearGradient id={`grad${id}`}>
           <stop
             offset="0%"
-            stopColor="black"
+            stopColor="#ffe700"
             id="stop747" />
           <stop
             offset={`${fillPercent}%`}
-            stopColor="black"
+            stopColor="#ffe700"
             id="stop749" />
           <stop
             offset={`${fillPercent}%`}
