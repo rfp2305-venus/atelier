@@ -52,6 +52,22 @@ describe('SubmitPost', () => {
     expect(inputFields.length).toBe(3);
   });
 
+  test('displays validation errors for empty fields', () => {
+
+    axios.mockResolvedValue({ status: 201 });
+
+    fireEvent.click(screen.getByText('Submit question'));
+
+    waitFor(() => {
+
+      expect(axios).not.toHaveBeenCalled();
+
+      expect(screen.getByText('Name, please.')).toBeInTheDocument();
+      expect(screen.getByText('Promise not to spam you.')).toBeInTheDocument();
+      expect(screen.getByText('Do you have a question?')).toBeInTheDocument();
+    });
+  });
+
   test('submits question w/ valid inputs', () => {
 
     axios.mockResolvedValue({ status: 201 });
@@ -59,10 +75,6 @@ describe('SubmitPost', () => {
     const user = screen.getByTestId('name-input');
     const email = screen.getByTestId('email-input');
     const post = screen.getByTestId('post-input');
-
-    // fireEvent.change(user, { target: { value: 'Alex' } });
-    // fireEvent.change(email, { target: { value: 'alex@coolguy.com' } });
-    // fireEvent.change(post, { target: { value: 'yo, you up?' } });
 
     /*
     user.dispatchEvent(
