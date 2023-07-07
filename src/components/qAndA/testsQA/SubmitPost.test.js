@@ -55,10 +55,14 @@ describe('SubmitPost', () => {
     expect(screen.getByText('Add answer')).toBeInTheDocument();
   });
 
-  /*
+  /* (COULD NOT GET QUERIES TO WORK)
   test('submits question w/ valid inputs', () => {
 
     fireEvent.click(screen.getByText('Add question'));
+
+    // const user = screen.getPlaceholderText('jackson00!');
+    // const email = screen.getPlaceholderText('spongebob69@snailmail.io');
+    // const post = screen.getPlaceholderText('What\'s the deal with airline food?');
 
     // const user = screen.getByLabelText('Your nickname:');
     // const email = screen.getByLabelText('Your email:');
@@ -67,10 +71,6 @@ describe('SubmitPost', () => {
     // const user = screen.getByRole('textbox', { name: /inputUser/ });
     // const email = screen.getByRole('textbox', { name: /Your email/ });
     // const post = screen.getByRole('textbox', { name: /Your question/ });
-
-    // const user = screen.getPlaceholderText('jackson00!');
-    // const email = screen.getPlaceholderText('spongebob69@snailmail.io');
-    // const post = screen.getPlaceholderText('What\'s the deal with airline food?');
 
     const submitButton = screen.getByText('Submit question');
     expect(submitButton).toBeInTheDocument();
