@@ -1,12 +1,14 @@
 const { API_URL, API_KEY } = process.env;
+import axios from 'axios';
+
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Typography, Box, useTheme } from '@mui/material';
+
 import Search from './Search';
 import QuestionsList from './QuestionsList';
 import SeeMore from './SeeMore';
 import SubmitPost from './SubmitPost';
-import axios from 'axios';
 
 export default function WrapQA() {
 
@@ -15,11 +17,9 @@ export default function WrapQA() {
   const [ questions, setQuestions ] = useState([]);
   const [ length, setLength ] = useState(4);
 
-  const [ search, setSearch ] = useState('');
-
   const fetchQuestions = (page = 1, count = 20) => {
 
-    axios
+    return axios
       .get(`${API_URL}/qa/questions`, {
         headers: { Authorization: API_KEY },
         params: {
@@ -56,6 +56,8 @@ export default function WrapQA() {
   });
   */
 
+  const [ search, setSearch ] = useState('');
+
   let searchResults = questions;
 
   if (search.length >= 3) {
@@ -66,13 +68,7 @@ export default function WrapQA() {
   }
 
   return (
-    <Box sx={{
-      width: '800px',
-      marginTop: '150px',
-      marginBottom: '150px',
-      marginLeft: 'auto',
-      marginRight: 'auto'
-    }}>
+    <Box sx={{ width: '800px', margin: '150px auto 150px auto' }}>
       <Typography
         variant="h3"
         sx={{ fontFamily: 'Roboto', fontWeight: 'bold' }}
@@ -91,6 +87,7 @@ export default function WrapQA() {
         <SeeMore type="question" length={ length } setLength={ setLength } />
       ) }
 
+      {/* button to add questions */}
       { product && <SubmitPost type="question" /> }
     </Box>
   );
