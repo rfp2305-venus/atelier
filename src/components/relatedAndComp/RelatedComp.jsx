@@ -8,8 +8,7 @@ import YourOutfit from './YourOutfit.jsx';
 import './relatedStyles.css';
 import axios from 'axios';
 //REDUX
-import { useSelector, useDispatch } from 'react-redux';
-// import aSimpleAction from '../../state/related/actions.js';
+import { useSelector } from 'react-redux';
 
 
 export default function RelatedComp() {

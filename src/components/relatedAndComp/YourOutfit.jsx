@@ -3,7 +3,6 @@ const {API_URL, API_KEY} = process.env;
 
 import react from 'react';
 import axios from 'axios';
-import { useState, useEffect } from 'react';
 
 import OutfitCard from './OutfitCard';
 import AddToOutfit from './AddToOutfit';

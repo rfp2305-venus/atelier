@@ -1,12 +1,12 @@
 import RelatedCard from './RelatedCard.jsx';
-import { Box, Typography, Card, Grid } from '@mui/material';
+import { Typography, Card, Grid } from '@mui/material';
 import Carousel from 'react-material-ui-carousel';
 
 export default function RelatedProducts({ relatedProducts }) {
 
   let cardList = relatedProducts.map((productID)=> <RelatedCard productID={productID} key={productID}/>);
-
-  const sliderItems = relatedProducts.length > 3 ? 3 : relatedProducts.length;
+  const sliderItems = 2;
+  // const sliderItems = (relatedProducts.length > 3) ? 3 : relatedProducts.length;
   // console.log('sliderItems', sliderItems);
   const items = [];
 
