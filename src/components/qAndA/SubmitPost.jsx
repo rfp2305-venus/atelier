@@ -1,8 +1,9 @@
 const { API_URL, API_KEY, /* UNSPLASH_URL, UNSPLASH_KEY */} = process.env;
+import axios from 'axios';
+
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Box, Button, Typography, TextField } from '@mui/material';
-import axios from 'axios';
 
 export default function SubmitPost({ id, body, type }) {
 
@@ -10,20 +11,19 @@ export default function SubmitPost({ id, body, type }) {
 
   const [ open, setOpen ] = useState(false);
 
-  // user inputs & validation
+  // user inputs
   const [ user, setUser ] = useState('');
-  const [ userFilled, setUserFilled ] = useState(true);
-
   const [ email, setEmail ] = useState('');
-  const [ emailFilled, setEmailFilled ] = useState(true);
-
   const [ post, setPost ] = useState('');
+
+  // validation
+  const [ userFilled, setUserFilled ] = useState(true);
+  const [ emailFilled, setEmailFilled ] = useState(true);
   const [ postFilled, setPostFilled ] = useState(true);
 
   const [ photos, setPhotos ] = useState([]);
 
   const reset = () => {
-    // reset to initial states
     setUser('');
     setEmail('');
     setPost('');
@@ -146,11 +146,9 @@ export default function SubmitPost({ id, body, type }) {
       let endpoint;
 
       if (type === 'question') {
-        // new questions
-        endpoint = `${ API_URL }/qa/${ type }s`;
+        endpoint = `${ API_URL }/qa/${ type }s`; // new questions
       } else {
-        // new answers
-        endpoint = `${ API_URL }/qa/questions/${ id }/${ type }s`;
+        endpoint = `${ API_URL }/qa/questions/${ id }/${ type }s`; // new answers
       }
 
       // POST req w/ form data
@@ -214,14 +212,13 @@ export default function SubmitPost({ id, body, type }) {
               <strong>Your nickname: **</strong>
             </Typography>
             <TextField
-              aria-label="name-input"
+              data-testid="name-input"
               placeholder="jackson00!"
               value={ user }
               onChange={ (e) => setUser(e.target.value) }
               // NOTE: useful props below!
               error={ !userFilled }
               helperText={ (!userFilled) ? ('Name, please.') : (null) }
-              // required
               inputProps={{ maxLength: 60 }}
             />
 
@@ -234,14 +231,13 @@ export default function SubmitPost({ id, body, type }) {
               <strong>Your email: **</strong>
             </Typography>
             <TextField
-              aria-label="email-input"
+              data-testid="email-input"
               placeholder="spongebob69@snailmail.io"
               value={ email }
               onChange={ (e) => setEmail(e.target.value) }
               error={ !emailFilled }
               helperText={ (!emailFilled) ? ('Promise not to spam you.') : (null) }
               type="email" // enforces email format validation
-              // required
               fullWidth
               inputProps={{ maxLength: 60 }}
             />
@@ -255,7 +251,7 @@ export default function SubmitPost({ id, body, type }) {
               <strong>Your { type }: **</strong>
             </Typography>
             <TextField
-              aria-label="post-input"
+              data-testid="post-input"
               placeholder={
                 (type === 'question')
                   ? ('What\'s the deal with airline food?')
@@ -271,7 +267,6 @@ export default function SubmitPost({ id, body, type }) {
                   ? ('a question')
                   : ('an answer') }?`)
                 : (null) }
-              // required
               inputProps={{ maxLength: 1000 }}
             />
           </form>
@@ -309,10 +304,6 @@ export default function SubmitPost({ id, body, type }) {
           <Button onClick={ reset }>
             Cancel
           </Button>
-
-          {/* <Button onClick={ uploadPhotos }>
-            Upload Photos
-          </Button> */}
 
           <Button type="submit" onClick={ handleSubmit }>
             Submit { type }

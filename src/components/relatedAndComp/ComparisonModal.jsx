@@ -1,8 +1,8 @@
 /* eslint-disable func-style */
 import React from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import axios from 'axios';
-import { Card, CardMedia, CardContent, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, IconButton, Typography, TableContainer, Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
+import { Card, CardMedia, Dialog, DialogTitle, DialogContent, DialogActions, IconButton, Typography, TableContainer, Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
 import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined';
 import CheckIcon from '@mui/icons-material/Check';
 //REDUX

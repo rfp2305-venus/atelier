@@ -1,11 +1,13 @@
 const { API_URL, API_KEY } = process.env;
+import axios from 'axios';
+
 import React, { useState, useEffect } from 'react';
 import { Box, Typography } from '@mui/material';
+
 import Upvote from './Upvote';
 import Report from './Report';
 import AnswersList from './AnswersList';
 import SubmitPost from './SubmitPost';
-import axios from 'axios';
 
 export default function Question({ id, body, date, user, helpfulness, reported }) {
 
@@ -15,7 +17,7 @@ export default function Question({ id, body, date, user, helpfulness, reported }
 
   const fetchAnswers = (page = 1, count = 20) => {
 
-    axios
+    return axios
       .get(`${ API_URL }/qa/questions/${ id }/answers`, {
         headers: { Authorization: API_KEY },
         params: {
@@ -54,8 +56,7 @@ export default function Question({ id, body, date, user, helpfulness, reported }
 
   useEffect(() => {
     fetchAnswers();
-  }, [/* product, id */]);
-  // does not seem to resolve multiple API calls —> backlog
+  }, []);
 
   /*
   // check if answers fetched correctly
@@ -86,6 +87,8 @@ export default function Question({ id, body, date, user, helpfulness, reported }
         isExpanded={ isExpanded }
         setExpanded={ setExpanded }
       />
+
+      {/* button to add answers */}
       <SubmitPost id={ id } body={ body } type="answer" />
     </Box>
   );

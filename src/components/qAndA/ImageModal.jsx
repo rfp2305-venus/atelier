@@ -12,7 +12,6 @@ export default function ImageModal({ open, handleClose, imageURL }) {
           onClick={ handleClose }
           sx={{ position: 'absolute', top: 1, right: 8 }}
           aria-label="Close" // added for easy ref in test suite
-          role="button"
         >
           <CloseIcon />
         </IconButton>

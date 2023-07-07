@@ -27,7 +27,7 @@ export default function ProductGallery({product, ...props}) {
 
   function handleMouseEnter(x) {
     x.preventDefault();
-    console.log(x);
+    // console.log(x);
     setMouseIn(true);
   }
 
