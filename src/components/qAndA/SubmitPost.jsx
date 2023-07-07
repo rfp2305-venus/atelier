@@ -211,17 +211,16 @@ export default function SubmitPost({ id, body, type }) {
 
           <form onSubmit={ handleSubmit }>
             <Typography variant="body1">
-              <strong data-testid='your-nickname'>Your nickname: **</strong>
+              <strong>Your nickname: **</strong>
             </Typography>
             <TextField
-              aria-label="name-input"
+              data-testid="name-input"
               placeholder="jackson00!"
               value={ user }
               onChange={ (e) => setUser(e.target.value) }
               // NOTE: useful props below!
               error={ !userFilled }
               helperText={ (!userFilled) ? ('Name, please.') : (null) }
-              // required
               inputProps={{ maxLength: 60 }}
             />
 
@@ -231,17 +230,16 @@ export default function SubmitPost({ id, body, type }) {
             </Typography>
 
             <Typography variant="body1">
-              <strong data-testid='your-email'>Your email: **</strong>
+              <strong>Your email: **</strong>
             </Typography>
             <TextField
-              aria-label="email-input"
+              data-testid="email-input"
               placeholder="spongebob69@snailmail.io"
               value={ email }
               onChange={ (e) => setEmail(e.target.value) }
               error={ !emailFilled }
               helperText={ (!emailFilled) ? ('Promise not to spam you.') : (null) }
               type="email" // enforces email format validation
-              // required
               fullWidth
               inputProps={{ maxLength: 60 }}
             />
@@ -252,10 +250,10 @@ export default function SubmitPost({ id, body, type }) {
             </Typography>
 
             <Typography variant="body1">
-              <strong data-testid='your-question'>Your { type }: **</strong>
+              <strong>Your { type }: **</strong>
             </Typography>
             <TextField
-              aria-label="post-input"
+              data-testid="post-input"
               placeholder={
                 (type === 'question')
                   ? ('What\'s the deal with airline food?')
@@ -271,7 +269,6 @@ export default function SubmitPost({ id, body, type }) {
                   ? ('a question')
                   : ('an answer') }?`)
                 : (null) }
-              // required
               inputProps={{ maxLength: 1000 }}
             />
           </form>
@@ -309,10 +306,6 @@ export default function SubmitPost({ id, body, type }) {
           <Button onClick={ reset }>
             Cancel
           </Button>
-
-          {/* <Button onClick={ uploadPhotos }>
-            Upload Photos
-          </Button> */}
 
           <Button type="submit" onClick={ handleSubmit }>
             Submit { type }
