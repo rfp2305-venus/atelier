@@ -6,6 +6,10 @@ import axios from 'axios';
 
 jest.mock('axios');
 
+async function clickToOpenComparisonModal() {
+  fireEvent.mouseDown(screen.getByTestId('comparison-modal'))
+}
+
 describe('RelatedCard', () => {
 
   it('renders something that isn\'t null', () => {
@@ -13,7 +17,7 @@ describe('RelatedCard', () => {
   });
 
   it('renders the cards if there is a related product', () => {
-    const mockProductID = 40345;
+    const mockProductID = 1;
     renderWithContext(<RelatedCard {...mockProductID} />);
     expect(screen.queryByTestId('related-card')).toBeTruthy();
   });

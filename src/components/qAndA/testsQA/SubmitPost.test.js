@@ -54,7 +54,7 @@ describe('SubmitPost', () => {
     expect(screen.getByText('Add answer')).toBeInTheDocument();
   });
 
-  /*
+
   test('submits question w/ valid inputs', () => {
 
     fireEvent.click(screen.getByText('Add question'));
@@ -62,6 +62,15 @@ describe('SubmitPost', () => {
     // const user = screen.getByLabelText('Your nickname:');
     // const email = screen.getByLabelText('Your email:');
     // const post = screen.getByLabelText('Your question:');
+
+  //vicky's experimentation
+    // const user = screen.queryByTestId('your-nickname');
+    // expect(screen.queryByTestId('your-nickname')).toBeTruthy();
+    // const email = screen.queryByTestId('your-email');
+    // expect(screen.queryByTestId('your-email')).toBeTruthy();
+    // const post = screen.queryByTestId('your-question');
+    // expect(screen.queryByTestId('your-question')).toBeTruthy();
+
 
     // const user = screen.getByRole('textbox', { name: /inputUser/ });
     // const email = screen.getByRole('textbox', { name: /Your email/ });
@@ -84,5 +93,6 @@ describe('SubmitPost', () => {
 
     // expect(screen.getByText('Alex posted question: yo, you up?')).toBeInTheDocument();
   });
-  */
+
+
 });
