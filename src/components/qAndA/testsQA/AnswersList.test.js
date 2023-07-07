@@ -45,6 +45,7 @@ describe('AnswersList', () => {
   ];
 
   beforeEach(() => {
+
     render(
       <AnswersList
         answers={ mockAnswers }

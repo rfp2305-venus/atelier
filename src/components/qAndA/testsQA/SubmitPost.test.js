@@ -24,6 +24,7 @@ describe('SubmitPost', () => {
   const store = mockStore(initialState);
 
   beforeEach(() => {
+
     render(
       <Provider store={ store }>
         <SubmitPost
