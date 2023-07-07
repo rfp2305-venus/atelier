@@ -67,26 +67,6 @@ describe('AnswersList', () => {
     expect(sellerAnswer).toBeInTheDocument();
   });
 
-  /*
-  test('answers by "Seller" sorted to top of list', () => {
-
-    // query for all rendered answers
-    const answers = screen.queryAllByTestId('answer');
-
-    // find index of 1st non-seller
-    const indexFirstNonSeller = answers.findIndex((answer) => {
-      const { textContent } = answer;
-
-      return !textContent.includes('LOVE SELLING SO MUCH');
-    });
-
-    // check all answers before 1st non-seller === seller
-    for (let i = 0; i < indexFirstNonSeller; i++) {
-      expect(answers[i].textContent).toContain('LOVE SELLING SO MUCH');
-    }
-  });
-  */
-
   test('should not render SeeMore component if less than (2) answers', () => {
 
     const mockAnswers = [
