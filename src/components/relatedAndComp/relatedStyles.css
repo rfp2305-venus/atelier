@@ -45,6 +45,7 @@ body {
 
 .related-products-thumbnail {
   height: 75px;
+  border-radius: 5%;
 }
 .card-first-row {
   display: flex;
