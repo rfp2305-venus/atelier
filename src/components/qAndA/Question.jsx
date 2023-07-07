@@ -3,6 +3,7 @@ import axios from 'axios';
 
 import React, { useState, useEffect } from 'react';
 import { Box, Typography } from '@mui/material';
+
 import Upvote from './Upvote';
 import Report from './Report';
 import AnswersList from './AnswersList';
