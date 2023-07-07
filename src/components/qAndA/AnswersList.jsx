@@ -10,7 +10,12 @@ export default function AnswersList({ answers, length, setLength, isExpanded, se
   return (
     <Box>
       {/* max height === 50% of viewport */}
-      <Box sx={{ maxHeight: '50vh', overflowY: 'auto' }}>
+      <Box sx={{
+        maxHeight: '50vh',
+        // overflowY: 'auto',
+        overflow: 'hidden',
+        '&:hover': { overflow: 'auto' }
+      }}>
         { answers
           .slice(0, length)
           .map(({ answer_id, body, date, answerer_name, helpfulness, photos, reported }) => (
