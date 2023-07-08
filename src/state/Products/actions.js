@@ -9,7 +9,8 @@ export function handleFetchProducts() {
     fetchProducts()
       .then(async (products) => {
         dispatch(handleReceiveProducts(products));
-        dispatch(handleSetLoading(false))
+        dispatch(handleSetLoading(false));
+        dispatch(handleFetchProduct(40344));
       })
   }
 }
